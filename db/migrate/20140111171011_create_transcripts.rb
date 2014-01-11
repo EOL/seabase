@@ -2,8 +2,8 @@ class CreateTranscripts < ActiveRecord::Migration
   def change
     create_table :transcripts do |t|
       t.string :name
-      t.int :isogroup
-      t.int :length
+      t.integer :isogroup
+      t.integer :length
       t.text :transcript_sequence
 
       t.timestamps

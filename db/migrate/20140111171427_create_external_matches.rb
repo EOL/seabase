@@ -6,11 +6,11 @@ class CreateExternalMatches < ActiveRecord::Migration
       t.references :transcript, index: true
       t.string :gene_name
       t.text :functional_name
-      t.int :length
-      t.int :query_from
-      t.int :query_to
-      t.int :paralog
-      t.int :isoform
+      t.integer :length
+      t.integer :query_from
+      t.integer :query_to
+      t.integer :paralog
+      t.integer :isoform
 
       t.timestamps
     end

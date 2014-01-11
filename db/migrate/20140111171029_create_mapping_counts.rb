@@ -3,7 +3,7 @@ class CreateMappingCounts < ActiveRecord::Migration
     create_table :mapping_counts do |t|
       t.references :replicate, index: true
       t.references :transcript, index: true
-      t.int :mapping_count
+      t.integer :mapping_count
 
       t.timestamps
     end
