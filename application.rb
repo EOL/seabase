@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-ENV['SEABASE_ENV'] ||= (ENV['RACK_ENV'] || :development)
+# ENV['SEABASE_ENV'] ||= (ENV['RACK_ENV'] || :development)
 
 require 'zen-grids'
 require 'rack/timeout'
@@ -24,7 +24,7 @@ class SeabaseApp < Sinatra::Base
     use Rack::Timeout
     Rack::Timeout.timeout = 9_000_000
 
-    use Rack::Session::Cookie, secret: HpsBioindex.conf.session_secret
+    use Rack::Session::Cookie, secret: Seabase.conf.session_secret
 
     set :scss, Compass.sass_engine_options
   end
