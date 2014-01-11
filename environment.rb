@@ -1,6 +1,7 @@
 require 'ostruct'
 require 'yaml'
 require 'active_record'
+require 'bio'
 
 class Seabase
 
@@ -51,4 +52,11 @@ class Seabase
   end
 end
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'models'))
+Dir.glob(File.join(File.dirname(__FILE__), 'models', '**', '*.rb')) do |app|
+  require File.basename(app, '.*')
+end
+
+
 Seabase.get_db_connection
+
