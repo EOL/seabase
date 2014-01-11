@@ -4,7 +4,7 @@ Coveralls.wear!
 require 'rack/test'
 require 'webmock/rspec'
 
-ENV['HPS_ENV'] = 'test'
+ENV['SEABASE_ENV'] = 'test'
 require_relative '../application.rb'
 
 module RSpecMixin

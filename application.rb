@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-# ENV['SEABASE_ENV'] ||= (ENV['RACK_ENV'] || :development)
-
 require 'zen-grids'
 require 'rack/timeout'
 require 'sinatra'
