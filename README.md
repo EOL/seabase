@@ -9,6 +9,12 @@ taxons:
 	int id
 	scientific_name string 256 # "Human", "Mouse", "Nematostella" ? Should this be restricted to a latin name?
 	common_name string 256
+rails generate scaffold Taxon scientific_name:string common_name:string
+
+condition:
+	id int
+	description text
+rails generate scaffold Condition description:text
 
 replicates:
 	id int
@@ -22,15 +28,7 @@ replicates:
 	slope float
 	total_mapping int
 
-condition:
-	id int
-	description text
-
-mapping_counts:
-	id int
-	replicate_id int
-	transcript_id int
-	mapping_count int # 3
+    rails generate scaffold Replicate taxon:references name:string:80 stage:int condition:references technical_replicate:int lane_replicate:int y_intercept:float slope:float total_mapping:int
 
 transcripts:
 	id int
@@ -39,8 +37,31 @@ transcripts:
 	length int # 254
 	transcript_sequence text
 
+    rails generate scaffold Transcript name:string:20 isogroup:int length:int transcript_sequence:text
+
+mapping_counts:
+	id int
+	replicate_id int
+	transcript_id int
+	mapping_count int # 3
+
+    rails generate scaffold MappingCount replicate:references transcript:references mapping_count:int
+
+external_sources:
+	id int
+	name string 256
+	
+	rails generate scaffold ExternalSource name:string
+
+external_identifiers:
+	id int
+	external_source_id int
+	name string 6 # Q14738
+	
+	  rails generate scaffold ExternalIdentifier external_source:references name:string:6
+
 # Comes from BLASTing mouse, human and searching UNIPROT
-predictions: ? Is this a reasonable name?
+blast_reads: ? Is this a reasonable name?
 	id int
 	taxon_id int
 	external_identifier_id int # Q14738
@@ -53,15 +74,7 @@ predictions: ? Is this a reasonable name?
 	query_to int # 138
 	isoform int # 1
 
-external_identifiers:
-	id int
-	external_source_id int
-	name string 6 # Q14738
-
-external_sources:
-	id int
-	name string 256
-
+    rails generate scaffold ExternalMatch taxon:references external_identifier:references transcript:references gene_name:string function_name:text length:int query_from:int query_to:int paralog:int isoform:int
 
 
 Queries from Perl:
