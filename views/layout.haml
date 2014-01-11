@@ -1,0 +1,27 @@
+!!! 5
+%html
+  %head
+    %title 
+      Seabase
+    %link{ rel: 'stylesheet', href: '/css/app.css', type: 'text/css' }
+  %body
+    .container
+      %h1{ id: 'title' }
+        %a{ href: '/' } Seabase
+      #sidebar
+        %ul
+          %li
+            %a{ href: '/' } Home
+          %li
+            %a{ href: '/search' } Search
+          %li
+            %a{ href: '/blast' } Blast
+
+        
+      #content
+        = yield
+    .clear &nbsp;
+    #footer
+      %a{ href: 'http://opensource.org/licenses/MIT' } MIT License
+
+

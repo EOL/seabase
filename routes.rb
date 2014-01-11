@@ -1,6 +1,12 @@
 class SeabaseApp < Sinatra::Base
-  get '/' do
-    'hello'
+
+  get '/css/:filename.css' do
+    scss :"sass/#{params[:filename]}"
   end
+
+  get '/' do
+    haml :home
+  end
+
 end
 
