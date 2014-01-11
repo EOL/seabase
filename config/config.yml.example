@@ -4,19 +4,19 @@ development:
   host: localhost
   username: root
   password:
-  database: hps_bioindex
+  database: seabase_dev
 test:
   session_secret: chnge_me
   adapter: mysql2
   host: localhost
   username: root
   password:
-  database: hps_bioindex_test
+  database: seabase_test
 production:
   session_secret: chnge_me
   adapter: mysql2
   host: localhost
   username: root
   password:
-  database: hps_bioindex
+  database: seabase
 
