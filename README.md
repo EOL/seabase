@@ -79,43 +79,47 @@ orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc) from $form_input{'type'}Name 
 orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 100";
 
 
-Trying to install DBD::mysql.  Prolly need to add to INC.
+	id = comp824_c0_seq1 (transcript)
+	sample = |  9h_A_L2 |  -4.4469180 | 15899.5300 |      16450010 |     0 | (half_sample?)
+	sequence_length = 2323
+	hour = 9
+	raw_expression = get_hour_expression(sample, id) = 3070
+	per_embryo(raw_expression, sample, sequence_length)
+
+	get_fpkm(sequence_length, raw_expression, total_mapping)
+	(2323, 3070, 16450010)
+
+	(3070 * 1000 * 1000 * 1000)/(2323 * 16450010)
+	fpkm = 80.33836692516454
+
+	normalize_rpkm(80.33836692516454, -4.4469180, 15899.5300, 0)
+
+	(/ (/ (+ (* 80.33836692516454 15899.5300) -4.4469180) 300) 0.1)
+	[Should be / 10]
+	42577.92760532204
+
+	(/ (* 3070 1000 1000 1000.0) (* 2323 16450010.0))
+	80.33836692516454
+
+	(/ (/ (+ (* 80.33836692516454 15899.5300) -4.4469180) 300) 0.1)
+	42577.92760532204
 
 
-mapping_count => fpkm(($map_count * 1000 * 1000 * 1000) / ($length * $total_mapping))
+	3106
+	(/ (* 3106 1000 1000 1000.0) (* 2323 16530015.0))
+	80.88704947918852
 
-1B * c / (length * n)
-554
+	(/ (/ (+ (* 80.88704947918852 14489.8700) -1.7842870) 300) 0.1)
+	39068.03491166698
 
-3845
-3974
-3070
-3106
+	(/ (+ 39068.03491166698 42577.92760532204) 2)
 
-)
-4.0)
-3498.75
-
-mapping_count for comp824_c0_seq1
-| 9h_A_L2                 | 3070
-| 9h_A_L5                 | 3106
-| 9h_B_L2                 | 3974
-| 9h_B_L4                 | 3845
-
-length 554
-
-b, m, total_mapping:
-	|  9h_A_L2 |  -4.4469180 | 15899.5300 |      16450010 |
-
-	|  9h_A_L5 |  -1.7842870 | 14489.8700 |      16530015 |
-
-(def molecules (mapping_count intercept slope total)
-  (/ (* mapping_count 1000000000) ())
+	40822.98125849451 (Hooray!)
 
 
-	| 9h_B_L2                 | 21284032
-	| 9h_B_L4                 | 19586443
+	(m(c * 10e9/(l * n))+b)/(300 * 0.1)
 
-(/ (* 3070 1000000000) (* 554 16450010))
 
-comp824_c0_seq1
+	select * from normalization where id like ' 9%';                                
+	select mapping_count from 9h_A_L2 where id = 'comp824_c0_seq1';                 
+	SELECT length FROM Sequences where id = 'comp824_c0_seq1';                      
