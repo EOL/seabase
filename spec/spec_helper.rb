@@ -1,6 +1,9 @@
 require 'coveralls'
 Coveralls.wear!
 
+# HACK: to suppress warnings                                                     
+$VERBOSE = nil   
+
 require 'rack/test'
 require 'webmock/rspec'
 

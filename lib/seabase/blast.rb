@@ -13,7 +13,8 @@ class Seabase
 
     def database_path
       path = File.expand_path(File.join('..', '..', '..',
-                                        'blast', 'db', database), __FILE__) 
+                                        'blast', 'db', 
+                                        database, database), __FILE__) 
     end
 
     def sequence(sequence_string)

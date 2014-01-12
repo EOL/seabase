@@ -22,8 +22,8 @@ describe Seabase::Blast do
     let(:seq) { File.read(File.expand_path('../../files/pcna_fasta.txt',
                                            __FILE__)) }
     it 'finds sequence' do
-      blast.search(seq)
-
+      res = blast.search(seq)
+      expect(res).to be_kind_of Bio::Blast::Report
     end
   end
 
