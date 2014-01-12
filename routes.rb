@@ -54,7 +54,7 @@ class SeabaseApp < Sinatra::Base
 
     else
       if @external_identifiers.size == 1
-        redirect '/show_external_name', { name: @external_identifiers[0] }
+        redirect "/external_identifiers/%s" % @external_identifiers[0]
       else
         haml :search_result
       end
@@ -62,9 +62,10 @@ class SeabaseApp < Sinatra::Base
     
   end
 
-  get '/show_external_name' do
+  get '/external_identifiers/:name' do
+    require 'ruby-debug'; debugger
     @name = params[:name]
-    haml :show_external_name
+    haml :external_identifier
   end
   
 end
