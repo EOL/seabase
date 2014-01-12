@@ -25,7 +25,7 @@ FROM external_identifiers ei, external_names en, external_matches em, taxons t
 WHERE ei.id = en.external_identifier_id
 AND en.id = em.external_name_id
 AND t.id = en.taxon_id
-AND t.name = #{scientific_name}
+AND t.scientific_name = #{scientific_name}
 AND (ei.name LIKE #{term} or en.gene_name LIKE #{term} or en.functional_name LIKE #{term}
 LIMIT 10;
 
@@ -316,7 +316,7 @@ FROM external_identifiers ei, external_names en, external_matches em, taxons t
 WHERE ei.id = en.external_identifier_id
 AND en.id = em.external_name_id
 AND t.id = en.taxon_id
-AND t.name = #{scientific_name}
+AND t.scientific_name = #{scientific_name}
 AND (ei.name = #{term} or en.gene_name = #{term};
 
 Examples:

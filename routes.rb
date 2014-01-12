@@ -31,5 +31,13 @@ class SeabaseApp < Sinatra::Base
     end
   end
 
+  post '/search' do
+    scientific_name = params[:scientific_name]
+    # scientific_name = params[:organism] # Currently ignored
+    term = params[:term]
+    @external_identifiers = ExternalMatch.like_ei_search(scientific_name, term)
+    haml :search_result
+  end
+
 end
 
