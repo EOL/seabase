@@ -31,12 +31,28 @@ class SeabaseApp < Sinatra::Base
     end
   end
 
-  post '/search' do
+  post '/search.?:format?' do
     scientific_name = params[:scientific_name]
     # scientific_name = params[:organism] # Currently ignored
     term = params[:term]
-    @external_identifiers = ExternalMatch.like_ei_search(scientific_name, term)
-    haml :search_result
+    exact_search = params[:exact_search] == 'true'
+    if exact_search
+      @external_identifiers = ExternalMatch.exact_ei_search(scientific_name, term)
+    else
+      @external_identifiers = ExternalMatch.like_ei_search(scientific_name, term)
+    end
+    if params[:format] == 'json'
+      content_type 'application/json', charset: 'utf-8'
+      names_json = @external_identities.to_json
+      if params[:callback]
+        names_json = "%s(%s)" % [params[:callback], names_json]
+      end
+      names_json
+
+    else
+      haml :search_result
+    end
+    
   end
 
 end

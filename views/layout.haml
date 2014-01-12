@@ -4,6 +4,9 @@
     %title 
       Seabase
     %link{ rel: 'stylesheet', href: '/css/app.css', type: 'text/css' }
+    %link{ rel: 'stylesheet', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', type: 'text/css' }
+    %script{ src: 'http://code.jquery.com/jquery-1.9.1.js' }
+    %script{ src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.js' }
   %body
     .container
       %h1{ id: 'title' }
@@ -21,7 +24,8 @@
             %option{ value: 'Nematostella vectensis' } Nematostella vectensis
           
           %label{ for: 'term' } Search Term
-          %input{ type: 'text', id: 'term', name: 'term' }
+          %input#term_search{ type: 'text', id: 'term', name: 'term' }
+          %input#exact_search{ type: 'hidden', value: false, name: 'exact_search' }
           %input{ type: 'submit', value: 'Search' }
 
         
@@ -40,5 +44,33 @@
     .clear &nbsp;
     #footer
       %a{ href: 'http://opensource.org/licenses/MIT' } MIT License
+
+
+:javascript
+  $(function() {
+    $( "#term_search" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "/search.json",
+          dataType: "jsonp",
+          data: {
+            search_term: request.term,
+            batch_size: 10
+          },
+          success: function( data ) {
+            response( $.map( data, function( item ) {
+              return { value: item.name  }
+            }));
+          },
+        });
+      },
+      minLength: 1,
+      select: function(event, ui) {
+        $("#exact_search").val('true');
+        $("#term_search").val(ui.item.label);
+        $("form#search_box").submit();
+      },
+    });
+  });
 
 
