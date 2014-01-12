@@ -1,4 +1,44 @@
-%form{ method: :post, action: '/blast' }
+%form{ method: :post, action: '/blast', enctype: 'multipart/form-data', name: 'blast_form' }
+  
+  %h3 Blast search against nematostella_vectensis_transcriptome
 
-  %textarea{ autofocus: true, rows: 4, cols: 50, name: :sequence }
-  %input{ type: :submit, value: 'Search' }
+  .form_section
+    %label{ for: 'program' } Select Blast Program:
+
+    %select{ name: 'program' }
+      %option blastn
+      %option tblastn
+      %option tblastx
+
+
+  .form_section
+    %fieldset
+      %legend Sequence
+      
+      .form_section
+        .info 
+          Enter sequence in FASTA format 
+
+        .sequence
+          %textarea{ name: 'sequence', rows: 6, cols: 60, autofocus: true }
+      
+      .form_section
+        .info Or load it from disk 
+
+        .file
+          %input{ type: 'file', name: 'seqfile' }
+        
+      .form_section
+        .info Set subsequence: 
+        .info 
+          From
+          %input{ type: 'text', name: 'query_from', size: 10 }
+          &nbsp;&nbsp&nbsp;&nbsp
+          To
+          %input{ type: 'text', name: 'query_to', size: 10 }
+
+  .form_section
+    %input{ type: 'submit', value: 'Search' }
+    %input{ type: 'button', value: 'Clear sequence', onClick: "blast_form.sequence.value='';blast_form.query_from.value='';blast_form.query_to.value='';blast_form.sequence.focus();"}
+
+

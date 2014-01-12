@@ -41,10 +41,6 @@ html, button, input, select, textarea {
   background-repeat: no-repeat;
 }
 
-#title {
-  display: none;
-}
-
 #login_area {
   @include zen-grid-item(6, 2);
   font-size: 0.8em;
@@ -122,6 +118,11 @@ html, button, input, select, textarea {
   border-width: 3px;
 }
 
+.form_section {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 body {
   background: url(/images/ru_reverse.png) no-repeat bottom right, url(/images/pattern.png);
   height: 10000px;
@@ -131,4 +132,23 @@ pre {
   overflow: auto;
   word-wrap: normal;
   white-space: pre;
+}
+
+dd, dt{
+    display: inline;
+    margin: 0;
+}
+
+dt {
+  font-weight: bold;
+}
+dd:before {
+    content: ' '; /* space them */
+}
+dt:before { /* insert line break before <dt> */
+    content:"\A";
+    white-space:pre;
+}
+dt:first-child:before { /* disable line break before the first <dt> */
+    content: none;
 }
