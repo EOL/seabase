@@ -2,9 +2,10 @@ class Seabase
   class Blast
     attr_reader :command
     attr_reader :database
+    attr_reader :blast
 
 
-    def initialize(command, database)
+    def initialize(command, database = 'nematostella_vectensis_transcriptome')
       @command = command
       @database = database
       @blast = Bio::Blast.local(@command,database_path)

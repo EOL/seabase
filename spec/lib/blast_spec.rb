@@ -22,9 +22,8 @@ describe Seabase::Blast do
     let(:seq) { File.read(File.expand_path('../../files/pcna_fasta.txt',
                                            __FILE__)) }
     it 'finds sequence' do
+      blast.search(seq)
 
-      require 'ruby-debug'; debugger
-      puts ''
     end
   end
 
