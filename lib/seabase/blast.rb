@@ -18,7 +18,7 @@ class Seabase
     end
 
     def sequence(sequence_string)
-      Bio::Sequence.auto(sequence_string)
+      sequence_string
     end
 
     def search(sequence_string)
