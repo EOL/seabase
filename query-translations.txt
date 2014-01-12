@@ -1,0 +1,157 @@
+Old query:
+SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 10
+
+Examples:
+SELECT DISTINCT(acc), gn, fn from NematostellaName WHERE acc LIKE '%Churchill%' OR gn LIKE '%Churchill%' OR fn LIKE '%Churchill%' LIMIT 10;
+SELECT DISTINCT(acc), gn, fn from NematostellaName WHERE acc LIKE '%Predicted protein%' OR gn LIKE '%Predicted protein%' OR fn LIKE '%Predicted protein%' LIMIT 10;
+
+New query:
+SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.name = #{scientific_name}
+AND (ei.name LIKE #{term} or en.gene_name LIKE #{term} or en.functional_name LIKE #{term}
+LIMIT 10;
+
+Examples:
+SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND (ei.name LIKE '%Churchill%' or en.gene_name LIKE '%Churchill%' or en.functional_name LIKE '%Churchill%')
+LIMIT 10;
+
+SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND (ei.name LIKE '%Predicted protein%' or en.gene_name LIKE '%Predicted protein%' or en.functional_name LIKE '%Predicted protein%')
+LIMIT 10;
+
+---------------------------------
+
+Old query:
+SELECT * FROM normalization
+
+New query:
+SELECT name, y_intercept, slope, total_mapping, 0 AS split FROM replicates
+
+---------------------------------
+
+Old query:
+SELECT mapping_count FROM $table where id = '$id' LIMIT 1
+
+Examples:
+SELECT mapping_count FROM 18h_A_L6 where id = 'comp0_c0_seq1' LIMIT 1;
+1671
+SELECT mapping_count FROM 1h_B_L4 where id = 'comp0_c0_seq1' LIMIT 1;
+604
+
+New query: (this should probably have a taxon)
+SELECT mc.mapping_count
+FROM mapping_counts mc, replicates rs, transcripts trs
+WHERE rs.id = mc.replicate_id
+AND trs.id = mc.transcript_id
+AND rs.stage = #{stage}
+AND rs.technical_replicate = #{technical_replicate}
+AND rs.lane_replicate = #{lane_replicate}
+AND trs.name = #{transcript_name}
+LIMIT 1;
+
+Examples:
+SELECT mc.mapping_count
+FROM mapping_counts mc, replicates rs, transcripts trs
+WHERE rs.id = mc.replicate_id
+AND trs.id = mc.transcript_id
+AND rs.stage = 18
+AND rs.technical_replicate = 1
+AND rs.lane_replicate = 6
+AND trs.name = 'comp0_c0_seq1'
+LIMIT 1;
+1671
+
+SELECT mc.mapping_count
+FROM mapping_counts mc, replicates rs, transcripts trs
+WHERE rs.id = mc.replicate_id
+AND trs.id = mc.transcript_id
+AND rs.stage = 1
+AND rs.technical_replicate = 2
+AND rs.lane_replicate = 4
+AND trs.name = 'comp0_c0_seq1'
+LIMIT 1;
+604
+
+---------------------------------
+
+Old query:
+SELECT length FROM Sequences where id = '$id' LIMIT 1;
+
+Example:
+SELECT length FROM Sequences where id = 'comp0_c0_seq1' LIMIT 1;
+224
+
+New query:
+SELECT length FROM transcripts WHERE name = #{id} LIMIT 1;
+
+Example:
+SELECT length FROM transcripts WHERE name = 'comp0_c0_seq1' LIMIT 1;
+224
+
+---------------------------------
+
+Old query:
+SELECT sequence FROM $database"."_prediction WHERE gene = '$id';
+
+Examples:
+SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4-paralog2';
+SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4-paralog1';
+comp75759_c0_seq1
+SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4';
+comp80232_c0_seq1
+
+New query:
+SELECT trs.name
+FROM transcripts trs, external_matches em
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND trs.paralog = 1
+
+$database"."_prediction WHERE gene = '$id'";
+
+Example:
+SELECT sequence FROM $database"."_prediction WHERE gene = '$id'";
+
+
+---------------------------------
+
+graph.cgi:	my $sql = "SELECT length, sequence FROM Sequences WHERE id = '$input'";
+
+---------------------------------
+
+graph.cgi:	my $sql = "SELECT gn, fn FROM $database where acc = '$input'";
+
+---------------------------------
+
+graph.cgi:	my $sql = "SELECT acc, gn, fn FROM mouseName WHERE sequence ='$input'";
+
+---------------------------------
+
+graph.cgi:        my $sql = "SELECT acc, gn, fn FROM humanName WHERE sequence ='$input'";
+
+---------------------------------
+
+graph.cgi:        my $sql = "SELECT acc, gn, fn FROM nematostellaName WHERE sequence ='$input'";
+
+---------------------------------
+
+orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc) from $form_input{'type'}Name WHERE acc = '$form_input{'term'}' or gn = '$form_input{'term'}'";
+
+---------------------------------
+
+orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 100";

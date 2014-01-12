@@ -1,0 +1,132 @@
+mysql> desc conditions;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| description | text     | YES  |     | NULL    |                |
+| created_at  | datetime | YES  |     | NULL    |                |
+| updated_at  | datetime | YES  |     | NULL    |                |
++-------------+----------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc external_identifiers;
++--------------------+--------------+------+-----+---------+----------------+
+| Field              | Type         | Null | Key | Default | Extra          |
++--------------------+--------------+------+-----+---------+----------------+
+| id                 | int(11)      | NO   | PRI | NULL    | auto_increment |
+| external_source_id | int(11)      | YES  | MUL | NULL    |                |
+| name               | varchar(255) | YES  |     | NULL    |                |
+| created_at         | datetime     | YES  |     | NULL    |                |
+| updated_at         | datetime     | YES  |     | NULL    |                |
++--------------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc external_matches;
++------------------+----------+------+-----+---------+----------------+
+| Field            | Type     | Null | Key | Default | Extra          |
++------------------+----------+------+-----+---------+----------------+
+| id               | int(11)  | NO   | PRI | NULL    | auto_increment |
+| transcript_id    | int(11)  | YES  | MUL | NULL    |                |
+| length           | int(11)  | YES  |     | NULL    |                |
+| query_from       | int(11)  | YES  |     | NULL    |                |
+| query_to         | int(11)  | YES  |     | NULL    |                |
+| paralog          | int(11)  | YES  |     | NULL    |                |
+| isoform          | int(11)  | YES  |     | NULL    |                |
+| created_at       | datetime | YES  |     | NULL    |                |
+| updated_at       | datetime | YES  |     | NULL    |                |
+| external_name_id | int(11)  | YES  | MUL | NULL    |                |
++------------------+----------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> desc external_names;
++------------------------+--------------+------+-----+---------+----------------+
+| Field                  | Type         | Null | Key | Default | Extra          |
++------------------------+--------------+------+-----+---------+----------------+
+| id                     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| taxon_id               | int(11)      | YES  | MUL | NULL    |                |
+| external_identifier_id | int(11)      | YES  | MUL | NULL    |                |
+| gene_name              | varchar(255) | YES  |     | NULL    |                |
+| functional_name        | text         | YES  |     | NULL    |                |
+| created_at             | datetime     | YES  |     | NULL    |                |
+| updated_at             | datetime     | YES  |     | NULL    |                |
++------------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc external_sources;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255) | YES  |     | NULL    |                |
+| created_at | datetime     | YES  |     | NULL    |                |
+| updated_at | datetime     | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> desc mapping_counts;
++---------------+----------+------+-----+---------+----------------+
+| Field         | Type     | Null | Key | Default | Extra          |
++---------------+----------+------+-----+---------+----------------+
+| id            | int(11)  | NO   | PRI | NULL    | auto_increment |
+| replicate_id  | int(11)  | YES  | MUL | NULL    |                |
+| transcript_id | int(11)  | YES  | MUL | NULL    |                |
+| mapping_count | int(11)  | YES  |     | NULL    |                |
+| created_at    | datetime | YES  |     | NULL    |                |
+| updated_at    | datetime | YES  |     | NULL    |                |
++---------------+----------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc replicates;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| id                  | int(11)      | NO   | PRI | NULL    | auto_increment |
+| taxon_id            | int(11)      | YES  | MUL | NULL    |                |
+| name                | varchar(255) | YES  |     | NULL    |                |
+| stage               | int(11)      | YES  |     | NULL    |                |
+| condition_id        | int(11)      | YES  | MUL | NULL    |                |
+| technical_replicate | int(11)      | YES  |     | NULL    |                |
+| lane_replicate      | int(11)      | YES  |     | NULL    |                |
+| y_intercept         | float        | YES  |     | NULL    |                |
+| slope               | float        | YES  |     | NULL    |                |
+| total_mapping       | int(11)      | YES  |     | NULL    |                |
+| created_at          | datetime     | YES  |     | NULL    |                |
+| updated_at          | datetime     | YES  |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> desc schema_migrations;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| version | varchar(255) | NO   | PRI | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> desc taxons;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| scientific_name | varchar(255) | YES  |     | NULL    |                |
+| common_name     | varchar(255) | YES  |     | NULL    |                |
+| created_at      | datetime     | YES  |     | NULL    |                |
+| updated_at      | datetime     | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc transcripts;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| id                  | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name                | varchar(255) | YES  |     | NULL    |                |
+| isogroup            | int(11)      | YES  |     | NULL    |                |
+| length              | int(11)      | YES  |     | NULL    |                |
+| transcript_sequence | text         | YES  |     | NULL    |                |
+| created_at          | datetime     | YES  |     | NULL    |                |
+| updated_at          | datetime     | YES  |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> 

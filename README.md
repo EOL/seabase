@@ -61,21 +61,27 @@ external_identifiers:
 	  rails generate scaffold ExternalIdentifier external_source:references name:string:6
 
 # Comes from BLASTing mouse, human and searching UNIPROT
-blast_reads: ? Is this a reasonable name?
+external_matches: ? Is this a reasonable name?
 	id int
-	taxon_id int
-	external_identifier_id int # Q14738
+	external_name_id int
 	paralog int # 1
 	transcript_id int
-	gene_name string 255 # Hibadh
-	function_name text # Serine/threonine-protein phosphatase 2A 56 kDa regulatory subunit epsilon isoform ? Just how long can these get?
 	length int # 602
 	query_from int # 65
 	query_to int # 138
 	isoform int # 1
 
+external_names:
+  id int
+  taxon_id int
+  external_identifier_id int
+  gene_name string
+  functional_name text
+  
+  
     rails generate scaffold ExternalMatch taxon:references external_identifier:references transcript:references gene_name:string function_name:text length:int query_from:int query_to:int paralog:int isoform:int
 
+    rails generate scaffold ExternalName taxon:references external_identifier:references gene_name:string function_name:text
 
 Queries from Perl:
 autoComplete.cgi:my $sql = "SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 10";
