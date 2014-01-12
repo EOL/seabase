@@ -1,9 +1,23 @@
+1.
+
 Old query:
 SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 10
 
 Examples:
 SELECT DISTINCT(acc), gn, fn from NematostellaName WHERE acc LIKE '%Churchill%' OR gn LIKE '%Churchill%' OR fn LIKE '%Churchill%' LIMIT 10;
+'A3EXK7', 'v1g118864', 'Churchill'
+
 SELECT DISTINCT(acc), gn, fn from NematostellaName WHERE acc LIKE '%Predicted protein%' OR gn LIKE '%Predicted protein%' OR fn LIKE '%Predicted protein%' LIMIT 10;
+'A7REN5', 'v1g196074', 'Predicted protein'
+'A7REN6', 'v1g196075', 'Predicted protein'
+'A7REN8', 'v1g43493 ', 'Predicted protein (Fragment)'
+'A7REN9', 'v1g176880', 'Predicted protein (Fragment)'
+'A7REP0', 'v1g157632', 'Predicted protein'
+'A7REP1', 'v1g176889', 'Predicted protein'
+'A7REP4', 'v1g196085', 'Predicted protein'
+'A7REP7', 'v1g157638', 'Predicted protein'
+'A7REP9', 'v1g196090', 'Predicted protein'
+'A7REQ0', 'v1g176892', 'Predicted protein'
 
 New query:
 SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
@@ -24,6 +38,7 @@ AND t.id = en.taxon_id
 AND t.scientific_name = 'Nematostella vectensis'
 AND (ei.name LIKE '%Churchill%' or en.gene_name LIKE '%Churchill%' or en.functional_name LIKE '%Churchill%')
 LIMIT 10;
+'A3EXK7', 'v1g118864', 'Churchill'
 
 SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
 FROM external_identifiers ei, external_names en, external_matches em, taxons t
@@ -33,16 +48,36 @@ AND t.id = en.taxon_id
 AND t.scientific_name = 'Nematostella vectensis'
 AND (ei.name LIKE '%Predicted protein%' or en.gene_name LIKE '%Predicted protein%' or en.functional_name LIKE '%Predicted protein%')
 LIMIT 10;
+'A7REN5', 'v1g196074', 'Predicted protein'
+'A7REN6', 'v1g196075', 'Predicted protein'
+'A7REN8', 'v1g43493 ', 'Predicted protein (Fragment)'
+'A7REN9', 'v1g176880', 'Predicted protein (Fragment)'
+'A7REP0', 'v1g157632', 'Predicted protein'
+'A7REP1', 'v1g176889', 'Predicted protein'
+'A7REP4', 'v1g196085', 'Predicted protein'
+'A7REP7', 'v1g157638', 'Predicted protein'
+'A7REP9', 'v1g196090', 'Predicted protein'
+'A7REQ0', 'v1g176892', 'Predicted protein'
 
 ---------------------------------
+
+2.
 
 Old query:
-SELECT * FROM normalization
+SELECT * FROM normalization;
+'0h_A_L1', -5.2092080, 8646.3680, 13497497, 0
+'0h_A_L6', -3.8449600, 8249.8330, 13681680, 0
+...
 
 New query:
-SELECT name, y_intercept, slope, total_mapping, 0 AS split FROM replicates
+SELECT name, y_intercept, slope, total_mapping, 0 AS split FROM replicates;
+'0h_A_L1', -5.20921, 8646.37, 13497497, 0
+'0h_A_L6', -3.84496, 8249.83, 13681680, 0
+...
 
 ---------------------------------
+
+3.
 
 Old query:
 SELECT mapping_count FROM $table where id = '$id' LIMIT 1
@@ -89,6 +124,8 @@ LIMIT 1;
 
 ---------------------------------
 
+4.
+
 Old query:
 SELECT length FROM Sequences where id = '$id' LIMIT 1;
 
@@ -105,11 +142,12 @@ SELECT length FROM transcripts WHERE name = 'comp0_c0_seq1' LIMIT 1;
 
 ---------------------------------
 
+5.
+
 Old query:
 SELECT sequence FROM $database"."_prediction WHERE gene = '$id';
 
 Examples:
-SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4-paralog2';
 SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4-paralog1';
 comp75759_c0_seq1
 SELECT sequence FROM nematostella_prediction WHERE gene = 'A7SFY4';
@@ -117,41 +155,194 @@ comp80232_c0_seq1
 
 New query:
 SELECT trs.name
-FROM transcripts trs, external_matches em
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei
 WHERE trs.id = em.transcript_id
 AND en.id = em.external_name_id
-AND trs.paralog = 1
+AND ei.id = en.external_identifier_id
+AND ei.name = #{id.name}
+AND em.paralog = #{id.paralog};
 
-$database"."_prediction WHERE gene = '$id'";
+Examples:
+SELECT trs.name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND ei.name = 'A7SFY4'
+AND em.paralog = 1;
+comp75759_c0_seq1
+
+SELECT trs.name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND ei.name = 'A7SFY4'
+AND em.paralog = 0;
+comp80232_c0_seq1
+
+---------------------------------
+
+6.
+
+Old query:
+SELECT length, sequence FROM Sequences WHERE id = '$input';
 
 Example:
-SELECT sequence FROM $database"."_prediction WHERE gene = '$id'";
+SELECT length, sequence FROM Sequences WHERE id = 'comp0_c0_seq1';
+224, 'TTTTTTTTTTTTTTTTTCAAGCAGAAGACGGCATACGAGATCACTGTGTGACTGGAGTTCAGACGTGTGCTCTTCCGATCTCCTGGTGGTGCCCTTCCGTCAATTCCTTTAAGTTTCAGCTTTGCAACCATACTTCCCCCAGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATTAAAAAAAAAAAAAAAAGTGGAAAAAA'
 
+New query:
+SELECT length, transcript_sequence FROM transcripts WHERE name = #{input};
 
----------------------------------
-
-graph.cgi:	my $sql = "SELECT length, sequence FROM Sequences WHERE id = '$input'";
-
----------------------------------
-
-graph.cgi:	my $sql = "SELECT gn, fn FROM $database where acc = '$input'";
-
----------------------------------
-
-graph.cgi:	my $sql = "SELECT acc, gn, fn FROM mouseName WHERE sequence ='$input'";
+Example:
+SELECT length, transcript_sequence FROM transcripts WHERE name = 'comp0_c0_seq1';
+224, 'TTTTTTTTTTTTTTTTTCAAGCAGAAGACGGCATACGAGATCACTGTGTGACTGGAGTTCAGACGTGTGCTCTTCCGATCTCCTGGTGGTGCCCTTCCGTCAATTCCTTTAAGTTTCAGCTTTGCAACCATACTTCCCCCAGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATTAAAAAAAAAAAAAAAAGTGGAAAAAA'
 
 ---------------------------------
 
-graph.cgi:        my $sql = "SELECT acc, gn, fn FROM humanName WHERE sequence ='$input'";
+7.
+
+Old query:
+SELECT gn, fn FROM $database where acc = '$input';
+
+Example: (Note: It's not clear if $database should be <taxon> or <taxon>name, so both examples are below, but it doesn't matter to the translation.)
+SELECT gn, fn FROM nematostella where acc = 'A0EYM0';
+'v1g136480', 'PaxD4 (Fragment)'
+
+SELECT gn, fn FROM nematostellaname where acc = 'A7RJE5';
+'v1g147359', 'Predicted protein (Fragment)'
+
+New query:
+SELECT gene_name, functional_name
+FROM external_names en, external_identifiers ei, taxons t
+WHERE ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND t.scientific_name = #{taxon}
+AND ei.name = #{input};
+
+Example:
+SELECT gene_name, functional_name
+FROM external_names en, external_identifiers ei, taxons t
+WHERE ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND ei.name = 'A0EYM0';
+'v1g136480', 'PaxD4 (Fragment)'
+
+SELECT gene_name, functional_name
+FROM external_names en, external_identifiers ei, taxons t
+WHERE ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND ei.name = 'A7RJE5';
+'v1g147359', 'Predicted protein (Fragment)'
 
 ---------------------------------
 
-graph.cgi:        my $sql = "SELECT acc, gn, fn FROM nematostellaName WHERE sequence ='$input'";
+8.
+
+Old query: (Note: this are all the same, just different taxa)
+SELECT acc, gn, fn FROM mouseName WHERE sequence ='$input';
+SELECT acc, gn, fn FROM humanName WHERE sequence ='$input';
+SELECT acc, gn, fn FROM nematostellaName WHERE sequence ='$input';
+
+Examples:
+SELECT acc, gn, fn FROM mouseName WHERE sequence ='comp3645_c0_seq1';
+'Q06649', 'Sh3bp2', 'SH3 domain-binding protein 2'
+SELECT acc, gn, fn FROM humanName WHERE sequence ='comp5993_c1_seq1';
+'Q15172', 'PPP2R5A', 'Serine/threonine-protein phosphatase 2A 56 kDa regulatory subunit alpha isoform'
+SELECT acc, gn, fn FROM nematostellaName WHERE sequence ='comp8775_c0_seq1';
+'A7RJE5', 'v1g147359', 'Predicted protein (Fragment)'
+
+New query:
+SELECT ei.name, en.gene_name, en.functional_name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei, taxons t
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND trs.name = #{input}
+AND t.scientific_name = #{scientific_name}
+
+Examples:
+SELECT ei.name, en.gene_name, en.functional_name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei, taxons t
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND trs.name = 'comp3645_c0_seq1'
+AND t.scientific_name = 'Mus musculus';
+'Q99N99', 'Srd5a2', '3-oxo-5-alpha-steroid 4-dehydrogenase 2'  ***********
+
+SELECT ei.name, en.gene_name, en.functional_name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei, taxons t
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND trs.name = 'comp5993_c1_seq1'
+AND t.scientific_name = 'Homo sapiens';
+'Q15172', 'PPP2R5A', 'Serine/threonine-protein phosphatase 2A 56 kDa regulatory subunit alpha isoform'
+
+SELECT ei.name, en.gene_name, en.functional_name
+FROM transcripts trs, external_matches em, external_names en, external_identifiers ei, taxons t
+WHERE trs.id = em.transcript_id
+AND en.id = em.external_name_id
+AND ei.id = en.external_identifier_id
+AND t.id = en.taxon_id
+AND trs.name = 'comp3645_c0_seq1'
+AND t.scientific_name = 'Nematostella vectensis';
+'A7RIE9', 'v1g197579', 'Predicted protein'  ***********
 
 ---------------------------------
 
-orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc) from $form_input{'type'}Name WHERE acc = '$form_input{'term'}' or gn = '$form_input{'term'}'";
+9.
+
+Old query:
+SELECT DISTINCT(acc) from $form_input{'type'}Name WHERE acc = '$form_input{'term'}' or gn = '$form_input{'term'}'";
+
+Examples:
+SELECT DISTINCT(acc) from NematostellaName WHERE acc = 'v1g118864' OR gn = 'v1g118864';
+A3EXK7
+
+SELECT DISTINCT(acc) from NematostellaName WHERE acc = 'A3EXK7' OR gn = 'A3EXK7';
+A3EXK7
+
+New query:
+SELECT DISTINCT(ei.name)
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.name = #{scientific_name}
+AND (ei.name = #{term} or en.gene_name = #{term};
+
+Examples:
+SELECT DISTINCT(ei.name)
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND (ei.name = 'v1g118864' or en.gene_name = 'v1g118864');
+A3EXK7
+
+SELECT DISTINCT(ei.name)
+FROM external_identifiers ei, external_names en, external_matches em, taxons t
+WHERE ei.id = en.external_identifier_id
+AND en.id = em.external_name_id
+AND t.id = en.taxon_id
+AND t.scientific_name = 'Nematostella vectensis'
+AND (ei.name = 'A3EXK7' or en.gene_name = 'A3EXK7');
+A3EXK7
 
 ---------------------------------
 
-orthologSearch.cgi:my $sql = "SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 100";
+10.
+
+Old query:
+SELECT DISTINCT(acc), gn, fn from $form_input{'type'}Name WHERE acc LIKE '%$form_input{'term'}%' OR gn LIKE '%$form_input{'term'}%' OR fn LIKE '%$form_input{'term'}%' LIMIT 100";
+
+Same as first query, but with different LIMIT.
