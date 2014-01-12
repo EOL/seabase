@@ -16,7 +16,7 @@ class ExternalMatch < ActiveRecord::Base
     self.connection.select_values(query)
   end
   
-  def self.like_ei_search(scientific_name, term)
+  def self.like_ei_search(scientific_name, term, limit)
     escape_term = self.sanitize(term).gsub(/^'(.+)'$/, '\1')
     escape_scientific_name = self.sanitize(scientific_name)
     query = "SELECT DISTINCT(ei.name), en.gene_name, en.functional_name
@@ -25,8 +25,9 @@ class ExternalMatch < ActiveRecord::Base
     AND en.id = em.external_name_id
     AND t.id = en.taxon_id
     AND t.scientific_name = %s
-    AND (ei.name LIKE '%%%s%%' or en.gene_name LIKE '%%%s%%' or en.functional_name LIKE '%%%s%%') LIMIT 100" % 
-    [escape_scientific_name, escape_term, escape_term, escape_term]
+    AND (ei.name LIKE '%%%s%%' or en.gene_name 
+    LIKE '%%%s%%' or en.functional_name LIKE '%%%s%%') LIMIT %s" % 
+    [escape_scientific_name, escape_term, escape_term, escape_term, limit.to_i]
     self.connection.select_values(query)
   end
   

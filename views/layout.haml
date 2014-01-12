@@ -12,21 +12,22 @@
       %h1{ id: 'title' }
         %a{ href: '/' } Seabase
       #search
-        %form{ method: :post, action: 'search', name: :search_form, id: :search_form}
-          %label{ for: 'scientific_name'} Search Type
-          %select{ name: 'scientific_name', id: 'scientific_name' }
-            %option{ value: 'Homo sapiens' } Transcript By Human Ortholog
-            %option{ value: 'Mus musculus' } Transcript By Mouse Ortholog
-            %option{ value: 'Nematostella vectensis', selected: true } Transcript By Nematostella Ortholog
-          
-          %label{ for: 'organism' }
-          %select{ id: 'organism', name: 'organism' }
-            %option{ value: 'Nematostella vectensis' } Nematostella vectensis
-          
-          %label{ for: 'term' } Search Term
-          %input#term_search{ type: 'text', id: 'term', name: 'term' }
-          %input#exact_search{ type: 'hidden', value: false, name: 'exact_search' }
-          %input{ type: 'submit', value: 'Search' }
+        .ui-widget
+          %form{ method: :get, action: 'search', name: :search_form, id: :search_form}
+            %label{ for: 'scientific_name'} Search Type
+            %select{ name: 'scientific_name', id: 'scientific_name' }
+              %option{ value: 'Homo sapiens' } Transcript By Human Ortholog
+              %option{ value: 'Mus musculus' } Transcript By Mouse Ortholog
+              %option{ value: 'Nematostella vectensis', selected: true } Transcript By Nematostella Ortholog
+            
+            %label{ for: 'organism' }
+            %select{ id: 'organism', name: 'organism' }
+              %option{ value: 'Nematostella vectensis' } Nematostella vectensis
+            
+            %label{ for: 'term' } Search Term
+            %input#term_search{ type: 'text', name: 'term' }
+            %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' }
+            %input{ type: 'submit', value: 'Search' }
 
         
       #sidebar
@@ -54,7 +55,8 @@
           url: "/search.json",
           dataType: "jsonp",
           data: {
-            search_term: request.term,
+            scientific_name: $("#scientific_name option:selected").attr('value'), 
+            term: request.term,
             batch_size: 10
           },
           success: function( data ) {
