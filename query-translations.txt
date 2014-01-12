@@ -274,7 +274,7 @@ AND ei.id = en.external_identifier_id
 AND t.id = en.taxon_id
 AND trs.name = 'comp3645_c0_seq1'
 AND t.scientific_name = 'Mus musculus';
-'Q99N99', 'Srd5a2', '3-oxo-5-alpha-steroid 4-dehydrogenase 2'  ***********
+'Q06649', 'Sh3bp2', 'SH3 domain-binding protein 2'
 
 SELECT ei.name, en.gene_name, en.functional_name
 FROM transcripts trs, external_matches em, external_names en, external_identifiers ei, taxons t
@@ -292,9 +292,9 @@ WHERE trs.id = em.transcript_id
 AND en.id = em.external_name_id
 AND ei.id = en.external_identifier_id
 AND t.id = en.taxon_id
-AND trs.name = 'comp3645_c0_seq1'
+AND trs.name = 'comp8775_c0_seq1'
 AND t.scientific_name = 'Nematostella vectensis';
-'A7RIE9', 'v1g197579', 'Predicted protein'  ***********
+'A7RJE5', 'v1g147359', 'Predicted protein (Fragment)'
 
 ---------------------------------
 
