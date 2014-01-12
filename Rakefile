@@ -64,6 +64,19 @@ namespace :db do
     ActiveRecord::Migration.verbose = true
     ActiveRecord::Migrator.migrate("db/migrate")
   end
+
+  desc 'Redo one migration'
+  namespace :migrate do
+    task(redo: :environment) do
+      Seabase.env = ENV['SEABASE_ENV'].to_sym rescue :development
+      ActiveRecord::Base.establish_connection(
+        ActiveRecord::Base.configurations[Seabase.env.to_s])
+      ActiveRecord::Base.logger = Logger.new(STDOUT)
+      ActiveRecord::Migration.verbose = true
+
+    end
+  end
+
 end
 
 task :environment do
