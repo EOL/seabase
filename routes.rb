@@ -53,10 +53,19 @@ class SeabaseApp < Sinatra::Base
       names_json
 
     else
-      haml :search_result
+      if @external_identifiers.size == 1
+        redirect '/show_external_name', { name: @external_identifiers[0] }
+      else
+        haml :search_result
+      end
     end
     
   end
 
+  get '/show_external_name' do
+    @name = params[:name]
+    haml :show_external_name
+  end
+  
 end
 

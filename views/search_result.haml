@@ -1,3 +1,6 @@
 %p 
-- @external_identifiers.each do |ei|
-  = ei
+- if @external_identifiers.size == 0
+  No results found
+- else
+  - @external_identifiers.each do |ei|
+    = ei
