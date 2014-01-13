@@ -132,7 +132,12 @@ class Seabase
       ((fpkm * slope + y_intercept) / NUMBER_OF_EMBRYOS) / 10
     end
     
-    def row(technical_replicate); stages.map {|s| count_per_embryo(s, technical_replicate)}; end
+    START_OF_ALPHABET = 64
+    
+    def row(technical_replicate)
+      result = stages.map {|s| count_per_embryo(s, technical_replicate)}
+      result.unshift(technical_replicate ? (technical_replicate + START_OF_ALPHABET).chr : 'Combined')
+    end
     
     def table(technical_replicate=nil)
       (technical_replicate ? [] : @distinct_technical_replicates.map {|tr| row(tr)}).push(row(technical_replicate))

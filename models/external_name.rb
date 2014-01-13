@@ -35,7 +35,7 @@ class ExternalName < ActiveRecord::Base
         WHERE rs.id = mc.replicate_id
         AND em.transcript_id = mc.transcript_id
         AND em.external_name_id = #{id}
-        ORDER BY rs.stage")
+        ORDER BY rs.stage").unshift("Replicate")
   end
   
   def transcripts
