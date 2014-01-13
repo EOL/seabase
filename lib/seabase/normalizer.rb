@@ -52,6 +52,7 @@ class Seabase
       @transcripts = id_to_obj_hash(transcripts)
       @data = mapping_count_data
       
+      @distinct_technical_replicates = Set.new
       @technical_replicates = SetLookup.new
       @lane_replicates = SetLookup.new
       @replicate_transcripts = SetLookup.new
@@ -74,6 +75,7 @@ class Seabase
       @data.each do |mapping_count, replicate_id, transcript_id|
         replicate = @replicates[replicate_id]
         transcript = @transcripts[transcript_id]
+        @distinct_technical_replicates.add(replicate.technical_replicate)
         @technical_replicates.add(replicate.stage, replicate.technical_replicate)
         @lane_replicates.add([replicate.stage, replicate.technical_replicate], replicate.lane_replicate)
         @replicate_transcripts.add([replicate.stage, replicate.technical_replicate, replicate.lane_replicate], TranscriptContext.new(replicate, transcript, mapping_count))
@@ -84,7 +86,7 @@ class Seabase
     def lane_replicates(stage, tr); @lane_replicates[[stage, tr]];end
     def replicate_transcripts(stage, tr, lr); @replicate_transcripts[[stage, tr, lr]]; end
     
-    def count_per_embryo(stage, technical_replicate=nil) # e.g. count_per_embryo(1, 1)
+    def count_per_embryo(stage, technical_replicate)
       if technical_replicate
         technical_replicate_counts(stage, technical_replicate)
       else
@@ -124,16 +126,18 @@ class Seabase
       (mapping_count * 1e9) / (length * total_mapping.to_f)
     end
     
+    NUMBER_OF_EMBRYOS = 150
+    
     def normalize_rpkm(fpkm, y_intercept, slope)
-      ((fpkm * slope + y_intercept) / 300) / 0.1 # Should be 10
+      ((fpkm * slope + y_intercept) / NUMBER_OF_EMBRYOS) / 10
     end
     
-    def table
-      [stages.map {|s| count_per_embryo(s)}]
+    def row(technical_replicate); stages.map {|s| count_per_embryo(s, technical_replicate)}; end
+    
+    def table(technical_replicate=nil)
+      (technical_replicate ? [] : @distinct_technical_replicates.map {|tr| row(tr)}).push(row(technical_replicate))
     end
     
-    def stages
-      @stage_to_replicate.keys.sort
-    end
+    def stages; @stage_to_replicate.keys.sort; end
   end
 end
