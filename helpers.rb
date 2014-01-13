@@ -16,5 +16,9 @@ class SeabaseApp < Sinatra::Base
       end
       res
     end
+
+    def format_graph_data(table_data)
+      table_data.transpose
+    end
   end
 end
