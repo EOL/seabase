@@ -1,33 +1,37 @@
 require 'set'
 
-# SELECT rs.stage, rs.technical_replicate, rs.lane_replicate, em.transcript_id, mc.mapping_count, rs.y_intercept, rs.slope, rs.total_mapping, tr.length
-#   FROM replicates rs, mapping_counts mc, external_matches em, external_names en
-#   WHERE rs.id = mc.replicate_id
-#   AND em.transcript_id = mc.transcript_id
-#   AND em.external_name_id = en.id
-#   AND en.id = #{id}
-#   ORDER BY rs.stage, rs.technical_replicate, rs.lane_replicate, em.transcript_id
-  
 class Seabase
   class SetLookup
-    def initialize; @set_hash = {}; end
+    def initialize; @set_hash = {}; @contexts = Set.new; end
     def [](index); @set_hash[index]; end
     def keys; @set_hash.keys; end
     
     def add(index, value)
       if @set_hash.member?(index)
-        @set_hash[index].add(value)
+        unless has_context?(value)
+          @set_hash[index].add(value)
+          add_context(value)
+        end
       else
         @set_hash[index] = Set.new([value])
       end
     end
+    
+    # It's not clear if this is still necessary, but logically it doesn't hurt.
+    def has_context?(value)
+      (value.class == TranscriptContext) and @contexts.member?(value.set_lookup_hash)
+    end
+    
+    def add_context(value)
+      @contexts.add(value.set_lookup_hash) if (value.class == TranscriptContext)
+    end
   end
   
-  class LaneContext
+  class TranscriptContext
     attr_reader :replicate
     attr_reader :transcript
     attr_reader :mapping_count
-    
+        
     def initialize(replicate, transcript, mapping_count)
       @replicate = replicate
       @transcript = transcript
@@ -38,6 +42,7 @@ class Seabase
     def total_mapping; @replicate.total_mapping; end
     def y_intercept; @replicate.y_intercept; end
     def slope; @replicate.slope; end
+    def set_lookup_hash; [replicate.id, transcript.id, mapping_count]; end
   end
   
   class Normalizer
@@ -49,6 +54,7 @@ class Seabase
       
       @technical_replicates = SetLookup.new
       @lane_replicates = SetLookup.new
+      @replicate_transcripts = SetLookup.new
       
       process_data
       
@@ -69,29 +75,46 @@ class Seabase
         replicate = @replicates[replicate_id]
         transcript = @transcripts[transcript_id]
         @technical_replicates.add(replicate.stage, replicate.technical_replicate)
-        @lane_replicates.add([replicate.stage, replicate.technical_replicate], LaneContext(replicate, transcript, mapping_count))
+        @lane_replicates.add([replicate.stage, replicate.technical_replicate], replicate.lane_replicate)
+        @replicate_transcripts.add([replicate.stage, replicate.technical_replicate, replicate.lane_replicate], TranscriptContext.new(replicate, transcript, mapping_count))
       end
     end
     
     def technical_replicates(stage); @technical_replicates[stage]; end
     def lane_replicates(stage, tr); @lane_replicates[[stage, tr]];end
+    def replicate_transcripts(stage, tr, lr); @replicate_transcripts[[stage, tr, lr]]; end
     
     def count_per_embryo(stage, technical_replicate=nil) # e.g. count_per_embryo(1, 1)
       if technical_replicate
         technical_replicate_counts(stage, technical_replicate)
       else
-        all_trs = technical_replicates(stage)
-        all_trs.inject {|sum, tr| sum + technical_replicate_counts(stage, tr)} / all_trs.size
+        average_ignore_zeros(technical_replicates(stage).map {|tr| technical_replicate_counts(stage, tr)})
       end
+    end
+
+    def average_ignore_zeros(nums)
+      count = 0.0
+      total = 0
+      nums.each do |n|
+        if n != 0
+          count += 1
+          total += n
+        end
+      end
+      count == 0 ? 0 : total/count
     end
     
     def technical_replicate_counts(stage, technical_replicate)
-      total = 0
       lrs = lane_replicates(stage, technical_replicate)
-      if lrs
-        require 'ruby-debug'; debugger
-        lrs.each do |lane_context|
-          total += normalize_rpkm(fpkm(lane_context[1].length, lane_context[2], lane_context[0].total_mapping), lane_context[0].y_intercept, lane_context[0].slope)
+      lrs ? average_ignore_zeros(lrs.map {|lr| lane_replicate_counts(stage, technical_replicate, lr)}) : 0
+    end
+    
+    def lane_replicate_counts(stage, technical_replicate, lane_replicate)
+      rts = replicate_transcripts(stage, technical_replicate, lane_replicate)
+      total = 0
+      if rts
+        rts.each do |lane_context|
+          total += normalize_rpkm(fpkm(lane_context.length, lane_context.mapping_count, lane_context.total_mapping), lane_context.y_intercept, lane_context.slope)
         end
       end
       total
@@ -106,7 +129,7 @@ class Seabase
     end
     
     def table
-      [stages.map {|s| count_per_embryo(s, 2)}]
+      [stages.map {|s| count_per_embryo(s)}]
     end
     
     def stages
