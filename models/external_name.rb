@@ -1,3 +1,5 @@
+require 'set'
+
 class ExternalName < ActiveRecord::Base
   belongs_to :external_source
   belongs_to :taxon
@@ -28,8 +30,7 @@ class ExternalName < ActiveRecord::Base
   end
 
   def headers
-    ["external name", "replicate"] +
-      self.connection.select_values("SELECT distinct(rs.stage)
+    self.connection.select_values("SELECT distinct(rs.stage)
         FROM replicates rs, mapping_counts mc, external_matches em
         WHERE rs.id = mc.replicate_id
         AND em.transcript_id = mc.transcript_id
@@ -37,13 +38,20 @@ class ExternalName < ActiveRecord::Base
         ORDER BY rs.stage")
   end
   
+  def transcripts
+    result = Set.new()
+    external_matches.each do |em|
+      result.add(em.transcript)
+    end
+    result
+  end
+  
+  # What are the transcripts associated with an ExternalName
   def table_items
-    self.connection.select_rows("SELECT en.name, rs.technical_replicate, rs.lane_replicate, rs.stage, mc.mapping_count
-      FROM replicates rs, mapping_counts mc, external_matches em, external_names en
-      WHERE rs.id = mc.replicate_id
-      AND em.transcript_id = mc.transcript_id
+    Seabase::Normalizer.new(Replicate.all(), transcripts, self.connection.select_rows("SELECT mc.mapping_count, mc.replicate_id, em.transcript_id
+      FROM mapping_counts mc, external_matches em, external_names en
+      WHERE em.transcript_id = mc.transcript_id
       AND em.external_name_id = en.id
-      AND en.id = #{id}
-      ORDER BY rs.stage, rs.technical_replicate, rs.lane_replicate")
+      AND en.id = #{id}")).table
   end
 end

@@ -13,7 +13,7 @@
         %a{ href: '/' } Seabase
       #search
         .ui-widget
-          %form{ method: :get, action: 'search', name: :search_form, id: :search_form}
+          %form{ method: :get, action: '/search', name: :search_form, id: :search_form}
             %label{ for: 'scientific_name'} Search Type
             %select{ name: 'scientific_name', id: 'scientific_name' }
               %option{ value: 'Homo sapiens' } Transcript By Human Ortholog
