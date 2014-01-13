@@ -1,0 +1,13 @@
+%p 
+  = @name
+
+%p
+  %table
+    %tbody
+      %tr
+        - @en.headers.each do |header|
+          %th= header
+      - @en.table_items.each do |row|
+        %tr
+          - row.each do |column|
+            %td= column

@@ -38,23 +38,21 @@ class SeabaseApp < Sinatra::Base
     limit = params[:batch_size] || 100
     exact_search = params[:exact_search] == 'true'
     if exact_search
-      @external_identifiers = ExternalMatch.exact_ei_search(scientific_name, term)
+      @external_names = ExternalName.exact_search(scientific_name, term)
     else
-      @external_identifiers = ExternalMatch.like_ei_search(scientific_name,
-                                                           term, limit)
+      @external_names = ExternalName.like_search(scientific_name, term, limit)
     end
     if params[:format] == 'json'
       content_type 'application/json', charset: 'utf-8'
-      names = @external_identifiers.map { |n| { name: n } }
-      names_json = names.to_json
+      names_json = @external_names.to_json
       if params[:callback]
         names_json = "%s(%s)" % [params[:callback], names_json]
       end
       names_json
 
     else
-      if @external_identifiers.size == 1
-        redirect "/external_identifiers/%s" % @external_identifiers[0]
+      if @external_names.size == 1
+        redirect "/external_names/%s" % @external_names[0].id
       else
         haml :search_result
       end
@@ -62,10 +60,10 @@ class SeabaseApp < Sinatra::Base
     
   end
 
-  get '/external_identifiers/:name' do
-    require 'ruby-debug'; debugger
-    @name = params[:name]
-    haml :external_identifier
+  # Should this be constrained to a taxon?
+  get '/external_names/:id' do
+    @en = ExternalName.find(params[:id])
+    haml :external_name
   end
   
 end

@@ -9,18 +9,6 @@ mysql> desc conditions;
 +-------------+----------+------+-----+---------+----------------+
 4 rows in set (0.00 sec)
 
-mysql> desc external_identifiers;
-+--------------------+--------------+------+-----+---------+----------------+
-| Field              | Type         | Null | Key | Default | Extra          |
-+--------------------+--------------+------+-----+---------+----------------+
-| id                 | int(11)      | NO   | PRI | NULL    | auto_increment |
-| external_source_id | int(11)      | YES  | MUL | NULL    |                |
-| name               | varchar(255) | YES  |     | NULL    |                |
-| created_at         | datetime     | YES  |     | NULL    |                |
-| updated_at         | datetime     | YES  |     | NULL    |                |
-+--------------------+--------------+------+-----+---------+----------------+
-5 rows in set (0.00 sec)
-
 mysql> desc external_matches;
 +------------------+----------+------+-----+---------+----------------+
 | Field            | Type     | Null | Key | Default | Extra          |
@@ -43,8 +31,9 @@ mysql> desc external_names;
 | Field                  | Type         | Null | Key | Default | Extra          |
 +------------------------+--------------+------+-----+---------+----------------+
 | id                     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| external_source_id     | int(11)      | YES  | MUL | NULL    |                |
+| name                   | varchar(255) | YES  |     | NULL    |                |
 | taxon_id               | int(11)      | YES  | MUL | NULL    |                |
-| external_identifier_id | int(11)      | YES  | MUL | NULL    |                |
 | gene_name              | varchar(255) | YES  |     | NULL    |                |
 | functional_name        | text         | YES  |     | NULL    |                |
 | created_at             | datetime     | YES  |     | NULL    |                |
