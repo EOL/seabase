@@ -1,3 +1,8 @@
-Graph page (integrated into )
-CSS
-Increase to resolution of the floats for y_intercept and slope
+Graph for external name items
+  Combined data - DM
+Graph for transcript
+  Transcript.table - NW
+  /transcript/#{id} - DM
+Links on graph for External Name to transcript pages - DM
+Multiple search results - ??
+CSS - DM
