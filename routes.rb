@@ -49,7 +49,6 @@ class SeabaseApp < Sinatra::Base
         names_json = "%s(%s)" % [params[:callback], names_json]
       end
       names_json
-
     else
       if @external_names.size == 1
         redirect "/external_names/%s" % @external_names[0].id

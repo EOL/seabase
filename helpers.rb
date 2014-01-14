@@ -18,7 +18,14 @@ class SeabaseApp < Sinatra::Base
     end
 
     def format_graph_data(table_data)
-      table_data.transpose
+      res = table_data.transpose
+
+      res.each_with_index do |r, i|
+        next if i == 0
+        res[i] = r.map { |n| n.round(2) }
+      end
+
+      res
     end
   end
 end

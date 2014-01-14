@@ -5,7 +5,7 @@ class Replicate < ActiveRecord::Base
   def self.all_stages
     self.connection.select_values("SELECT distinct(rs.stage)
         FROM replicates rs
-        ORDER BY rs.stage").unshift("Replicate")
+        ORDER BY rs.stage").unshift("Hours")
   end
 
 end

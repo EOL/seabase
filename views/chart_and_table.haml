@@ -2,8 +2,8 @@
   = @name
   - google_chart_data = format_graph_data(@table_data)
 
-#combined_data_chart
-#combined_data_table
+#data_chart
+#data_table
 
 :javascript
   google.load('visualization', '1', {packages:["corechart"]});
@@ -24,14 +24,14 @@
     };
 
     var combined_table_options = {
-      width: 500,
+      width: 250,
     }
 
     data_view = new google.visualization.DataView(combined_data);
     
-    var combined_chart = new google.visualization.LineChart(document.getElementById('combined_data_chart'));
+    var combined_chart = new google.visualization.LineChart(document.getElementById('data_chart'));
     combined_chart.draw(combined_data, combined_chart_options);
-    var combined_table = new google.visualization.Table(document.getElementById('combined_data_table'));
+    var combined_table = new google.visualization.Table(document.getElementById('data_table'));
     combined_table.draw(data_view, combined_table_options);
 
     google.visualization.events.addListener(combined_table, 'select', function() {
