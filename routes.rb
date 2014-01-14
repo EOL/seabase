@@ -54,6 +54,8 @@ class SeabaseApp < Sinatra::Base
       if @external_names.size == 1
         redirect "/external_names/%s" % @external_names[0].id
       else
+        @scientific_name = scientific_name
+        @term = term
         haml :search_result
       end
     end
