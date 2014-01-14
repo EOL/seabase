@@ -31,10 +31,7 @@ class ExternalName < ActiveRecord::Base
 
   def headers
     self.connection.select_values("SELECT distinct(rs.stage)
-        FROM replicates rs, mapping_counts mc, external_matches em
-        WHERE rs.id = mc.replicate_id
-        AND em.transcript_id = mc.transcript_id
-        AND em.external_name_id = #{id}
+        FROM replicates rs
         ORDER BY rs.stage").unshift("Replicate")
   end
   
