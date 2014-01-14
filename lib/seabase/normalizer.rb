@@ -82,7 +82,7 @@ class Seabase
       end
     end
     
-    def technical_replicates(stage); @technical_replicates[stage]; end
+    def technical_replicates(stage); @technical_replicates[stage] or []; end
     def lane_replicates(stage, tr); @lane_replicates[[stage, tr]];end
     def replicate_transcripts(stage, tr, lr); @replicate_transcripts[[stage, tr, lr]]; end
     
