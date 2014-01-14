@@ -104,6 +104,16 @@ html, button, input, select, textarea {
   background-color: #fff;
 }
 
+#transcripts_data {
+  @include zen-clear;
+  @include size-params;
+  padding: 0.5em;
+  a { 
+    text-decoration: none;
+    color:   #30659b;
+  }
+}
+
 #footer {
   @include zen-clear;
   @include brd(8px);
