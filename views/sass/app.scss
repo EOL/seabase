@@ -123,6 +123,14 @@ html, button, input, select, textarea {
   margin-bottom: 1em;
 }
 
+.transcript_details {
+  margin-bottom: 1em;
+  strong {
+    display: inline-block;
+    width: 4em;
+  }
+}
+
 body {
   background: url(/images/ru_reverse.png) no-repeat bottom right, url(/images/pattern.png);
   height: 10000px;

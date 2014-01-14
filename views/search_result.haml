@@ -2,5 +2,17 @@
 - if @external_names.size == 0
   No results found
 - else
+  %h4 Found #{@external_names.size} items 
   - @external_names.each do |en|
-    = en
+    .transcript_details
+      .item  
+        %a{ href: "http://uniprot.org/uniprot/%s" % en.name, title: 'Uniprot link'}
+          = en.name
+      .item 
+        %strong Gene:
+        %a{ href: "/external_names/%s" % en.id }
+          = en.gene_name
+      .item
+        %strong Protein:
+        %a{ href: "/external_names/%s" % en.id }
+          = en.functional_name

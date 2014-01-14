@@ -67,46 +67,5 @@ class SeabaseApp < Sinatra::Base
     haml :external_name
   end
 
-  get '/graph_test' do 
-    @name = 'A0PJN4'
-    @row1 = ['A',6161,3750,6097,0,0,6818,3256,0,11200,7030,12841,19105,
-            17866,13156,16136,21079,25991,14865,19888,14275]
-    @row2 = ['B',3082,6891,4166,11621,3980,0,0,4597,0,0,0,13326,20170,
-            15724,19362,25053,27408,14136,19576,21808]
-    @row3 = ['combined',4621,5321,5131,11621,3980,6818,3256,4597,11200,
-            7030,12841,16216,19018,14440,17749,23066,26699,14501,19732,18041]
-
-    @combined_data = get_combined(@row3.dup) 
-    @separate_data = get_separate(@row1, @row2, @row3)
-    haml :google_chart
-  end
-
-  def get_separate(r1, r2, r3)
-    count = 0
-    res = [['Hour', r1.shift, r2.shift, r3.shift ]]
-    until r1.empty? do
-      d1 = r1.shift.to_i
-      d2 = r2.shift.to_i
-      d3 = r3.shift.to_i
-      d1 = nil if d1 == 0
-      d2 = nil if d2 == 0
-      d3 = nil if d3 == 0
-      res << [count, d1, d2, d3]
-      count+=1
-    end
-    res.to_json.gsub(/null/, '')
-  end
-
-  def get_combined(row)
-    count = 0
-    res = [['Hour', row.shift, {type: 'string', role: 'tooltip'} ]]
-    until row.empty? do
-      datum = row.shift
-      res << [count, datum, "%s h\n%s amol/embr." % [count, datum]] if datum.to_i != 0
-      count += 1
-    end
-    res
-  end
-
 end
 
