@@ -2,7 +2,9 @@
 - if @external_names.size == 0
   No results found
 - else
-  %h4 Found #{@external_names.size} items 
+  - num = @external_names.size > 99 ? "> %s" : "%s"
+  - num = num % @external_names.size
+  %h4 Found #{num} items 
   - @external_names.each do |en|
     .transcript_details
       .item  

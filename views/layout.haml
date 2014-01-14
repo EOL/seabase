@@ -10,8 +10,18 @@
     %script{ src: 'https://www.google.com/jsapi' }
   %body
     .container
-      %h1{ id: 'title' }
-        %a{ href: '/' } SeaBase
+      .header
+        %h1{ id: 'title' }
+          %a{ href: '/' } SeaBase
+        .menu
+          %ul
+            %li
+              %a{ href: '/' } Home
+            %li
+              %a{ href: '/search' } Search
+            %li
+              %a{ href: '/blast' } Blast
+    .container
       #search
         .ui-widget
           %form{ method: :get, action: '/search', name: :search_form, id: :search_form}
@@ -30,21 +40,15 @@
             %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' }
             %input{ type: 'submit', value: 'Search' }
 
+    .container
         
-      #sidebar
-        %ul
-          %li
-            %a{ href: '/' } Home
-          %li
-            %a{ href: '/search' } Search
-          %li
-            %a{ href: '/blast' } Blast
-
         
       #content
         = yield
     .clear &nbsp;
     #footer
+      %a{ href: 'http://mbl.edu' } Marine Biological Laboratory
+      |
       %a{ href: 'http://opensource.org/licenses/MIT' } MIT License
 
 

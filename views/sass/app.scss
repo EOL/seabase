@@ -1,6 +1,6 @@
 @import "zen";
 $zen-column-count: 7;
-$zen-gutter-width: 10px;
+$zen-gutter-width: 0px;
 
 @mixin brd($radius){
   border-style: solid;
@@ -14,7 +14,7 @@ $zen-gutter-width: 10px;
   max-width: 1200px;
   width: 95%;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0px;
 }
 
 html, button, input, select, textarea {                                          
@@ -25,6 +25,7 @@ html, button, input, select, textarea {
                Arial, 
                sans-serif;
   font-weight: 400; /* normal */                                                 
+  font-size: 1em;
   color: #333;                                                                   
   font-smooth:always;                                                            
   -webkit-font-smoothing: antialiased;                                           
@@ -34,37 +35,57 @@ html, button, input, select, textarea {
 
 .container {
   @include zen-grid-container;
-  @include brd(15px);
   @include size-params;
-  background-color: #9768D1;
-  background-image: url(/images/dspace.png);
+  background-color: white;
   background-repeat: no-repeat;
 }
 
-#login_area {
-  @include zen-grid-item(6, 2);
-  font-size: 0.8em;
-  color: #fff;
-  text-align: right;
-  margin-bottom: 80px;
+
+.header {
+  @include zen-grid-item(7, 1);
+  @include brd(8px);
+  padding: 1em;
+  padding-top: 0.5em;
+  margin-bottom: 0.5em;
+  background-color: #30659b;
+  color: white;
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
+    float: left;
+  }
   a { 
-    color: #fff; 
+    color: white;
     text-decoration: none;
+  }
+  .menu {
+    font-size: 1.4em;
+    text-align: right; 
+    list-style-type: none;
+    ul { 
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: inline;
+      padding: 0;
+      margin: 0;
+    }
+    a { color: #fff; }
   }
 
 }
 
-#sidebar {
-  @include zen-clear;
-  @include zen-grid-item(1,1);
-  min-width: 100px;
-  padding: 10px;
-  list-style-type: none;
-  li {
-    display: block;
-    margin-bottom: 0.5em;
-  }
-  a { color: #fff; }
+#search {
+  @include zen-grid-item(7, 1);
+  @include brd(8px);
+  width: 100%;
+  background-color: #eee;
+  padding: 0.3em;
+  margin-bottom: 0.5em;
+  text-align: center;
 }
 
 #flash {
@@ -78,18 +99,18 @@ html, button, input, select, textarea {
 }
 
 #content {
-  @include zen-grid-item(6, 2);
-  @include brd(8px);
-  width: 75%;
+  @include zen-grid-item(7, 1);
+  width: 100%;
   padding: 1em;
-  background-color: #e6d1ff;
+  background-color: #fff;
 }
 
 #footer {
   @include zen-clear;
   @include brd(8px);
   @include size-params;
-  background-color: #541C99;
+  padding: 0.5em;
+  background-color: #30659b;
   color: #e6d1ff;
   a { 
     text-decoration: none;
@@ -124,7 +145,9 @@ html, button, input, select, textarea {
 }
 
 .transcript_details {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
+  padding-top: 0.5em;
+  border-top: 1px solid grey;
   strong {
     display: inline-block;
     width: 4em;
