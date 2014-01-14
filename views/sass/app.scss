@@ -40,6 +40,9 @@ html, button, input, select, textarea {
   background-repeat: no-repeat;
 }
 
+.item {
+  margin-bottom: 0.5em;
+}
 
 .header {
   @include zen-grid-item(7, 1);

@@ -4,7 +4,7 @@
 - else
   - num = @external_names.size > 99 ? "> %s" : "%s"
   - num = num % @external_names.size
-  = "Results for '#{@term}' in #{@scientific_name} Ortholog"
+  = "Results for '#{@term}' in #{@ortholog_name} Ortholog"
   %h4 Found #{num} items 
   - @external_names.each do |en|
     .transcript_details

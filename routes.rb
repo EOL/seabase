@@ -33,7 +33,6 @@ class SeabaseApp < Sinatra::Base
 
   get '/search.?:format?' do
     scientific_name = params[:scientific_name]
-    # scientific_name = params[:organism] # Currently ignored
     term = params[:term]
     limit = params[:batch_size] || 100
     exact_search = params[:exact_search] == 'true'
@@ -54,7 +53,7 @@ class SeabaseApp < Sinatra::Base
       if @external_names.size == 1
         redirect "/external_names/%s" % @external_names[0].id
       else
-        @scientific_name = scientific_name
+        @ortholog_name = Taxon.scientific_name_to_ortholog_name(scientific_name)
         @term = term
         haml :search_result
       end
