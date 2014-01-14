@@ -199,3 +199,8 @@ dt:before { /* insert line break before <dt> */
 dt:first-child:before { /* disable line break before the first <dt> */
     content: none;
 }
+
+.home_img {
+  float:left;
+  margin: 1em;
+}
