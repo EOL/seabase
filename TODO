@@ -1,14 +1,35 @@
-Graph for external name items
-  Combined data - DM
-Graph for transcript
-  Transcript.table - NW
-  /transcript/#{id} - DM
-Links on graph for External Name to transcript pages - DM
-Multiple search results - ??
 CSS - DM
+
+Graph for transcript
+  /transcript/#{id} - NW
+
+Graph for external name items
+  New title - Time Series Expression Plot for #{id} <mumble> protein <mumble> mouse ortholog - NW
+  Links on graph for External Name to transcript pages - NW
+
+Autocomplete - Text should be more complete
+
+Search interface:
+  Seach by: <taxon> Ortholog
+  Remove existing <taxon> pulldwon
+  Default to Mouse Ortholog
+
+Multiple search results
+  Uniprot link
+  Title
+
+Blob for home page
+
+Domain
+Link to EOL
+Link from EOL
 
 Additional datasets
 
+String abstraction for I18n
+Comment facility
+Click on graph to change table selection
+More than one gene at once
 After first delivery:
 Add tests
 CI and Coverage
