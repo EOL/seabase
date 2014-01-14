@@ -63,12 +63,14 @@ class SeabaseApp < Sinatra::Base
   get '/external_names/:id' do
     @en = ExternalName.find(params[:id])
     @table_data = @en.table_items.unshift(Replicate.all_stages)
+    @name = "Protein #{@en.name}"
     haml :external_name
   end
 
   get '/transcript/:id' do
     @tr = Transcript.find(params[:id])
     @table_data = @tr.table_items.unshift(Replicate.all_stages)
+    @name = "Transcript #{@tr.name}"
     haml :transcript
   end
 

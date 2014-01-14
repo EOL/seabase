@@ -1,5 +1,4 @@
 %p 
-  = @name
   - google_chart_data = format_graph_data(@table_data)
 
 #combined_data_chart
@@ -16,7 +15,7 @@
     var combined_chart_options = {
       width: 800,
       height: 500,
-      title: "Separate Data for #{@name}",
+      title: "Time Series Expression Plot for:\n#{@name}",
       titleTextStyle: { fontSize: 18 },
       colors: ['#afa', '#9d9', '#3a3'],
       hAxis: { title: 'Hours' }, 
