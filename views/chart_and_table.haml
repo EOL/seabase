@@ -1,0 +1,41 @@
+%p 
+  = @name
+  - google_chart_data = format_graph_data(@table_data)
+
+#combined_data_chart
+#combined_data_table
+
+:javascript
+  google.load('visualization', '1', {packages:["corechart"]});
+  google.load('visualization', '1', {packages:['table']});
+  google.setOnLoadCallback(drawChartSeparate);
+  
+  function drawChartSeparate() {
+    var combined_data = google.visualization.arrayToDataTable(#{google_chart_data});
+
+    var combined_chart_options = {
+      width: 800,
+      height: 500,
+      title: "Separate Data for #{@name}",
+      titleTextStyle: { fontSize: 18 },
+      colors: ['#afa', '#9d9', '#3a3'],
+      hAxis: { title: 'Hours' }, 
+      vAxis: { title: 'Molecules per Embryo' },
+    };
+
+    var combined_table_options = {
+      width: 500,
+    }
+
+    data_view = new google.visualization.DataView(combined_data);
+    
+    var combined_chart = new google.visualization.LineChart(document.getElementById('combined_data_chart'));
+    combined_chart.draw(combined_data, combined_chart_options);
+    var combined_table = new google.visualization.Table(document.getElementById('combined_data_table'));
+    combined_table.draw(data_view, combined_table_options);
+
+    google.visualization.events.addListener(combined_table, 'select', function() {
+      combined_chart.setSelection(combined_table.getSelection());
+    });
+
+  }

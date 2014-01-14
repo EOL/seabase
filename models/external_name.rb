@@ -29,12 +29,6 @@ class ExternalName < ActiveRecord::Base
       [escape_scientific_name, escape_term, escape_term, escape_term, limit.to_i])
   end
 
-  def headers
-    self.connection.select_values("SELECT distinct(rs.stage)
-        FROM replicates rs
-        ORDER BY rs.stage").unshift("Replicate")
-  end
-  
   def transcripts
     result = Set.new()
     external_matches.each do |em|
@@ -49,5 +43,5 @@ class ExternalName < ActiveRecord::Base
       WHERE em.transcript_id = mc.transcript_id
       AND em.external_name_id = en.id
       AND en.id = #{id}")).table
-  end
+    end
 end

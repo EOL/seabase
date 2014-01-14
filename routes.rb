@@ -60,11 +60,16 @@ class SeabaseApp < Sinatra::Base
     
   end
 
-  # Should this be constrained to a taxon?
   get '/external_names/:id' do
     @en = ExternalName.find(params[:id])
-    @table_data = @en.table_items.unshift(@en.headers)
+    @table_data = @en.table_items.unshift(Replicate.all_stages)
     haml :external_name
+  end
+
+  get '/transcript/:id' do
+    @tr = Transcript.find(params[:id])
+    @table_data = @tr.table_items.unshift(Replicate.all_stages)
+    haml :transcript
   end
 
 end
