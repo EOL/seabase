@@ -25,17 +25,17 @@
       #search
         .ui-widget
           %form{ method: :get, action: '/search', name: :search_form, id: :search_form}
-            %label{ for: 'scientific_name'} Search Type
+            Search for
+            %em Nematostella vectensis 
+            transcripts by 
+
             %select{ name: 'scientific_name', id: 'scientific_name' }
-              %option{ value: 'Homo sapiens' } Transcript By Human Ortholog
-              %option{ value: 'Mus musculus', selected: true } Transcript By Mouse Ortholog
-              %option{ value: 'Nematostella vectensis' } Transcript By Nematostella Ortholog
+              %option{ value: 'Homo sapiens' } Human
+              %option{ value: 'Mus musculus', selected: true } Mouse
+              %option{ value: 'Nematostella vectensis' } Nematostella
             
-            %label{ for: 'organism' }
-            %select{ id: 'organism', name: 'organism' }
-              %option{ value: 'Nematostella vectensis' } Nematostella vectensis
+            orthologs: 
             
-            %label{ for: 'term' } Search Term
             %input#term_search{ type: 'text', name: 'term', autofocus: true }
             %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' }
             %input{ type: 'submit', value: 'Search' }
