@@ -53,6 +53,8 @@ class SeabaseApp < Sinatra::Base
       if @external_names.size == 1
         redirect "/external_names/%s" % @external_names[0].id
       else
+        @scientific_name = scientific_name
+        @term = term
         haml :search_result
       end
     end
@@ -62,12 +64,14 @@ class SeabaseApp < Sinatra::Base
   get '/external_names/:id' do
     @en = ExternalName.find(params[:id])
     @table_data = @en.table_items.unshift(Replicate.all_stages)
+    @name = "Protein #{@en.name}"
     haml :external_name
   end
 
   get '/transcript/:id' do
     @tr = Transcript.find(params[:id])
     @table_data = @tr.table_items.unshift(Replicate.all_stages)
+    @name = "Transcript #{@tr.name}"
     haml :transcript
   end
 

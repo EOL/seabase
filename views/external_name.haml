@@ -1,1 +1,5 @@
 = haml :chart_and_table
+
+Transcripts:
+- @en.transcripts.each do |t|
+  %a{ href: "/transcript/#{t.id}" }= t.name
