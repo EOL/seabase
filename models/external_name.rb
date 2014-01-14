@@ -46,7 +46,6 @@ class ExternalName < ActiveRecord::Base
     result
   end
   
-  # What are the transcripts associated with an ExternalName
   def table_items
     Seabase::Normalizer.new(Replicate.all(), transcripts, self.connection.select_rows("SELECT mc.mapping_count, mc.replicate_id, em.transcript_id
       FROM mapping_counts mc, external_matches em, external_names en
