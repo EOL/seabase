@@ -38,6 +38,7 @@ class SeabaseApp < Sinatra::Base
     limit = params[:batch_size] || 100
     exact_search = params[:exact_search] == 'true'
     if exact_search
+      term.gsub!(/:[^:]*:.*/, '')
       @external_names = ExternalName.exact_search(scientific_name, term)
     else
       @external_names = ExternalName.like_search(scientific_name, term, limit)

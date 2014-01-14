@@ -163,6 +163,12 @@ html, button, input, select, textarea {
   }
 }
 
+.ui-menu-item {
+  font-size: 0.8em;
+  text-wrap: normal;
+  border-bottom: 1px solid #aaa;
+}
+
 body {
   background: url(/images/ru_reverse.png) no-repeat bottom right, url(/images/pattern.png);
   height: 10000px;

@@ -36,7 +36,7 @@
               %option{ value: 'Nematostella vectensis' } Nematostella vectensis
             
             %label{ for: 'term' } Search Term
-            %input#term_search{ type: 'text', name: 'term' }
+            %input#term_search{ type: 'text', name: 'term', autofocus: true }
             %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' }
             %input{ type: 'submit', value: 'Search' }
 
@@ -66,7 +66,7 @@
           },
           success: function( data ) {
             response( $.map( data, function( item ) {
-              return { value: item.name  }
+              return { value: item.name + ':' + item.gene_name + ':' + item.functional_name }
             }));
           },
         });

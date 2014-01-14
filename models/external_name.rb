@@ -29,6 +29,10 @@ class ExternalName < ActiveRecord::Base
       [escape_scientific_name, escape_term, escape_term, escape_term, limit.to_i])
   end
 
+  def summary
+    "%s:%s:%s" % [gene_name, name, functional_name]
+  end
+
   def transcripts
     result = Set.new()
     external_matches.each do |em|
