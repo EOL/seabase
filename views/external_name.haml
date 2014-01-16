@@ -6,7 +6,7 @@
   %strong #{gene_type(@en, capitalize: true)}: 
   #{@en.gene_name}
 .item
-  %strong UniProt:
+  %strong UniProt outlink:
   %a{ href: "http://uniprot.org/uniprot/%s" % @en.name, title: 'Uniprot link'}
     = "#{@en.name}: #{@en.functional_name}"
 

@@ -22,9 +22,14 @@ class SeabaseApp < Sinatra::Base
 
       res.each_with_index do |r, i|
         next if i == 0
-        res[i] = r.map do |n| 
-          num = n.round(2) 
-          num == 0 ? nil : num
+        res[i] = r.map_with_index do |n, i| 
+          require 'ruby-debug'; debugger
+          num = n
+          if i > 0
+            num = n.round(2) 
+            num == 0 ? nil : num
+          end
+          num
         end 
       end
 
@@ -35,9 +40,9 @@ class SeabaseApp < Sinatra::Base
       taxon = external_name.taxon.scientific_name
       res = nil
       if taxon == 'Nematostella vectensis'
-        res = 'Nematostella gene annotation'
+        res = 'Nematostella annotation'
       else
-        res = "%s gene ortholog" % external_name.taxon.common_name.downcase
+        res = "%s ortholog" % external_name.taxon.common_name.downcase
       end
 
       if opts[:capitalize] 
