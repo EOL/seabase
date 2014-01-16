@@ -69,6 +69,7 @@ class SeabaseApp < Sinatra::Base
   end
 
   get '/transcript/:id' do
+    @en = ExternalName.find(params[:external_name_id])
     @tr = Transcript.find(params[:id])
     @table_data = @tr.table_items.unshift(Replicate.all_stages)
     @name = "Transcript #{@tr.name}"

@@ -4,7 +4,8 @@
     %title 
       SeaBase
     %link{ rel: 'stylesheet', href: '/css/app.css', type: 'text/css' }
-    %link{ rel: 'stylesheet', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', type: 'text/css' }
+
+    %link{ rel: 'stylesheet', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css', type: 'text/css' } 
     %script{ src: 'http://code.jquery.com/jquery-1.9.1.js' }
     %script{ src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.js' }
     %script{ src: 'https://www.google.com/jsapi' }
@@ -30,14 +31,13 @@
             transcripts by 
 
             %select{ name: 'scientific_name', id: 'scientific_name' }
-              %option{ value: 'Homo sapiens' } Human
-              %option{ value: 'Mus musculus', selected: true } Mouse
-              %option{ value: 'Nematostella vectensis' } Nematostella
+              %option{ value: 'Homo sapiens' } Human orthologs 
+              %option{ value: 'Mus musculus', selected: true } Mouse orthologs
+              %option{ value: 'Nematostella vectensis' } Nematostella annotations
             
-            orthologs: 
-            
+            Name: 
             %input#term_search{ type: 'text', name: 'term', autofocus: true }
-            %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' }
+            %input#exact_search{ type: 'hidden', value: 'false', name: 'exact_search' } 
             %input{ type: 'submit', value: 'Search' }
 
     .container

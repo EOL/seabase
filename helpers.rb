@@ -22,9 +22,27 @@ class SeabaseApp < Sinatra::Base
 
       res.each_with_index do |r, i|
         next if i == 0
-        res[i] = r.map { |n| n.round(2) }
+        res[i] = r.map do |n| 
+          num = n.round(2) 
+          num == 0 ? nil : num
+        end 
       end
 
+      res.to_json
+    end
+
+    def gene_type(external_name, opts = { capitalize: false })
+      taxon = external_name.taxon.scientific_name
+      res = nil
+      if taxon == 'Nematostella vectensis'
+        res = 'Nematostella gene annotation'
+      else
+        res = "%s gene ortholog" % external_name.taxon.common_name.downcase
+      end
+
+      if opts[:capitalize] 
+        res = res.split(' ').map { |w| w.capitalize }.join(' ') 
+      end
       res
     end
   end

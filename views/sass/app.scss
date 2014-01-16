@@ -33,6 +33,11 @@ html, button, input, select, textarea {
   text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 
+a {
+  color: #30659b;
+  text-decoration: none;
+}
+
 .container {
   @include zen-grid-container;
   @include size-params;
