@@ -22,13 +22,9 @@ class SeabaseApp < Sinatra::Base
 
       res.each_with_index do |r, i|
         next if i == 0
-        res[i] = r.map_with_index do |n, i| 
-          require 'ruby-debug'; debugger
-          num = n
-          if i > 0
-            num = n.round(2) 
-            num == 0 ? nil : num
-          end
+        res[i] = r.map do |n| 
+          num = n.round(2) 
+          num == 0 ? nil : num
           num
         end 
       end
