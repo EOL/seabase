@@ -144,6 +144,7 @@ a {
 
 #data_table {
   @include zen-grid-item(2, 6);
+  padding-top: 1em;
 }
 
 .dir_item {
@@ -163,7 +164,7 @@ a {
 .transcript_details {
   margin-bottom: 0.5em;
   padding-top: 0.5em;
-  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
   strong {
     display: inline-block;
     width: 8em;

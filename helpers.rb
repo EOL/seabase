@@ -22,11 +22,16 @@ class SeabaseApp < Sinatra::Base
 
       res.each_with_index do |r, i|
         next if i == 0
-        res[i] = r.map do |n| 
-          num = n.round(2) 
-          num == 0 ? nil : num
-          num
+        element = []
+        r.each_with_index do |n, ii| 
+          num = n
+          if ii > 0
+            num = num.round(2) 
+            num = (num == 0) ? nil : num
+          end
+          element << num
         end 
+        res[i] = element
       end
 
       res.to_json

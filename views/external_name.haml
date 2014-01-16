@@ -1,14 +1,15 @@
 %h2 
   %em Nematostella vectensis 
   transcripts homologous to the #{gene_type(@en)} #{@en.gene_name}
-
-.item 
-  %strong #{gene_type(@en, capitalize: true)}: 
-  #{@en.gene_name}
-.item
-  %strong UniProt outlink:
-  %a{ href: "http://uniprot.org/uniprot/%s" % @en.name, title: 'Uniprot link'}
-    = "#{@en.name}: #{@en.functional_name}"
+  
+.transcript_details
+  .item 
+    %strong #{gene_type(@en, capitalize: true)}: 
+    #{@en.gene_name}
+  .item
+    %strong UniProt Outlink:
+    %a{ href: "http://uniprot.org/uniprot/%s" % @en.name, title: 'Uniprot link'}
+      = "#{@en.name}: #{@en.functional_name}"
 
 = haml :chart_and_table
 
