@@ -42,6 +42,8 @@ class Seabase
   def self.get_conf
     conf = self.db_conf[self.env.to_s]
     @conf = OpenStruct.new(
+                            ga_id:            conf['google_analytics_id'],
+                            ga_domain:        conf['google_analytics_domain'],
                             session_secret:   conf['session_secret'],
                             adapter:          conf['adapter'],
                             host:             conf['host'],
