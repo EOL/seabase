@@ -96,7 +96,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    webmock (1.16.1)
+    webmock (1.17.1)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     zen-grids (1.4)
@@ -121,6 +121,6 @@ DEPENDENCIES
   sass (~> 3.2)
   sinatra (~> 1.4)
   sinatra-activerecord (~> 1.2)
-  unicorn (~> 4.6)
-  webmock (~> 1.16)
+  unicorn (~> 4.8)
+  webmock (~> 1.17)
   zen-grids (~> 1.4)

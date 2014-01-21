@@ -19,12 +19,12 @@ group :development do
 end
 
 group :production do
-  gem 'unicorn', '~> 4.6'
+  gem 'unicorn', '~> 4.8'
 end
 
 group :test do
   gem 'rspec', '~> 2.14'
-  gem 'webmock', '~> 1.16'
+  gem 'webmock', '~> 1.17'
   gem 'coveralls', '~> 0.7', require: false
 end
 
