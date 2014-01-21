@@ -42,16 +42,16 @@ Code: [Nathan Wilson][10],[Dmitry Mozzherin][11]
 Copyright (c) 2014 [Marine Biological Laboratory][12]. See LICENSE[13] for
 further details.
 
-[1]: https://secure.travis-ci.org/eol/seabase.png
-[2]: http://travis-ci.org/eol/seabase
-[3]: https://coveralls.io/repos/eol/seabase/badge.png?branch=master
-[4]: https://coveralls.io/r/eol/seabase?branch=master
-[5]: https://codeclimate.com/github/eol/seabase.png
-[6]: https://codeclimate.com/github/eol/seabase
-[7]: https://gemnasium.com/eol/seabase.png
-[8]: https://gemnasium.com/eol/seabase
+[1]: https://secure.travis-ci.org/EOL/seabase.png
+[2]: http://travis-ci.org/EOL/seabase
+[3]: https://coveralls.io/repos/EOL/seabase/badge.png?branch=master
+[4]: https://coveralls.io/r/EOL/seabase?branch=master
+[5]: https://codeclimate.com/github/EOL/seabase.png
+[6]: https://codeclimate.com/github/EOL/seabase
+[7]: https://gemnasium.com/EOL/seabase.png
+[8]: https://gemnasium.com/EOL/seabase
 [9]: https://github.com/EOL/seabase/blob/master/.travis.yml
-[10]: https://github.com/nwilson-eol
+[10]: https://github.com/nwilson-EOL
 [11]: https://github.com/dimus
 [12]: http://mbl.edu
 [13]: https://github.com/EOL/seabase/blob/master/LICENSE
