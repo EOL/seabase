@@ -39,7 +39,7 @@ Copyright
 
 Code: [Nathan Wilson][10],[Dmitry Mozzherin][11] 
 
-Copyright (c) 2014 [Marine Biological Laboratory][12]. See LICENSE[13] for
+Copyright (c) 2014 [Marine Biological Laboratory][12]. See [LICENSE][13] for
 further details.
 
 [1]: https://secure.travis-ci.org/EOL/seabase.png

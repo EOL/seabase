@@ -1,7 +1,9 @@
 require 'set'
 
 class Seabase
+
   class SetLookup
+
     def initialize; @set_hash = {}; @contexts = Set.new; end
     def [](index); @set_hash[index]; end
     def keys; @set_hash.keys; end
@@ -19,7 +21,8 @@ class Seabase
     
     # It's not clear if this is still necessary, but logically it doesn't hurt.
     def has_context?(value)
-      (value.class == TranscriptContext) and @contexts.member?(value.set_lookup_hash)
+      (value.class == TranscriptContext) && 
+        @contexts.member?(value.set_lookup_hash)
     end
     
     def add_context(value)
@@ -76,21 +79,33 @@ class Seabase
         replicate = @replicates[replicate_id]
         transcript = @transcripts[transcript_id]
         @distinct_technical_replicates.add(replicate.technical_replicate)
-        @technical_replicates.add(replicate.stage, replicate.technical_replicate)
-        @lane_replicates.add([replicate.stage, replicate.technical_replicate], replicate.lane_replicate)
-        @replicate_transcripts.add([replicate.stage, replicate.technical_replicate, replicate.lane_replicate], TranscriptContext.new(replicate, transcript, mapping_count))
+        @technical_replicates.add(replicate.stage, 
+                                  replicate.technical_replicate)
+        @lane_replicates.add([replicate.stage, 
+                             replicate.technical_replicate], 
+                             replicate.lane_replicate)
+        @replicate_transcripts.add([replicate.stage, 
+                                   replicate.technical_replicate, 
+                                   replicate.lane_replicate], 
+                                   TranscriptContext.new(replicate, 
+                                                         transcript, 
+                                                         mapping_count))
       end
     end
     
-    def technical_replicates(stage); @technical_replicates[stage] or []; end
+    def technical_replicates(stage); @technical_replicates[stage] || []; end
     def lane_replicates(stage, tr); @lane_replicates[[stage, tr]];end
-    def replicate_transcripts(stage, tr, lr); @replicate_transcripts[[stage, tr, lr]]; end
+
+    def replicate_transcripts(stage, tr, lr)
+      @replicate_transcripts[[stage, tr, lr]]
+    end
     
     def count_per_embryo(stage, technical_replicate)
       if technical_replicate
         technical_replicate_counts(stage, technical_replicate)
       else
-        average_ignore_zeros(technical_replicates(stage).map {|tr| technical_replicate_counts(stage, tr)})
+        average_ignore_zeros(technical_replicates(stage).
+                             map {|tr| technical_replicate_counts(stage, tr)})
       end
     end
 
@@ -108,7 +123,8 @@ class Seabase
     
     def technical_replicate_counts(stage, technical_replicate)
       lrs = lane_replicates(stage, technical_replicate)
-      lrs ? average_ignore_zeros(lrs.map {|lr| lane_replicate_counts(stage, technical_replicate, lr)}) : 0
+      lrs ? average_ignore_zeros(lrs.map { |lr| lane_replicate_counts(stage, 
+                                                technical_replicate, lr) }) : 0
     end
     
     def lane_replicate_counts(stage, technical_replicate, lane_replicate)
@@ -116,7 +132,11 @@ class Seabase
       total = 0
       if rts
         rts.each do |lane_context|
-          total += normalize_rpkm(fpkm(lane_context.length, lane_context.mapping_count, lane_context.total_mapping), lane_context.y_intercept, lane_context.slope)
+          total += normalize_rpkm(fpkm(lane_context.length, 
+                                       lane_context.mapping_count, 
+                                       lane_context.total_mapping), 
+                                  lane_context.y_intercept, 
+                                  lane_context.slope)
         end
       end
       total
@@ -136,11 +156,15 @@ class Seabase
     
     def row(technical_replicate)
       result = stages.map {|s| count_per_embryo(s, technical_replicate)}
-      result.unshift(technical_replicate ? (technical_replicate + START_OF_ALPHABET).chr : 'Combined')
+      result.unshift(technical_replicate ? 
+                     (technical_replicate + START_OF_ALPHABET).chr : 
+                     'Combined')
     end
     
     def table(technical_replicate=nil)
-      (technical_replicate ? [] : @distinct_technical_replicates.map {|tr| row(tr)}).push(row(technical_replicate))
+      (technical_replicate ? [] : 
+       @distinct_technical_replicates.
+         map {|tr| row(tr)}).push(row(technical_replicate))
     end
     
     def stages; @stage_to_replicate.keys.sort; end

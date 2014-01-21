@@ -17,12 +17,8 @@ class Seabase
                                         database, database), __FILE__) 
     end
 
-    def sequence(sequence_string)
-      sequence_string
-    end
-
     def search(sequence_string)
-      seq = sequence(sequence_string) 
+      seq = sequence_string 
       @blast.query(seq)
     end
     
