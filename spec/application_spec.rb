@@ -62,7 +62,26 @@ describe SeabaseApp do
         expect(page.status_code).to eq 200
         expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
       end
+
+      it 'returns empty result if nothing is found' do
+        visit '/blast'
+        fill_in('sequence', with: 'ATAATTAAATTT')
+        click_button('Run Blast')
+        expect(page.status_code).to eq 200
+        expect(page.body).to match /No matches/ if os != 'mac'
+      end
+
+      it 'stays on blast search page if empty string is entered' do
+        visit '/blast'
+        fill_in('sequence', with: '')
+        click_button('Run Blast')
+        expect(page.status_code).to eq 200
+        expect(page.body).not_to match /No matches/
+        expect(page.body).to match 'Blast search against'
+      end
+        
     end
+
   end
 
   describe '/search' do
