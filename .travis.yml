@@ -12,6 +12,7 @@ before_script:
   - bundle exec rake db:create:all
   - bundle exec rake db:migrate
   - bundle exec rake db:migrate SEABASE_ENV=test
+  - bundle exec rake seed SEABASE_ENV=test
 script:
   - bundle exec rake 
 
