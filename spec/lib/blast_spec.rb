@@ -20,7 +20,7 @@ describe Seabase::Blast do
     let(:seq) { File.read(File.expand_path('../../files/pcna_fasta.txt',
                                            __FILE__)) }
     it 'finds sequence' do
-      unless RUBY_PLATFORM =~ /darvin/
+      unless RUBY_PLATFORM =~ /darwin/
         res = blast.search(seq)
         expect(res).to be_kind_of Bio::Blast::Report
       end
