@@ -42,7 +42,7 @@ class ExternalName < ActiveRecord::Base
   end
   
   def table_items
-    Seabase::Normalizer.new(Replicate.all(), transcripts, self.connection.select_rows("SELECT mc.mapping_count, mc.replicate_id, em.transcript_id
+    Seabase::Normalizer.new(Replicate.all(), transcripts, ExternalName.connection.select_rows("SELECT mc.mapping_count, mc.replicate_id, em.transcript_id
       FROM mapping_counts mc, external_matches em, external_names en
       WHERE em.transcript_id = mc.transcript_id
       AND em.external_name_id = en.id
