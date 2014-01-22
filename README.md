@@ -29,6 +29,8 @@ General requirements:
 Running Tests
 -------------
 
+    bundle exec rake db:migrate SEABASE_ENV=test
+    bundle exec rake seed SEABASE_ENV=test
     bundle exec rake
 
 Also look at [.travis.yml][9] file for more information

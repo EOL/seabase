@@ -1,6 +1,10 @@
-require_relative '../environment'
+require 'csv'
+require_relative '../lib/seabase'
 
-exit if Sinatra::Base.settings.environment != :test
+if Seabase.env != :test
+  puts 'Use: bundle exec rake seed SEABASE_ENV=test'
+  exit
+end
 
 class Seeder
   attr :common_dir, :env_dir
@@ -8,7 +12,7 @@ class Seeder
   def initialize
     @db = ActiveRecord::Base.connection
     @common_dir = File.join(File.dirname(__FILE__), 'seed')
-    @env_dir = File.join(common_dir, Sinatra::Base.settings.environment.to_s)
+    @env_dir = File.join(common_dir, Seabase.env.to_s)
     @path = nil
   end
 
