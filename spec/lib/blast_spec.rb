@@ -1,5 +1,3 @@
-require_relative '../spec_helper'
-
 describe Seabase::Blast do
   subject(:blast) { Seabase::Blast.new(command, db) }
   let(:command) { 'blastn' }

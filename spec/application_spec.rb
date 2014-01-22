@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe SeabaseApp do
   describe '/' do
     it 'renders' do
