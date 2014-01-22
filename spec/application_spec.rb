@@ -117,6 +117,11 @@ describe SeabaseApp do
         end
       end
 
+      it 'can do callbacks' do
+        visit('/search.json?scientific_name=Homo+sapiens'\
+              "&term=QSOX1&exact_search=false&callback=some_method")
+        expect(page.body).to match "some_method"
+      end
     end
   end
 
