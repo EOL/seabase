@@ -131,6 +131,12 @@ describe SeabaseApp do
       expect(page.status_code).to eq 200
       expect(page.body).to match 'the human ortholog QSOX1'
     end
+
+    it 'renders a Nematostella' do
+      visit '/external_names/2'
+      expect(page.status_code).to eq 200
+      expect(page.body).to match 'A3EXK7: Churchill'
+    end
   end
 
   describe '/transcript' do
