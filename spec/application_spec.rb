@@ -15,6 +15,16 @@ describe SeabaseApp do
       expect(page.status_code).to eq 200
       expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
     end
+    
+    it 'exact searches' do
+      visit '/'
+      select('Human orthologs', :from => 'scientific_name')
+      fill_in('term', :with => 'sox')
+      click_button('Search')
+      print("#{page.current_url}\n")
+      expect(page.status_code).to eq 200
+      expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
+    end
   end
 
   describe '/blast' do
@@ -32,6 +42,12 @@ describe SeabaseApp do
       expect(page.body).to match %q(For example 'polymerase alpha', 'P17918')
     end
 
+    it 'exact searches' do
+      visit '/search?scientific_name=Homo+sapiens&term=QSOX1&exact_search=true'
+      expect(page.status_code).to eq 200
+      expect(page.body).to match %q(Sulfhydryl oxidase 1)
+    end
+    
     context 'html' do
       it 'returns html page' do
         data = [{ term: 'sox',  count: 3 },
@@ -90,6 +106,18 @@ describe SeabaseApp do
     end
   end
   
+  describe 'environment' do
+    it 'sets production' do
+      original = Seabase.env
+      expect(original == :production).to be false
+      Seabase.env = :production
+      expect(Seabase.env).to eq :production
+      Seabase.env = original
+      expect(Seabase.env).to eq original
+    end
+
+    it 'cannot set to bogus value' do
+      expect { Seabase.env = :bogus }.to raise_error(TypeError, 'Wrong environment')
+    end
+  end
 end
-
-
