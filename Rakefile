@@ -98,6 +98,10 @@ task(release: :environment) do
   end
 end
 
+task :seed do
+  require_relative 'db/seed'
+end
+
 desc "Open an irb session preloaded with this library"
 task :console do
     sh "irb -I lib -I extra -r seabase.rb"
