@@ -8,7 +8,6 @@ require_relative 'environment'
 task :default => :spec
 
 RSpec::Core::RakeTask.new do |t|
-  require_relative 'spec/spec_helper'
   t.pattern = 'spec/**/*spec.rb'
 end
 
