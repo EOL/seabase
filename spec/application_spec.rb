@@ -5,6 +5,16 @@ describe SeabaseApp do
       expect(page.status_code).to eq 200
       expect(page.body).to match 'SeaBase'
     end
+    
+    it 'searches' do
+      visit '/'
+      select('Human orthologs', :from => 'scientific_name')
+      fill_in('term', :with => 'sox')
+      click_button('Search')
+      print("#{page.current_url}\n")
+      expect(page.status_code).to eq 200
+      expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
+    end
   end
 
   describe '/blast' do
