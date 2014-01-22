@@ -18,3 +18,18 @@ RSpec.configure do |c|
   c.include Capybara::DSL
 end
 
+class Float
+  def absolute_approx(other, epsilon=Float::EPSILON)
+    return (other-self).abs <= epsilon
+  end
+end
+
+def near_enough(a1, a2)
+  if a1.class == Array
+    a1.zip(a2).map {|r1, r2| near_enough(r1, r2)}.reduce(:&)
+  elsif a1.class == Float
+    a1.absolute_approx(a2)
+  else
+    a1 == a2
+  end
+end
