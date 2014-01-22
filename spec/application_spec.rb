@@ -154,7 +154,7 @@ describe SeabaseApp do
     it 'renders a Nematostella' do
       visit '/external_names/2'
       expect(page.status_code).to eq 200
-      expect(page.body).to match 'A3EXK7: Churchill'
+      expect(page.body).to match 'Nematostella annotation'
     end
   end
 
