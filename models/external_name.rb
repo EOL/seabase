@@ -47,5 +47,5 @@ class ExternalName < ActiveRecord::Base
       WHERE em.transcript_id = mc.transcript_id
       AND em.external_name_id = en.id
       AND en.id = #{id}")).table
-    end
+  end
 end

@@ -1,4 +1,12 @@
 describe SeabaseApp do
+
+  describe '/css' do
+    it 'renders' do
+      visit '/css/app.css'
+      expect(page.body).to match /font-family: "Open sans",  "Helvetica Neue"/
+    end
+  end
+
   describe '/' do
     it 'renders' do
       visit '/'
@@ -8,8 +16,8 @@ describe SeabaseApp do
     
     it 'searches' do
       visit '/'
-      select('Human orthologs', :from => 'scientific_name')
-      fill_in('term', :with => 'sox')
+      select('Human orthologs', from: 'scientific_name')
+      fill_in('term', with: 'sox')
       click_button('Search')
       print("#{page.current_url}\n")
       expect(page.status_code).to eq 200
@@ -22,6 +30,28 @@ describe SeabaseApp do
       visit '/blast'
       expect(page.status_code).to eq 200
       expect(page.body).to match 'Blast'
+    end
+
+    context 'blast from file' do
+      it 'performs search of file' do
+        visit '/blast'
+        attach_file('seqfile', 
+                    File.expand_path(File.join(%w(.. files pcna_fasta.txt)),
+                                                __FILE__))
+        click_button('Run Blast')
+        expect(page.status_code).to eq 200
+        expect(page.body).to match /TGGCGCTAGTATTT/
+      end
+    end
+
+    context 'blast from string' do
+      it 'perform search on string' do
+        visit '/blast'
+        fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
+        click_button('Run Blast')
+        expect(page.status_code).to eq 200
+        expect(page.body).to match /TGGCGCTAGTATTT/
+      end
     end
   end
 
