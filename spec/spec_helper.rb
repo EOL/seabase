@@ -33,3 +33,10 @@ def near_enough(a1, a2)
     a1 == a2
   end
 end
+
+def os
+  res = 'linux'
+  res = 'win' if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM)
+  res = 'mac' if (/darwin/ =~ RUBY_PLATFORM) 
+  res
+end

@@ -50,7 +50,7 @@ describe SeabaseApp do
                                                 __FILE__))
         click_button('Run Blast')
         expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/
+        expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
       end
     end
 
@@ -60,7 +60,7 @@ describe SeabaseApp do
         fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
         click_button('Run Blast')
         expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/
+        expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
       end
     end
   end
