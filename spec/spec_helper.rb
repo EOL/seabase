@@ -15,6 +15,6 @@ require_relative '../application.rb'
 Capybara.app = SeabaseApp
 
 RSpec.configure do |c|
-  c.include Capybara
+  c.include Capybara::DSL
 end
 

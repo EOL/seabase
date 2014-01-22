@@ -13,5 +13,5 @@ before_script:
   - bundle exec rake db:migrate
   - bundle exec rake db:migrate SEABASE_ENV=test
 script:
-  - bundle exec rake
+  - bundle exec rake spec -c .rspec
 

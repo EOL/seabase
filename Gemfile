@@ -28,6 +28,7 @@ group :test do
   gem 'webmock', '~> 1.17'
   gem 'capybara', '~> 2.2'
   gem 'coveralls', '~> 0.7', require: false
+  gem 'travis-lint', '~> 1.7'
 end
 
 
