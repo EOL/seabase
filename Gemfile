@@ -16,6 +16,7 @@ gem 'bio', '~> 1.4'
 
 group :development do
   gem 'debugger', '~> 1.6'
+  gem 'sinatra-reloader', '~> 1.0'
 end
 
 group :production do
@@ -25,6 +26,7 @@ end
 group :test do
   gem 'rspec', '~> 2.14'
   gem 'webmock', '~> 1.17'
+  gem 'capybara', '~> 2.2'
   gem 'coveralls', '~> 0.7', require: false
 end
 

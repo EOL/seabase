@@ -6,16 +6,15 @@ $VERBOSE = nil
 
 require 'rack/test'
 require 'webmock/rspec'
+require 'capybara'
+require 'capybara/dsl'
 
 ENV['SEABASE_ENV'] = 'test'
 require_relative '../application.rb'
 
-module RSpecMixin
-  include Rack::Test::Methods
-  def app() SeabaseApp end
-end
+Capybara.app = SeabaseApp
 
 RSpec.configure do |c|
-  c.include RSpecMixin
+  c.include Capybara
 end
 
