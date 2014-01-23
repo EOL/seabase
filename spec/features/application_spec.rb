@@ -21,7 +21,6 @@ describe SeabaseApp do
       select('Human orthologs', from: 'scientific_name')
       fill_in('term', with: 'sox')
       click_button('Search')
-      print("#{page.current_url}\n")
       expect(page.status_code).to eq 200
       expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
     end
@@ -31,7 +30,6 @@ describe SeabaseApp do
       select('Human orthologs', :from => 'scientific_name')
       fill_in('term', :with => 'sox')
       click_button('Search')
-      print("#{page.current_url}\n")
       expect(page.status_code).to eq 200
       expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
     end
@@ -43,8 +41,6 @@ describe SeabaseApp do
         visit '/'
         expect(page).to have_no_xpath '//ul[@id="ui-id-1"]/li[1]'
         fill_in('term', with: 'so')
-        sleep 2
-        
         expect(page).to have_xpath '//ul[@id="ui-id-1"]/li[1]'
         expect(page).to have_xpath '//li[@class="ui-menu-item"]'
         find(:xpath, '//li[@class="ui-menu-item"][1]').click
@@ -64,31 +60,37 @@ describe SeabaseApp do
 
     context 'blast from file' do
       it 'performs search of file' do
-        visit '/blast'
-        attach_file('seqfile', 
-                    File.expand_path(File.join(%w(.. .. files pcna_fasta.txt)),
-                                                __FILE__))
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
+        if os == 'linux'
+          visit '/blast'
+          attach_file('seqfile', 
+                      File.expand_path(File.join(%w(.. .. 
+                          files pcna_fasta.txt)), __FILE__))
+          click_button('Run Blast')
+          expect(page.status_code).to eq 200
+          expect(page.body).to match /TGGCGCTAGTATTT/ 
+        end
       end
     end
 
     context 'blast from string' do
       it 'perform search on string' do
-        visit '/blast'
-        fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
+        if os == 'linux'
+          visit '/blast'
+          fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
+          click_button('Run Blast')
+          expect(page.status_code).to eq 200
+          expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
+        end
       end
 
       it 'returns empty result if nothing is found' do
-        visit '/blast'
-        fill_in('sequence', with: 'ATAATTAAATTT')
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /No matches/ if os != 'mac'
+        if os == 'linux'
+          visit '/blast'
+          fill_in('sequence', with: 'ATAATTAAATTT')
+          click_button('Run Blast')
+          expect(page.status_code).to eq 200
+          expect(page.body).to match /No matches/ if os != 'mac'
+        end
       end
 
       it 'stays on blast search page if empty string is entered' do

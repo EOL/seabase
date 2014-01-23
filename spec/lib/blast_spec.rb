@@ -17,10 +17,10 @@ describe Seabase::Blast do
   end
 
   describe '#search' do
-    let(:seq) { File.read(File.expand_path('../../files/pcna_fasta.txt',
-                                           __FILE__)) }
+    let(:seq) { File.read(File.expand_path(File.join(%w(.. .. files
+      pcna_fasta.txt), __FILE__))) }
     it 'finds sequence' do
-      unless RUBY_PLATFORM =~ /darwin/
+      if os == 'linux'
         res = blast.search(seq)
         expect(res).to be_kind_of Bio::Blast::Report
       end

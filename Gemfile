@@ -31,7 +31,7 @@ group :test do
   gem 'coveralls', '~> 0.7', require: false
   gem 'travis-lint', '~> 1.7'
   gem 'launchy', '~> 2.4'
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
 end
 
 
