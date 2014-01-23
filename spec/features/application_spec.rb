@@ -39,10 +39,12 @@ describe SeabaseApp do
 
     context 'search autocomplete', js: true do
 
-      it 'searches with autocomplete', js: true do
+      it 'searches with autocomplete' do
         visit '/'
         expect(page).to have_no_xpath '//ul[@id="ui-id-1"]/li[1]'
         fill_in('term', with: 'so')
+        sleep 2
+        
         expect(page).to have_xpath '//ul[@id="ui-id-1"]/li[1]'
         expect(page).to have_xpath '//li[@class="ui-menu-item"]'
         find(:xpath, '//li[@class="ui-menu-item"][1]').click
