@@ -1,3 +1,5 @@
+1	1	A0EYM0	1	v1g136480	PaxD4 (Fragment)
+2	1	A3EXK7	1	v1g118864	Churchill
 25360	1	O00391	2	QSOX1	Sulfhydryl oxidase 1
 25419	1	O00570	2	SOX1	Transcription factor SOX-1
 25764	1	O15370	2	SOX12	Transcription factor SOX-12
@@ -8,5 +10,26 @@
 29524	1	P35712	2	SOX6	Transcription factor SOX-6
 29525	1	P35713	2	SOX18	Transcription factor SOX-18
 29526	1	P35716	2	SOX11	Transcription factor SOX-11
-1	1	A0EYM0	1	v1g136480	PaxD4 (Fragment)
-2	1	A3EXK7	1	v1g118864	Churchill
+47529	1	P35710	3	Sox5	Transcription factor SOX-5
+47607	1	P40645	3	Sox6	Transcription factor SOX-6
+47608	1	P40646	3	Sox7	Transcription factor SOX-7
+47689	1	P43267	3	Sox15	Protein SOX-15
+47705	1	P43680	3	Sox18	Transcription factor SOX-18
+47819	1	P48432	3	Sox2	Transcription factor SOX-2
+48072	1	P53783	3	Sox1	Transcription factor SOX-1
+48073	1	P53784	3	Sox3	Transcription factor SOX-3
+49268	1	Q04886	3	Sox8	Transcription factor SOX-8
+49269	1	Q04887	3	Sox9	Transcription factor SOX-9
+49270	1	Q04888	3	Sox10	Transcription factor SOX-10
+49271	1	Q04890	3	Sox12	Transcription factor SOX-12
+49272	1	Q04891	3	Sox13	Transcription factor SOX-13
+49273	1	Q04892	3	Sox14	Transcription factor SOX-14
+49327	1	Q06831	3	Sox4	Transcription factor SOX-4
+49766	1	Q3TMX7	3	Qsox2	Sulfhydryl oxidase 2
+51273	1	Q61473	3	Sox17	Transcription factor SOX-17
+51500	1	Q62247	3	Sox16	Protein SOX-16 (Fragment)
+51501	1	Q62249	3	Sox19	Protein SOX-19 (Fragment)
+52642	1	Q7M6Y2	3	Sox11	Transcription factor SOX-11
+53399	1	Q811W0	3	Sox21	Transcription factor SOX-21
+54020	1	Q8BND5	3	Qsox1	Sulfhydryl oxidase 1
+55169	1	Q8CGW4	3	Sox30	Transcription factor SOX-30

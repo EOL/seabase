@@ -23,7 +23,7 @@ class Seeder
       table = file.gsub(/\.csv/, '')
       data = get_data(table, file) 
       @db.execute("truncate table %s" % table)
-      @db.execute("insert into %s values %s" % [table, data]) if data
+      @db.execute("insert ignore into %s values %s" % [table, data]) if data
     end
   end
 

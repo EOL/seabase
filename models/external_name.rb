@@ -19,14 +19,15 @@ class ExternalName < ActiveRecord::Base
   def self.like_search(scientific_name, term, limit)
     escape_term = self.sanitize(term).gsub(/^'(.+)'$/, '\1')
     escape_scientific_name = self.sanitize(scientific_name)
-    ExternalName.find_by_sql("SELECT DISTINCT en.*
+    q = "SELECT DISTINCT en.*
       FROM external_names en, external_matches em, taxons t
       WHERE en.id = em.external_name_id
       AND t.id = en.taxon_id
       AND t.scientific_name = %s
       AND (en.name LIKE '%%%s%%' or en.gene_name 
       LIKE '%%%s%%' or en.functional_name LIKE '%%%s%%') LIMIT %s" % 
-      [escape_scientific_name, escape_term, escape_term, escape_term, limit.to_i])
+      [escape_scientific_name, escape_term, escape_term, escape_term, limit.to_i]
+    ExternalName.find_by_sql(q)
   end
 
   def transcripts

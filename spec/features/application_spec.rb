@@ -3,11 +3,13 @@ describe SeabaseApp do
   describe '/css' do
     it 'renders' do
       visit '/css/app.css'
-      expect(page.body).to match /font-family: "Open sans",  "Helvetica Neue"/
+      expect(page.body).
+        to match /font-family: "Open sans",  "Helvetica Neue"/
     end
   end
 
   describe '/' do
+
     it 'renders' do
       visit '/'
       expect(page.status_code).to eq 200
@@ -24,7 +26,7 @@ describe SeabaseApp do
       expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
     end
     
-    it 'exact searches' do
+    it 'searches for exact match' do
       visit '/'
       select('Human orthologs', :from => 'scientific_name')
       fill_in('term', :with => 'sox')
@@ -33,7 +35,23 @@ describe SeabaseApp do
       expect(page.status_code).to eq 200
       expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
     end
+
+
+    context 'search autocomplete', js: true do
+
+      it 'searches with autocomplete', js: true do
+        visit '/'
+        expect(page).to have_no_xpath '//ul[@id="ui-id-1"]/li[1]'
+        fill_in('term', with: 'so')
+        expect(page).to have_xpath '//ul[@id="ui-id-1"]/li[1]'
+        expect(page).to have_xpath '//li[@class="ui-menu-item"]'
+        find(:xpath, '//li[@class="ui-menu-item"][1]').click
+        search_res = find(:xpath, '//*[@id="term_search"]').value 
+        expect(search_res).to eq 'P43680:Sox18:Transcription factor SOX-18'
+      end
+    end
   end
+
 
   describe '/blast' do
     it 'renders' do 
@@ -46,7 +64,7 @@ describe SeabaseApp do
       it 'performs search of file' do
         visit '/blast'
         attach_file('seqfile', 
-                    File.expand_path(File.join(%w(.. files pcna_fasta.txt)),
+                    File.expand_path(File.join(%w(.. .. files pcna_fasta.txt)),
                                                 __FILE__))
         click_button('Run Blast')
         expect(page.status_code).to eq 200

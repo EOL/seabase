@@ -29,19 +29,23 @@ General requirements:
 Running Tests
 -------------
 
+Javascript tests use capybara-webkit, which requires installation of 
+QT Webkit library, you can find installations instruction on 
+[capybara-webkit wiki][9]
+
     bundle exec rake db:migrate SEABASE_ENV=test
     bundle exec rake seed SEABASE_ENV=test
     bundle exec rake
 
-Also look at [.travis.yml][9] file for more information
+Also look at [.travis.yml][10] file for more information
 
 
 Copyright
 ---------
 
-Code: [Nathan Wilson][10],[Dmitry Mozzherin][11] 
+Code: [Nathan Wilson][11],[Dmitry Mozzherin][12] 
 
-Copyright (c) 2014 [Marine Biological Laboratory][12]. See [LICENSE][13] for
+Copyright (c) 2014 [Marine Biological Laboratory][13]. See [LICENSE][14] for
 further details.
 
 [1]: https://secure.travis-ci.org/EOL/seabase.png
@@ -52,8 +56,9 @@ further details.
 [6]: https://codeclimate.com/github/EOL/seabase
 [7]: https://gemnasium.com/EOL/seabase.png
 [8]: https://gemnasium.com/EOL/seabase
-[9]: https://github.com/EOL/seabase/blob/master/.travis.yml
-[10]: https://github.com/nwilson-EOL
-[11]: https://github.com/dimus
-[12]: http://mbl.edu
-[13]: https://github.com/EOL/seabase/blob/master/LICENSE
+[9]: http://goo.gl/BNFBZM
+[10]: https://github.com/EOL/seabase/blob/master/.travis.yml
+[11]: https://github.com/nwilson-EOL
+[12]: https://github.com/dimus
+[13]: http://mbl.edu
+[14]: https://github.com/EOL/seabase/blob/master/LICENSE

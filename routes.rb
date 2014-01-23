@@ -58,7 +58,6 @@ class SeabaseApp < Sinatra::Base
         haml :search_result
       end
     end
-    
   end
 
   get '/external_names/:id' do

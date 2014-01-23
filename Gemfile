@@ -26,10 +26,12 @@ end
 group :test do
   gem 'rspec', '~> 2.14'
   gem 'webmock', '~> 1.17'
+  gem 'capybara-webkit', '~> 1.1'
   gem 'capybara', '~> 2.2'
   gem 'coveralls', '~> 0.7', require: false
   gem 'travis-lint', '~> 1.7'
   gem 'launchy', '~> 2.4'
+  gem 'selenium-webdriver'
 end
 
 

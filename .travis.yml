@@ -7,6 +7,9 @@ branches:
 before_install:
   - sudo apt-get update
   - sudo apt-get install ncbi-blast+
+  - sudo apt-get install libqt4-dev
+  - "export DISPLAY=:99.0" 
+  - "sh -e /etc/init.d/xvfb start"
 before_script:
   - cp config/config.yml.example config/config.yml
   - bundle exec rake db:create:all

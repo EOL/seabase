@@ -5,13 +5,15 @@ Coveralls.wear!
 $VERBOSE = nil   
 
 require 'rack/test'
-require 'webmock/rspec'
 require 'capybara'
+require 'capybara/rspec'
 require 'capybara/dsl'
+require 'capybara/webkit'
 
 ENV['SEABASE_ENV'] = 'test'
 require_relative '../application.rb'
 
+Capybara.javascript_driver = :webkit
 Capybara.app = SeabaseApp
 
 RSpec.configure do |c|
