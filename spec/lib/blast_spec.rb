@@ -18,7 +18,7 @@ describe Seabase::Blast do
 
   describe '#search' do
     let(:seq) { File.read(File.expand_path(File.join(%w(.. .. files
-      pcna_fasta.txt), __FILE__))) }
+      pcna_fasta.txt)), __FILE__)) }
     it 'finds sequence' do
       if os == 'linux'
         res = blast.search(seq)
