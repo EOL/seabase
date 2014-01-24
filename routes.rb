@@ -31,15 +31,6 @@ class SeabaseApp < Sinatra::Base
     end
   end
 
-  def perform_search(opts)
-    if opts[:exact_search]
-      opts[:term].gsub!(/:[^:]*:.*/, '')
-      ExternalName.exact_search(opts)
-    else
-      ExternalName.like_search(opts)
-    end
-  end
-
   get '/search.?:format?' do
     opts = {
       format: params[:format],
@@ -70,6 +61,15 @@ class SeabaseApp < Sinatra::Base
 
   private
 
+  def perform_search(opts)
+    if opts[:exact_search]
+      opts[:term].gsub!(/:[^:]*:.*/, '')
+      ExternalName.exact_search(opts)
+    else
+      ExternalName.like_search(opts)
+    end
+  end
+
   def format_search_json(opts)
     content_type 'application/json', charset: 'utf-8'
     names_json = @external_names.to_json
@@ -97,7 +97,6 @@ class SeabaseApp < Sinatra::Base
       format_search_html(opts)
     end
   end
-
 
 end
 
