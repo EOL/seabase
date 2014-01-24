@@ -54,6 +54,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.2)
     fssm (0.2.10)
+    git (1.2.6)
     haml (4.0.5)
       tilt
     hashr (0.0.22)
@@ -143,6 +144,7 @@ DEPENDENCIES
   compass (~> 0.12)
   coveralls (~> 0.7)
   debugger (~> 1.6)
+  git (~> 1.2)
   haml (~> 4.0)
   launchy (~> 2.4)
   mysql2 (~> 0.3)

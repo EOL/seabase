@@ -2,6 +2,7 @@ require 'bundler'
 require 'active_record'
 require 'rake'
 require 'rspec'
+require 'git'
 require 'rspec/core/rake_task'
 require 'sinatra/activerecord/rake'
 require_relative 'lib/seabase'
@@ -38,7 +39,7 @@ desc 'create release on github'
 task(:release) do
   require 'git'
   g = Git.open(File.dirname(__FILE__))
-  new_tag = seabase.version
+  new_tag = Seabase.version
     g.add_tag("v.%s" % new_tag)
     g.add(all: true)
     g.commit("Releasing version %s" % new_tag)
