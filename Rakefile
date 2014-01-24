@@ -4,7 +4,7 @@ require 'rake'
 require 'rspec'
 require 'rspec/core/rake_task'
 require 'sinatra/activerecord/rake'
-require_relative 'environment'
+require_relative 'lib/seabase'
 
 task :default => :spec
 
@@ -15,27 +15,26 @@ end
 include ActiveRecord::Tasks
 
 namespace :db do
-  desc 'Create all the databases from config.yml'
+  desc 'create all the databases from config.yml'
   namespace :create do
     task(:all) do
       DatabaseTasks.create_all
     end
   end
 
-  desc 'Drop all the databases from config.yml'
+  desc 'drop all the databases from config.yml'
   namespace :drop do
     task(:all) do
       DatabaseTasks.drop_all
     end
   end
-end
-  
-task :environment do
-  require_relative 'lib/seabase'
+
+  desc 'redo last migration'
+  task :redo => ['db:rollback', 'db:migrate']
 end
 
-desc 'Create release on github'
-task(release: :environment) do
+desc 'create release on github'
+task(:release) do
   require 'git'
   g = Git.open(File.dirname(__FILE__))
   new_tag = seabase.version
@@ -50,12 +49,12 @@ task(release: :environment) do
   end
 end
 
-desc 'Populate seed data for tests'
+desc 'populate seed data for tests'
 task :seed do
   require_relative 'db/seed'
 end
 
-desc 'Open an irb session preloaded with this library'
+desc 'open an irb session preloaded with this library'
 task :console do
     sh "irb -I lib -I extra -r seabase.rb"
 end
