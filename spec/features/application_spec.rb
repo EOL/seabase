@@ -50,7 +50,6 @@ describe SeabaseApp do
     end
   end
 
-
   describe '/blast' do
     it 'renders' do 
       visit '/blast'

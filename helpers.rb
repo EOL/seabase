@@ -1,6 +1,9 @@
 class SeabaseApp < Sinatra::Base
   helpers do
 
+    include Rack::Utils
+    alias_method :h, :escape_html
+   
     def show_alignment(data)
       step = 51
       count = 0
