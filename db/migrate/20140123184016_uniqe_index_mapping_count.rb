@@ -5,6 +5,6 @@ class UniqeIndexMappingCount < ActiveRecord::Migration
   end
   
   def down
-    remove_index :mappint_counts, name: :idx_mapping_counts_03
+    remove_index :mapping_counts, name: :idx_mapping_counts_03
   end
 end
