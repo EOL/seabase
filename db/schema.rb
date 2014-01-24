@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122134542) do
+ActiveRecord::Schema.define(version: 20140123184016) do
 
   create_table "conditions", force: true do |t|
     t.text "description"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140122134542) do
   end
 
   add_index "mapping_counts", ["replicate_id"], name: "index_mapping_counts_on_replicate_id", using: :btree
+  add_index "mapping_counts", ["transcript_id", "replicate_id"], name: "idx_mapping_counts_03", unique: true, using: :btree
   add_index "mapping_counts", ["transcript_id"], name: "index_mapping_counts_on_transcript_id", using: :btree
 
   create_table "replicates", force: true do |t|
