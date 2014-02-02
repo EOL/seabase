@@ -27,9 +27,8 @@ helpers do
       element = []
       r.each_with_index do |n, ii| 
         num = n
-        if ii > 0
+        if ii > 0 and num
           num = num.round(2) 
-          num = (num == 0) ? nil : num
         end
         element << num
       end 

@@ -124,10 +124,11 @@ class Seabase
     def technical_replicate_counts(stage, technical_replicate)
       lrs = lane_replicates(stage, technical_replicate)
       lrs ? average_ignore_zeros(lrs.map { |lr| lane_replicate_counts(stage, 
-                                                technical_replicate, lr) }) : 0
+                                                technical_replicate, lr) }) : nil
     end
     
     def lane_replicate_counts(stage, technical_replicate, lane_replicate)
+      watching = (stage == 1) and (technical_replicate == 1)
       rts = replicate_transcripts(stage, technical_replicate, lane_replicate)
       total = 0
       if rts
@@ -163,7 +164,7 @@ class Seabase
     
     def table(technical_replicate=nil)
       (technical_replicate ? [] : 
-       @distinct_technical_replicates.
+       @distinct_technical_replicates.sort.
          map {|tr| row(tr)}).push(row(technical_replicate))
     end
     
