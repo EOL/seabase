@@ -1,44 +1,253 @@
-%form{ method: :post, action: '/blast', enctype: 'multipart/form-data', name: 'blast_form' }
-  
-  %h3 Blast search against nematostella_vectensis_transcriptome
-
-  .form_section
-    %label{ for: 'program' } Select Blast Program:
-
-    %select{ name: 'program' }
-      %option blastn
-      %option tblastn
-      %option tblastx
-
-
-  .form_section
-    %fieldset
-      %legend Sequence
-      
-      .form_section
-        .info 
-          Enter sequence in FASTA format 
-
-        .sequence
-          %textarea{ name: 'sequence', rows: 6, cols: 60, autofocus: true }
-      
-      .form_section
-        .info Or load it from disk 
-
-        .file
-          %input{ type: 'file', name: 'seqfile' }
-        
-      .form_section
-        .info Set subsequence: 
-        .info 
-          From
-          %input{ type: 'text', name: 'query_from', size: 10 }
-          &nbsp;&nbsp&nbsp;&nbsp
-          To
-          %input{ type: 'text', name: 'query_to', size: 10 }
-
-  .form_section
-    %input{ type: 'submit', value: 'Run Blast' }
-    %input{ type: 'button', value: 'Clear sequence', onClick: "blast_form.sequence.value='';blast_form.query_from.value='';blast_form.query_to.value='';blast_form.sequence.focus();"}
-
-
+%form{:action => "blast.cgi", :enctype => "multipart/form-data", :method => "POST", :name => "MainBlastForm"}
+  %b Choose program to use and database to search:
+  %p
+    %a{:href => "docs/blast_program.html"} Program
+    %select{:name => "PROGRAM"}
+      %option
+        blastn
+      %option
+        blastp
+      %option
+        blastx
+      %option
+        tblastn
+      %option
+        tblastx
+    %a{:href => "docs/blast_databases.html"} Database
+    %select{:name => "DATALIB"}
+      %option{:value => "nematostella_vectensis_transcriptome"}
+        nematostella vectensis transcriptome
+  %p
+    Enter sequence below in
+    %a{:href => "docs/fasta.html"} FASTA
+    format
+    %br/
+    %textarea{:cols => "60", :name => "SEQUENCE", :rows => "6"}
+    %br/
+    Or load it from disk
+    %input{:name => "SEQFILE", :type => "file"}/
+  %p
+    Set subsequence: From
+    \&nbsp;&nbsp
+    %input{:name => "QUERY_FROM", :size => "10", :type => "text", :value => ""}/
+    \&nbsp;&nbsp&nbsp;&nbsp To
+    %input{:name => "QUERY_TO", :size => "10", :type => "text", :value => ""}/
+  %p
+    %input{:onclick => "MainBlastForm.SEQUENCE.value='';MainBlastForm.QUERY_FROM.value='';MainBlastForm.QUERY_TO.value='';MainBlastForm.SEQUENCE.focus();", :type => "button", :value => "Clear sequence"}/
+    %input{:type => "submit", :value => "Search"}/
+  %hr/
+  The query sequence is
+  %a{:href => "docs/filtered.html"} filtered
+  for low complexity regions by default.
+  %br/
+  %a{:href => "docs/newoptions.html#filter"} Filter
+  %input{:checked => "", :name => "FILTER", :type => "checkbox", :value => "L"}/
+  Low complexity
+  %input{:name => "FILTER", :type => "checkbox", :value => "m"}/
+  Mask for lookup table only
+  %p
+    %a{:href => "docs/newoptions.html#expect"} Expect
+    %select{:name => "EXPECT"}
+      %option
+        0.0001
+      %option
+        0.01
+      %option
+        1
+      %option{:selected => ""}
+        10
+      %option
+        100
+      %option
+        1000
+    \&nbsp;&nbsp;
+    %a{:href => "docs/matrix_info.html"} Matrix
+    %select{:name => "MAT_PARAM"}
+      %option{:value => "PAM30\t 9\t 1"} PAM30
+      %option{:value => "PAM70\t 10\t 1"} PAM70
+      %option{:value => "BLOSUM80\t 10\t 1"} BLOSUM80
+      %option{:selected => "", :value => "BLOSUM62\t 11\t 1"} BLOSUM62
+      %option{:value => "BLOSUM45\t 14\t 2"} BLOSUM45
+    %input{:name => "UNGAPPED_ALIGNMENT", :type => "checkbox", :value => "is_set"}/
+    Perform ungapped alignment
+  %p
+    %a{:href => "docs/newoptions.html#gencodes"}
+      Query Genetic Codes (blastx only)
+    %select{:name => "GENETIC_CODE"}
+      %option
+        Standard (1)
+      %option
+        Vertebrate Mitochondrial (2)
+      %option
+        Yeast Mitochondrial (3)
+      %option
+        Mold Mitochondrial; ... (4)
+      %option
+        Invertebrate Mitochondrial (5)
+      %option
+        Ciliate Nuclear; ... (6)
+      %option
+        Echinoderm Mitochondrial (9)
+      %option
+        Euplotid Nuclear (10)
+      %option
+        Bacterial (11)
+      %option
+        Alternative Yeast Nuclear (12)
+      %option
+        Ascidian Mitochondrial (13)
+      %option
+        Flatworm Mitochondrial (14)
+      %option
+        Blepharisma Macronuclear (15)
+  %p
+    %a{:href => "docs/newoptions.html#gencodes"}
+      Database Genetic Codes (tblast[nx] only)
+    %select{:name => "DB_GENETIC_CODE"}
+      %option
+        Standard (1)
+      %option
+        Vertebrate Mitochondrial (2)
+      %option
+        Yeast Mitochondrial (3)
+      %option
+        Mold Mitochondrial; ... (4)
+      %option
+        Invertebrate Mitochondrial (5)
+      %option
+        Ciliate Nuclear; ... (6)
+      %option
+        Echinoderm Mitochondrial (9)
+      %option
+        Euplotid Nuclear (10)
+      %option
+        Bacterial (11)
+      %option
+        Alternative Yeast Nuclear (12)
+      %option
+        Ascidian Mitochondrial (13)
+      %option
+        Flatworm Mitochondrial (14)
+      %option
+        Blepharisma Macronuclear (15)
+  %p
+    %a{:href => "docs/oof_notation.html"} Frame shift penalty
+    for blastx
+    %select{:name => "OOF_ALIGN"}
+      %option
+        6
+      %option
+        7
+      %option
+        8
+      %option
+        9
+      %option
+        10
+      %option
+        11
+      %option
+        12
+      %option
+        13
+      %option
+        14
+      %option
+        15
+      %option
+        16
+      %option
+        17
+      %option
+        18
+      %option
+        19
+      %option
+        20
+      %option
+        25
+      %option
+        30
+      %option
+        50
+      %option
+        1000
+      %option{:selected => "", :value => "0"}
+        No OOF
+  %p
+    %a{:href => "docs/full_options.html"} Other advanced options:
+    \&nbsp;&nbsp;&nbsp;&nbsp;
+    %input{:maxlength => "50", :name => "OTHER_ADVANCED", :type => "text", :value => ""}/
+  %hr/
+  /
+    <INPUT TYPE="checkbox" NAME="NCBI_GI" >&amp;nbsp;&amp;nbsp;
+    <a href="docs/newoptions.html#ncbi-gi"> NCBI-gi</a>
+    \&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+  %input{:checked => "", :name => "OVERVIEW", :type => "checkbox"}/
+  %a{:href => "docs/newoptions.html#graphical-overview"} Graphical Overview
+  \&nbsp;&nbsp;
+  %a{:href => "docs/options.html#alignmentviews"} Alignment view
+  %select{:name => "ALIGNMENT_VIEW"}
+    %option{:value => "0"}
+      Pairwise
+    %option{:value => "1"}
+      master-slave with identities
+    %option{:value => "2"}
+      master-slave without identities
+    %option{:value => "3"}
+      flat master-slave with identities
+    %option{:value => "4"}
+      flat master-slave without identities
+    %option{:value => "7"}
+      BLAST XML
+    %option{:value => "9"}
+      Hit Table
+  %br/
+  %a{:href => "docs/newoptions.html#descriptions"} Descriptions
+  %select{:name => "DESCRIPTIONS"}
+    %option
+      0
+    %option
+      10
+    %option
+      50
+    %option{:selected => ""}
+      100
+    %option
+      250
+    %option
+      500
+  \&nbsp;&nbsp;
+  %a{:href => "docs/newoptions.html#alignments"} Alignments
+  %select{:name => "ALIGNMENTS"}
+    %option
+      0
+    %option
+      10
+    %option{:selected => ""}
+      50
+    %option
+      100
+    %option
+      250
+    %option
+      500
+  %a{:href => "docs/color_schema.html"} Color schema
+  %select{:name => "COLOR_SCHEMA"}
+    %option{:selected => "", :value => "0"}
+      No color schema
+    %option{:value => "1"}
+      Color schema 1
+    %option{:value => "2"}
+      Color schema 2
+    %option{:value => "3"}
+      Color schema 3
+    %option{:value => "4"}
+      Color schema 4
+    %option{:value => "5"}
+      Color schema 5
+    %option{:value => "6"}
+      Color schema 6
+  %p
+    %input{:onclick => "MainBlastForm.SEQUENCE.value='';MainBlastForm.SEQFILE.value='';MainBlastForm.SEQUENCE.focus();", :type => "button", :value => "Clear sequence"}/
+    %input{:type => "submit", :value => "Search"}/
