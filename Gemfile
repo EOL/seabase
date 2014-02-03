@@ -12,6 +12,7 @@ gem 'zen-grids', '~> 1.4'
 gem 'sinatra', '~> 1.4'
 gem 'sinatra-activerecord', '~> 1.2'
 gem 'haml', '~> 4.0'
+gem 'rack-legacy', '~> 0.9'
 
 group :development do
   gem 'debugger', '~> 1.6'

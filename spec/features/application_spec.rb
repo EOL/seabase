@@ -55,51 +55,51 @@ describe '/blast' do
     expect(page.body).to match 'Blast'
   end
 
-  context 'blast from file' do
-    it 'performs search of file' do
-      if os == 'linux'
-        visit '/blast'
-        attach_file('seqfile', 
-                    File.expand_path(File.join(%w(.. .. 
-                        files pcna_fasta.txt)), __FILE__))
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/ 
-      end
-    end
-  end
+  # context 'blast from file' do
+  #   it 'performs search of file' do
+  #     if os == 'linux'
+  #       visit '/blast'
+  #       attach_file('seqfile', 
+  #                   File.expand_path(File.join(%w(.. .. 
+  #                       files pcna_fasta.txt)), __FILE__))
+  #       click_button('Run Blast')
+  #       expect(page.status_code).to eq 200
+  #       expect(page.body).to match /TGGCGCTAGTATTT/ 
+  #     end
+  #   end
+  # end
 
-  context 'blast from string' do
-    it 'perform search on string' do
-      if os == 'linux'
-        visit '/blast'
-        fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
-      end
-    end
+  # context 'blast from string' do
+  #   it 'perform search on string' do
+  #     if os == 'linux'
+  #       visit '/blast'
+  #       fill_in('sequence', with: 'GGATACCTTGGCGCTAGTATTT')
+  #       click_button('Run Blast')
+  #       expect(page.status_code).to eq 200
+  #       expect(page.body).to match /TGGCGCTAGTATTT/ if os != 'mac'
+  #     end
+  #   end
 
-    it 'returns empty result if nothing is found' do
-      if os == 'linux'
-        visit '/blast'
-        fill_in('sequence', with: 'ATAATTAAATTT')
-        click_button('Run Blast')
-        expect(page.status_code).to eq 200
-        expect(page.body).to match /No matches/ if os != 'mac'
-      end
-    end
+  #   it 'returns empty result if nothing is found' do
+  #     if os == 'linux'
+  #       visit '/blast'
+  #       fill_in('sequence', with: 'ATAATTAAATTT')
+  #       click_button('Run Blast')
+  #       expect(page.status_code).to eq 200
+  #       expect(page.body).to match /No matches/ if os != 'mac'
+  #     end
+  #   end
 
-    it 'stays on blast search page if empty string is entered' do
-      visit '/blast'
-      fill_in('sequence', with: '')
-      click_button('Run Blast')
-      expect(page.status_code).to eq 200
-      expect(page.body).not_to match /No matches/
-      expect(page.body).to match 'Blast search against'
-    end
-      
-  end
+  #   it 'stays on blast search page if empty string is entered' do
+  #     visit '/blast'
+  #     fill_in('sequence', with: '')
+  #     click_button('Run Blast')
+  #     expect(page.status_code).to eq 200
+  #     expect(page.body).not_to match /No matches/
+  #     expect(page.body).to match 'Blast search against'
+  #   end
+  #     
+  # end
 
 end
 
