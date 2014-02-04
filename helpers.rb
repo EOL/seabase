@@ -21,21 +21,24 @@ helpers do
 
   def format_graph_data(table_data)
     res = table_data.transpose
-
     res.each_with_index do |r, i|
       next if i == 0
       element = []
       r.each_with_index do |n, ii| 
-        num = n
-        if ii > 0 and num
-          num = num.round(2) 
+        cell_data = n
+        if ii > 0 
+          cell_data = format_cell_data(n)
         end
-        element << num
+        element << cell_data
       end 
       res[i] = element
     end
-
     res.to_json
+  end
+
+  def format_cell_data(n)
+    format = n ? n.round(2) : 'N/A'
+    { v: n, f: format } 
   end
 
   def gene_type(external_name, opts = { capitalize: false })

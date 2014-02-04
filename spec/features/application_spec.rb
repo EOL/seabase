@@ -170,6 +170,12 @@ describe '/external_names' do
     expect(page.body).to match 'the human ortholog QSOX1'
   end
 
+  it 'returns N/A for empty cells in the table' do
+    visit '/external_names/25360'
+    expect(page.status_code).to eq 200
+    expect(page.body).to match '"f":"N/A"'
+  end
+
   it 'renders a Nematostella' do
     visit '/external_names/2'
     expect(page.status_code).to eq 200
