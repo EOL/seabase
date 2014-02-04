@@ -7,7 +7,9 @@
 echo "Content-type: text/html"
 echo ""
 
+
 #setenv DEBUG_COMMAND_LINE TRUE
 setenv BLASTDB db
-
+#printenv > /tmp/blast.env
 ./blast.REAL
+
