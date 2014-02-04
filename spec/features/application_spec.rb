@@ -175,6 +175,11 @@ describe '/external_names' do
     expect(page.body).to match '"f":"N/A"'
   end
 
+  it 'shows sequence of transcripts' do
+    visit '/external_names/25360'
+    expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
+  end
+
   it 'renders a Nematostella' do
     visit '/external_names/2'
     expect(page.status_code).to eq 200
@@ -187,6 +192,12 @@ describe '/transcript' do
     visit '/transcript/17065?external_name_id=25360'
     expect(page.status_code).to eq 200
     expect(page.body).to match /transcript comp12135_c0_seq1.+ QSOX1/m
+    expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
+  end
+  
+  it 'it shows transcript sequence' do
+    visit '/transcript/17065?external_name_id=25360'
+    expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
   end
 end
 

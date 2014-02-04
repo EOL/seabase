@@ -14,20 +14,20 @@ get '/blast' do
   haml :blast
 end
 
-post '/blast' do
-  program = params[:program]
-  file = params[:seqfile]
-  @seq = file ? seq_from_file(file) : params[:sequence]
-  from_query = params[:from_query]
-  to_query = params[:to_query]
-  blast = Seabase::Blast.new(program)
-  @blast_result = @seq.to_s != '' ? blast.search(@seq) : nil
-  if @blast_result
-    haml :blast_result
-  else
-    redirect '/blast' 
-  end
-end
+# post '/blast' do
+#   program = params[:program]
+#   file = params[:seqfile]
+#   @seq = file ? seq_from_file(file) : params[:sequence]
+#   from_query = params[:from_query]
+#   to_query = params[:to_query]
+#   blast = Seabase::Blast.new(program)
+#   @blast_result = @seq.to_s != '' ? blast.search(@seq) : nil
+#   if @blast_result
+#     haml :blast_result
+#   else
+#     redirect '/blast' 
+#   end
+# end
 
 get '/search.?:format?' do
   opts = {
@@ -45,7 +45,7 @@ end
 get '/external_names/:id' do
   @en = ExternalName.find(params[:id])
   @table_data = @en.table_items.unshift(Replicate.all_stages)
-  @chart_title = "Sum of transcription levels for all %s homologs" % @en.gene_name
+  @chart_title = "Sum of transcription levels for %s homologs" % @en.gene_name
   haml :external_name
 end
 

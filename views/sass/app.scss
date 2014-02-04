@@ -210,3 +210,13 @@ dt:first-child:before { /* disable line break before the first <dt> */
   float:left;
   margin: 1em;
 }
+
+.sequence {
+  font-family: "Lucida Console",
+               "Courier New",
+               "Monospace";
+  padding: 0.5em;
+  margin: 0.5em;
+  marging-left: 1em;
+  border: 1px solid #ccc;
+}
