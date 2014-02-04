@@ -39,6 +39,7 @@ bin
 tags
 public/dwca/*
 log/*
+blast/wwwblast.log
 
 # YARD artifacts
 .yardoc
