@@ -45,13 +45,14 @@ end
 get '/external_names/:id' do
   @en = ExternalName.find(params[:id])
   @table_data = @en.table_items.unshift(Replicate.all_stages)
-  @name = "Protein #{@en.name}"
+  @chart_title = "Sum of transcription levels for all %s homologs" % @en.gene_name
   haml :external_name
 end
 
 get '/transcript/:id' do
   @en = ExternalName.find(params[:external_name_id])
   @tr = Transcript.find(params[:id])
+  @chart_title = "Transcription levels for %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
   haml :transcript

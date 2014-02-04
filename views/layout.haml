@@ -77,8 +77,7 @@
       minLength: 1,
       select: function(event, ui) {
         $("#exact_search").val('true');
-        $("#term_search").val(ui.item.label);
-        $("form#search_box").submit();
+        $("#search_form").submit();
       },
     });
   });
