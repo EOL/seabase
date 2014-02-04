@@ -11,5 +11,5 @@ echo ""
 #setenv DEBUG_COMMAND_LINE TRUE
 setenv BLASTDB db
 #printenv > /tmp/blast.env
-./blast.REAL
+./blast.REAL | ./format_blast.rb
 
