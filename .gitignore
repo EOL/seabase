@@ -40,6 +40,7 @@ tags
 public/dwca/*
 log/*
 blast/wwwblast.log
+blast/TmpGifs/*.gif
 
 # YARD artifacts
 .yardoc

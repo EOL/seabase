@@ -1,19 +1,21 @@
 %h2 
   %em Nematostella vectensis 
   transcript #{@tr.name}
-  homologous to the #{gene_type(@en)} #{@en.gene_name}
+  - if @en
+    homologous to the #{gene_type(@en)} #{@en.gene_name}
 
 .transcript_details
   .item
     %strong Transcript:
     #{@tr.name}
-  .item 
-    %strong #{gene_type(@en, capitalize: true)}: 
-    %a{ href: "/external_names/#{@en.id}" } #{@en.gene_name}
-  .item
-    %strong UniProt Outlink:
-    %a{ href: "http://uniprot.org/uniprot/%s" % @en.name, title: 'Uniprot link'}
-      = "#{@en.name}: #{@en.functional_name}"
+  - if @en
+    .item 
+      %strong #{gene_type(@en, capitalize: true)}: 
+      %a{ href: "/external_names/#{@en.id}" } #{@en.gene_name}
+    .item
+      %strong UniProt Outlink:
+      %a{ href: "http://uniprot.org/uniprot/%s" % @en.name, title: 'Uniprot link'}
+        = "#{@en.name}: #{@en.functional_name}"
 
 
 = haml :chart_and_table

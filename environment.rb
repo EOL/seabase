@@ -1,7 +1,6 @@
 require 'ostruct'
 require 'yaml'
 require 'active_record'
-require 'rack-legacy'
 
 class Seabase
 

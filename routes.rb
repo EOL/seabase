@@ -10,7 +10,8 @@ get '/blast' do
   haml :blast
 end
 
-# post '/blast' do
+post '/blast' do
+  haml :blast_result
 #   program = params[:program]
 #   file = params[:seqfile]
 #   @seq = file ? seq_from_file(file) : params[:sequence]
@@ -23,7 +24,7 @@ end
 #   else
 #     redirect '/blast' 
 #   end
-# end
+end
 
 get '/search.?:format?' do
   opts = {
@@ -48,6 +49,14 @@ end
 get '/transcript/:id' do
   @en = ExternalName.find(params[:external_name_id])
   @tr = Transcript.find(params[:id])
+  @chart_title = "Transcription levels for %s" % @tr.name
+  @table_data = @tr.table_items.unshift(Replicate.all_stages)
+  @name = "Transcript #{@tr.name}"
+  haml :transcript
+end
+
+get '/transcript' do
+  @tr = Transcript.find_by_name(params[:name])
   @chart_title = "Transcription levels for %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
