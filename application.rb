@@ -21,6 +21,7 @@ configure do
   Rack::Timeout.timeout = 9_000_000
 
   use Rack::Session::Cookie, secret: Seabase.conf.session_secret
+  use Rack::Legacy::Cgi, 'blast'
 
   set :scss, Compass.sass_engine_options
 end

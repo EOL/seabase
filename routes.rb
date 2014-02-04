@@ -1,7 +1,3 @@
-def seq_from_file(file)
-  File.read(file[:tempfile].path)
-end
-
 get '/css/:filename.css' do
   scss :"sass/#{params[:filename]}"
 end
