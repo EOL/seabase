@@ -42,8 +42,7 @@ describe '/' do
       expect(page).to have_xpath '//ul[@id="ui-id-1"]/li[1]'
       expect(page).to have_xpath '//li[@class="ui-menu-item"]'
       find(:xpath, '//li[@class="ui-menu-item"][1]').click
-      search_res = find(:xpath, '//*[@id="term_search"]').value 
-      expect(search_res).to eq 'P43680:Sox18:Transcription factor SOX-18'
+      expect(page.body).to match 'homologous to the mouse ortholog Sox18'
     end
   end
 end
