@@ -11,19 +11,8 @@ get '/blast' do
 end
 
 post '/blast' do
+  #heavy lifing is done by Rack::Blast
   haml :blast_result
-#   program = params[:program]
-#   file = params[:seqfile]
-#   @seq = file ? seq_from_file(file) : params[:sequence]
-#   from_query = params[:from_query]
-#   to_query = params[:to_query]
-#   blast = Seabase::Blast.new(program)
-#   @blast_result = @seq.to_s != '' ? blast.search(@seq) : nil
-#   if @blast_result
-#     haml :blast_result
-#   else
-#     redirect '/blast' 
-#   end
 end
 
 get '/search.?:format?' do
@@ -46,17 +35,10 @@ get '/external_names/:id' do
   haml :external_name
 end
 
-get '/transcript/:id' do
+get '/transcript/?:id?' do
+  @tr = Transcript.find_by_name(params[:name]) if params[:name]
+  @tr = Transcript.find(params[:id]) if params[:id]
   @en = ExternalName.find(params[:external_name_id])
-  @tr = Transcript.find(params[:id])
-  @chart_title = "Transcription levels for %s" % @tr.name
-  @table_data = @tr.table_items.unshift(Replicate.all_stages)
-  @name = "Transcript #{@tr.name}"
-  haml :transcript
-end
-
-get '/transcript' do
-  @tr = Transcript.find_by_name(params[:name])
   @chart_title = "Transcription levels for %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
