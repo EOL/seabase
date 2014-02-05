@@ -34,7 +34,7 @@
     %input{:name => "QUERY_TO", :size => "10", :type => "text", :value => ""}/
   %p
     %input{:onclick => "MainBlastForm.SEQUENCE.value='';MainBlastForm.QUERY_FROM.value='';MainBlastForm.QUERY_TO.value='';MainBlastForm.SEQUENCE.focus();", :type => "button", :value => "Clear sequence"}/
-    %input{:type => "submit", :value => "Search"}/
+    %input{:type => "submit", :value => "Run Blast", :id => "run_blast_1"}/
   %hr/
   The query sequence is
   %a{:href => "docs/filtered.html"} filtered
@@ -250,4 +250,4 @@
       Color schema 6
   %p
     %input{:onclick => "MainBlastForm.SEQUENCE.value='';MainBlastForm.SEQFILE.value='';MainBlastForm.SEQUENCE.focus();", :type => "button", :value => "Clear sequence"}/
-    %input{:type => "submit", :value => "Search"}/
+    %input{:type => "submit", :value => "Run Blast", :id => 'run_blast_2'}/
