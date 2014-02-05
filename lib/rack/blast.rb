@@ -24,8 +24,7 @@ class Rack::Blast
     text.gsub!(%r|.*?(<pre>.*</pre>).*|mi, '\1')
     text.gsub!(/nph-viewgif.cgi\?/, '/TmpGifs/')
     text.gsub!(%r|"\.\./blast/|, '"/')
-    text.gsub!(%r|^(.*?)(NVT-)(\S+)(\s.+)$|,
-               '\1<a href="/transcript?name=\3">\2\3</a>\4')
+    text.gsub!(%r#^(><a name = [\d]+></a>|\s*)(NVT-)(\S+)(\s.+)$#, '\1<a href="/transcript?name=\3">\2\3</a>\4')
     text
   end
 
