@@ -38,7 +38,9 @@ end
 get '/transcript/?:id?' do
   @tr = Transcript.find_by_name(params[:name]) if params[:name]
   @tr = Transcript.find(params[:id]) if params[:id]
-  @en = ExternalName.find(params[:external_name_id])
+  if params[:external_name_id]
+    @en = ExternalName.find(params[:external_name_id])
+  end
   @chart_title = "Transcription levels for %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"

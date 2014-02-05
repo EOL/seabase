@@ -75,7 +75,7 @@ describe '/blast', js: true do
         fill_in('SEQUENCE', with: 'GGATACCTTGGCGCTAGTATTT')
         click_button('run_blast_1')
         expect(page.status_code).to eq 200
-        expect(page.body).to match /tggcgctagtattt/ if os != 'mac'
+        expect(page.body).to match /tggcgctagtattt/
       end
     end
 
@@ -85,17 +85,19 @@ describe '/blast', js: true do
         fill_in('SEQUENCE', with: 'TTTTTT')
         click_button('run_blast_1')
         expect(page.status_code).to eq 200
-        expect(page.body).to match /No hits found/ if os != 'mac'
+        expect(page.body).to match /No hits found/
       end
     end
 
     it 'returns Blast error if empty string is entered' do
-      visit '/blast'
-      fill_in('SEQUENCE', with: '')
-      click_button('run_blast_1')
-      expect(page.status_code).to eq 200
-      expect(page.body).not_to match /No matches/
-      expect(page.body).to match 'Error 8 in submitting BLAST query'
+      if os == 'linux'
+        visit '/blast'
+        fill_in('SEQUENCE', with: '')
+        click_button('run_blast_1')
+        expect(page.status_code).to eq 200
+        expect(page.body).not_to match /No matches/
+        expect(page.body).to match 'Error 8 in submitting BLAST query'
+      end
     end
       
   end
@@ -195,9 +197,16 @@ describe '/transcript' do
     expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
   end
   
-  it 'it shows transcript sequence' do
+  it 'shows transcript sequence' do
     visit '/transcript/17065?external_name_id=25360'
     expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
+  end
+
+  it 'finds transcript by name' do
+    visit '/transcript?name=comp12135_c0_seq1'
+    expect(page.status_code).to eq 200
+    expect(page.body).to match /transcript comp12135_c0_seq1/
+    expect(page.body).to match /ATCTCATGTAAAAGGTTGAGAAA/
   end
 end
 
