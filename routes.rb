@@ -11,7 +11,8 @@ get '/blast' do
 end
 
 post '/blast' do
-  #heavy lifing is done by Rack::Blast
+  blast = Seabase::BlastCgi.new(env)
+  @cgi_blast = blast.run
   haml :blast_result
 end
 

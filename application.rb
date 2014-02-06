@@ -9,14 +9,12 @@ require 'sass'
 require 'childprocess'
 
 require_relative 'lib/seabase'
-require_relative 'lib/rack/blast'
 require_relative 'routes'
 require_relative 'helpers'
 
 configure do
   use Rack::MethodOverride
   use Rack::Session::Cookie, secret: Seabase.conf.session_secret
-  use Rack::Blast
   use Rack::Timeout
   Rack::Timeout.timeout = 9_000_000
 
