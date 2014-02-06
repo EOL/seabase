@@ -11,7 +11,8 @@ get '/blast' do
 end
 
 post '/blast' do
-  blast = Seabase::BlastCgi.new(env)
+  path = File.join(settings.root, 'blast', 'blast.cgi')
+  blast = Seabase::BlastCgi.new(env, path)
   @cgi_blast = blast.run
   haml :blast_result
 end

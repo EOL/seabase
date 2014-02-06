@@ -1,7 +1,7 @@
 class Seabase::BlastCgi
-  def initialize(env)
+  def initialize(env, path)
     @env = env
-    @path = get_path
+    @path = path
   end
 
   def run
@@ -22,12 +22,8 @@ class Seabase::BlastCgi
     text
   end
 
-  def get_path
-    path = File.join("../../../blast/%s" % 'blast.cgi')
-    File.expand_path(path, __FILE__)
-  end
-
   def setup_cgi
+    ChildProcess.posix_spawn = true
     cgi = ChildProcess.build(@path)
     cgi.duplex = true
     cgi.cwd = File.dirname(@path)
