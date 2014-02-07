@@ -159,7 +159,7 @@ class Seabase
       result = stages.map {|s| count_per_embryo(s, technical_replicate)}
       result.unshift(technical_replicate ? 
                      (technical_replicate + START_OF_ALPHABET).chr : 
-                     'Combined')
+                     'Average')
     end
     
     def table(technical_replicate=nil)

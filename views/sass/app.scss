@@ -147,6 +147,18 @@ a {
   padding-top: 1em;
 }
 
+#chart_container {
+  #vertical_slider_container {
+    float: right;
+    #vertical_slider{
+      height: 350px;
+    }
+  }
+
+  #chart {
+  }
+}
+
 .dir_item {
   @include brd(8px);
   padding: 10px;

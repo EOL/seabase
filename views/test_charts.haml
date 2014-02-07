@@ -1,0 +1,74 @@
+- google_chart_data = format_graph_data(@table_data)
+
+#chart_container
+  #vertical_slider_container
+    #y_axis_values{ style: 'margin-bottom: 1em' } Y Axis Scale: 0 - #{@max_y.round(0)}
+    #vertical_slider{ style: 'text-align: center;' }
+  #chart
+#table
+
+:javascript
+  google.load('visualization', '1', {packages:["corechart"]});
+  google.load('visualization', '1', {packages:['table']});
+  google.setOnLoadCallback(drawChartSeparate);
+  
+  max_y = #{@max_y};
+  min_y = 0;
+
+  $(function() {
+    $('#vertical_slider').slider({
+      orientation: 'vertical',
+      range: true,
+      values: [min_y, max_y],
+      min: 0,
+      max: #{@max_y},
+      change: function(event, ui) {
+        min_y = ui.values[0];
+        max_y = ui.values[1];
+        drawChartSeparate();
+      }
+    });
+  });
+
+  function drawChartSeparate() {
+
+    var combined_data = google
+      .visualization
+      .arrayToDataTable(#{google_chart_data});
+
+    var combined_chart_options = {
+      width: 1100,
+      height: 500,
+      title: '#{@chart_title}',
+      titleTextStyle: { fontSize: 18 },
+      chartArea: { 
+        width: '60%', 
+      },
+      hAxis: { title: 'Hours' }, 
+      vAxis: { 
+        title: 'Molecules per Embryo',
+        viewWindow: {
+          max: max_y, 
+          min: min_y,
+        }
+      },
+    };
+
+    var combined_table_options = {
+      width: 1100,
+    }
+
+    var 
+
+    data_view = new google.visualization.DataView(combined_data);
+    
+    var combined_chart = new google.visualization.LineChart(document.getElementById('chart'));
+    combined_chart.draw(combined_data, combined_chart_options);
+    var combined_table = new google.visualization.Table(document.getElementById('table'));
+    combined_table.draw(data_view, combined_table_options);
+
+    google.visualization.events.addListener(combined_table, 'select', function() {
+      combined_chart.setSelection(combined_table.getSelection());
+    });
+
+  }

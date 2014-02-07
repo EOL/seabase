@@ -33,7 +33,7 @@ end
 get '/external_names/:id' do
   @en = ExternalName.find(params[:id])
   @table_data = @en.table_items.unshift(Replicate.all_stages)
-  @chart_title = "Sum of transcription levels for %s homologs" % @en.gene_name
+  @chart_title = "Sum of transcripts for %s homologs" % @en.gene_name
   haml :external_name
 end
 
@@ -47,6 +47,34 @@ get '/transcript/?:id?' do
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
   haml :transcript
+end
+
+get '/test_charts' do
+  data = []
+  f = File.open(File.join(settings.root, 'technical_files', 'test_set'))
+  max_y = 0
+  f.each_with_index do |l, i|
+    transcripts = Transcript.find_by_sql("
+                                 select * 
+                                 from transcripts 
+                                 where name 
+                                 like '%s%%'" % l.strip)
+    transcripts.each do |tr|
+      d = tr.table_items.unshift(Replicate.all_stages)
+      d[-1][0] = tr.name
+      data << d[0] if i == 0
+      data << d[-1]
+      new_max_y = d[-1][1..-1].max
+      max_y = new_max_y if new_max_y > max_y
+    end
+  end
+  @max_y = max_y
+  @table_data = data 
+  haml :test_charts
+end
+
+get '/test_d3' do
+  haml :test_d3
 end
 
 private

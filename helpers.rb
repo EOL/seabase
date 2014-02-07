@@ -21,7 +21,8 @@ helpers do
   end
 
   def format_cell_data(n)
-    format = n ? n.round(2) : 'N/A'
+    n = 0.0 if n && n < 0
+    format = n ? n.round(2).to_s : 'N/A'
     { v: n, f: format } 
   end
 
