@@ -10,7 +10,7 @@ gem 'compass', '~> 0.12'
 gem 'sass', '~> 3.2'
 gem 'zen-grids', '~> 1.4'
 gem 'sinatra', '~> 1.4'
-gem 'sinatra-activerecord', '~> 1.2'
+gem 'sinatra-activerecord', '~> 1.3'
 gem 'haml', '~> 4.0'
 gem 'childprocess', '~> 0.4'
 
