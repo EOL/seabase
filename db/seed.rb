@@ -1,34 +1,44 @@
 require 'csv'
 require_relative '../lib/seabase'
 
-if Seabase.env != :test
-  puts 'Use: bundle exec rake seed SEABASE_ENV=test'
+unless [:development, :test, :production].include? Seabase.env
+  puts 'Use: bundle exec rake seed SEABASE_ENV=test|development|production'
   exit
 end
 
 class Seeder
-  attr :common_dir, :env_dir
+  attr :env_dir
 
   def initialize
     @db = ActiveRecord::Base.connection
-    @common_dir = File.join(File.dirname(__FILE__), 'seed')
+    common_dir = File.join(File.dirname(__FILE__), 'seed')
     @env_dir = File.join(common_dir, Seabase.env.to_s)
     @path = nil
   end
 
   def walk_path(path)
+    run_migrations_msg = "\nBefore adding seeds run:\n"\
+      "bundle exec rake db:migrate SEABASE_ENV=%s\n\n" % Seabase.env
     @path = path
     files = Dir.entries(path).map {|e| e.to_s}.select {|e| e.match /csv$/}
-    files.each do |file|
-      table = file.gsub(/\.csv/, '')
-      data = get_data(table, file) 
-      @db.execute("truncate table %s" % table)
-      @db.execute("insert ignore into %s values %s" % [table, data]) if data
+    begin
+      files.each do |file|
+        add_seeds(file)
+      end
+    rescue ActiveRecord::StatementInvalid
+      raise run_migrations_msg
     end
   end
 
   private 
   
+  def add_seeds(file)
+    table = file.gsub(/\.csv/, '')
+    data = get_data(table, file) 
+    @db.execute("truncate table %s" % table) 
+    @db.execute("insert ignore into %s values %s" % [table, data]) if data
+  end
+
   def get_data(table, file)
     columns = @db.select_values("show columns from %s" % table)
     ca_index = columns.index("created_at")
@@ -57,7 +67,7 @@ class Seeder
 end
 
 s = Seeder.new
-
 s.walk_path(s.env_dir)
+puts "You added seeds data to %s tables" % Seabase.env.upcase
 
 

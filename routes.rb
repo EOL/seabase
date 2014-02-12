@@ -33,7 +33,7 @@ end
 get '/external_names/:id' do
   @en = ExternalName.find(params[:id])
   @table_data = @en.table_items.unshift(Replicate.all_stages)
-  @chart_title = "Sum of transcripts for %s homologs" % @en.gene_name
+  @chart_title = "All transcripts homologous to %s" % @en.gene_name
   haml :external_name
 end
 
@@ -43,7 +43,7 @@ get '/transcript/?:id?' do
   if params[:external_name_id]
     @en = ExternalName.find(params[:external_name_id])
   end
-  @chart_title = "Transcription levels for %s" % @tr.name
+  @chart_title = "Transcript %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
   haml :transcript

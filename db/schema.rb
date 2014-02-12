@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140123184016) do
+ActiveRecord::Schema.define(version: 20140211163714) do
 
   create_table "conditions", force: true do |t|
     t.text "description"
@@ -72,6 +72,11 @@ ActiveRecord::Schema.define(version: 20140123184016) do
   create_table "taxons", force: true do |t|
     t.string "scientific_name"
     t.string "common_name"
+  end
+
+  create_table "time_units", force: true do |t|
+    t.string "unit"
+    t.string "abbreviation"
   end
 
   create_table "transcripts", force: true do |t|
