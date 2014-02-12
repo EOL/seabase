@@ -9,4 +9,8 @@ class Transcript < ActiveRecord::Base
                               FROM mapping_counts mc
                               WHERE mc.transcript_id = #{id}")).table
   end
+
+  def fasta_sequence
+    ">%s\n%s" % [name, transcript_sequence]
+  end
 end

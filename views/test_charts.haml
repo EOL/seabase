@@ -1,11 +1,22 @@
-- google_chart_data = format_graph_data(@table_data)
+%h2 Overlay
 
 #chart_container
   #vertical_slider_container
-    #y_axis_values{ style: 'margin-bottom: 1em' } Y Axis Scale: 0 - #{@max_y.round(0)}
     #vertical_slider{ style: 'text-align: center;' }
   #chart
 #table
+
+%h2 Trace
+
+#trace_chart_container
+  #trace_chart
+
+%h3 Regression
+
+#regression_chart_container
+  #regression_chart
+
+- google_chart_data = format_graph_data(@table_data)
 
 :javascript
   google.load('visualization', '1', {packages:["corechart"]});
@@ -58,7 +69,20 @@
       width: 1100,
     }
 
-    var 
+    var trace_chart_options = {
+      width: 1100,
+      height: 500,
+      isStacked: true,
+      legend: 'none',
+      chartArea: { 
+        width: '60%', 
+      },
+      hAxis: { title: 'Hours' }, 
+      vAxis: { 
+        title: 'Molecules per Embryo',
+      },
+
+    };
 
     data_view = new google.visualization.DataView(combined_data);
     
@@ -66,9 +90,30 @@
     combined_chart.draw(combined_data, combined_chart_options);
     var combined_table = new google.visualization.Table(document.getElementById('table'));
     combined_table.draw(data_view, combined_table_options);
+    var trace_chart = new google.visualization.AreaChart(document.getElementById('trace_chart'));
+    trace_chart.draw(combined_data, trace_chart_options);
 
     google.visualization.events.addListener(combined_table, 'select', function() {
       combined_chart.setSelection(combined_table.getSelection());
     });
 
+    google.visualization.events.addListener(combined_table, 'select', function() {
+      trace_chart.setSelection(combined_table.getSelection());
+    });
+    //-----REGRESSION placeholder
+
+    var regr_data = google.visualization.arrayToDataTable([
+      ['set1', 'set2'],
+      [8, 37], [4, 19.5], [11, 52], [4, 22], [3, 16.5], [6.5, 32.8], [14, 72]]);
+
+    var regr_options = {
+      width: 1100,
+      height: 500,
+      title: 'Linear regression test',
+      legend: 'none',
+      trendlines: { 0: {} }    // Draw a trendline for data series 0.
+    };
+
+    var regr_chart = new google.visualization.ScatterChart(document.getElementById('regression_chart'));
+    regr_chart.draw(regr_data, regr_options);
   }

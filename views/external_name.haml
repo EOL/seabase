@@ -19,4 +19,4 @@
   - @en.transcripts.each do |t|
     .item
       %a{ href: "/transcript/#{t.id}?external_name_id=#{@en.id}" }= t.name
-    .sequence= t.transcript_sequence
+    .sequence= t.fasta_sequence

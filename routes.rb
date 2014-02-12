@@ -33,7 +33,7 @@ end
 get '/external_names/:id' do
   @en = ExternalName.find(params[:id])
   @table_data = @en.table_items.unshift(Replicate.all_stages)
-  @chart_title = "All transcripts homologous to %s" % @en.gene_name
+  @chart_title = "Transcripts homologous to %s" % @en.gene_name
   haml :external_name
 end
 

@@ -151,7 +151,11 @@ a {
   #vertical_slider_container {
     float: right;
     #vertical_slider{
-      height: 350px;
+      positon: relative;
+      top: 95px;
+      left: -1050px;
+      height: 310px;
+      z-index: 10;
     }
   }
 
