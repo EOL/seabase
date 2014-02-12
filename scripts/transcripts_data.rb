@@ -17,6 +17,8 @@ db = Transcript.connection
 
 db.execute('truncate table transcripts_data')
 
+names = { 'Average' => 1, 'A' => 2, 'B' => 3 }
+
 count = 0
 Transcript.all.each do |t|
   count += 1
@@ -29,7 +31,7 @@ Transcript.all.each do |t|
     [0,1,2].each do |ii|
       is_average = ii == 2 ? 1 : 0
       quantity = ti[ii][i].is_a?(Numeric) ? ti[ii][i] : 'null'
-      data << [t.id, h, 1, quantity, is_average, ("'%s'" % ti[ii][0])].
+      data << [t.id, h, 1, quantity, is_average, names[ti[ii][0]]].
         join(',')
     end
   end

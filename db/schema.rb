@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211163714) do
+ActiveRecord::Schema.define(version: 20140212121104) do
 
   create_table "conditions", force: true do |t|
     t.text "description"
@@ -69,6 +69,10 @@ ActiveRecord::Schema.define(version: 20140211163714) do
   add_index "replicates", ["condition_id"], name: "index_replicates_on_condition_id", using: :btree
   add_index "replicates", ["taxon_id"], name: "index_replicates_on_taxon_id", using: :btree
 
+  create_table "set_names", force: true do |t|
+    t.string "name"
+  end
+
   create_table "taxons", force: true do |t|
     t.string "scientific_name"
     t.string "common_name"
@@ -85,5 +89,16 @@ ActiveRecord::Schema.define(version: 20140211163714) do
     t.integer "length"
     t.text    "transcript_sequence"
   end
+
+  create_table "transcripts_data", force: true do |t|
+    t.integer "transcript_id"
+    t.integer "time_point"
+    t.integer "time_unit_id"
+    t.float   "quantity"
+    t.boolean "averaged"
+    t.integer "set_name_id_id"
+  end
+
+  add_index "transcripts_data", ["transcript_id"], name: "index_transcripts_data_on_transcript_id", using: :btree
 
 end
