@@ -1,0 +1,12 @@
+%form{ action: '/login', method: 'post'}
+  #login_form
+    %h3 Login
+    .item
+      %label{ for: :login_email } Email
+      %input{ id: :login_email, type: :text, name: :email, autofocus: true }
+    .item
+      %label{ for: :login_password } Password
+      %input{ id: :login_password, type: :password, name: :password }
+    .item
+      %label{ for: :login_submit } 
+      %input{ id: :login_submit, type: :submit, name: :Login } 

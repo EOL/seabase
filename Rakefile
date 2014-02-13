@@ -35,6 +35,12 @@ namespace :db do
   task :redo => ['db:rollback', 'db:migrate']
 end
 
+desc 'prepares everything for tests'
+task :testup do
+  system('rake db:migrate SEABASE_ENV=test')
+  system('rake seed SEABASE_ENV=test')
+end
+
 desc 'create release on github'
 task(:release) do
   require 'git'

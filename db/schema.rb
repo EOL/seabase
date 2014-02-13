@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140212121104) do
+ActiveRecord::Schema.define(version: 20140212205513) do
+
+  create_table "comments", force: true do |t|
+    t.integer  "news_post_id"
+    t.integer  "user_id"
+    t.integer  "parent"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "conditions", force: true do |t|
     t.text "description"
@@ -54,6 +63,13 @@ ActiveRecord::Schema.define(version: 20140212121104) do
   add_index "mapping_counts", ["transcript_id", "replicate_id"], name: "idx_mapping_counts_03", unique: true, using: :btree
   add_index "mapping_counts", ["transcript_id"], name: "index_mapping_counts_on_transcript_id", using: :btree
 
+  create_table "news_posts", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "replicates", force: true do |t|
     t.integer "taxon_id"
     t.string  "name"
@@ -68,6 +84,17 @@ ActiveRecord::Schema.define(version: 20140212121104) do
 
   add_index "replicates", ["condition_id"], name: "index_replicates_on_condition_id", using: :btree
   add_index "replicates", ["taxon_id"], name: "index_replicates_on_taxon_id", using: :btree
+
+  create_table "roles", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "roles_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "roles_users", ["user_id", "role_id"], name: "idx_roles_users_1", unique: true, using: :btree
 
   create_table "set_names", force: true do |t|
     t.string "name"
@@ -100,5 +127,12 @@ ActiveRecord::Schema.define(version: 20140212121104) do
   end
 
   add_index "transcripts_data", ["transcript_id"], name: "index_transcripts_data_on_transcript_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string "email"
+    t.string "name"
+    t.string "password_hash"
+    t.string "token"
+  end
 
 end

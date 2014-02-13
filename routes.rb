@@ -6,6 +6,28 @@ get '/' do
   haml :home
 end
 
+get '/login' do
+  haml :login
+end
+
+post '/login' do
+  eperson = password_authorization(email: params[:email], 
+                                               password: params[:password])
+  session[:current_user_id] = eperson.id if eperson
+  redirect session[:previous_location] || '/' 
+end
+
+get '/logout' do
+  session[:current_user_id] = nil
+  redirect '/', info: 'You logged out'
+end
+
+get '/news_edit' do
+  authentication_required
+  authorized_for_roles(['admin'])
+  haml :news_edit
+end
+
 get '/blast' do
   haml :blast
 end
@@ -114,4 +136,37 @@ def format_search_results(opts)
   else
     format_search_html(opts)
   end
+end
+
+def current_user
+  return nil unless session[:current_user_id]
+  User.where(id: session[:current_user_id]).first
+end
+
+def authentication_required
+  session[:previous_location] = request.fullpath
+  unless session[:current_user_id] && session[:current_user_id].to_i > 0
+    redirect '/login', 
+      info: "Please login to see the '%s' page." % request.path
+  end
+end
+
+def authorized_for_roles(roles = [])
+  return true if roles.empty?
+  size = current_user.roles.size
+  authorized = (current_user.roles_names - roles).size < size
+  unless authorized
+    redirect '/', 
+      error: "You are not authorized to access '%s' page." % request.path
+  end
+end
+
+def password_authorization(opts = {})
+  return nil unless opts[:email] && opts[:password]
+  user = User.where(email: opts[:email]).
+    where(password_hash: Digest::SHA1.hexdigest(opts[:password].strip)).first
+  if user
+    session[:current_user_id] = user.id
+  end
+  user
 end

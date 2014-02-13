@@ -11,6 +11,8 @@ gem 'sass', '~> 3.2'
 gem 'zen-grids', '~> 1.4'
 gem 'sinatra', '~> 1.4'
 gem 'sinatra-activerecord', '~> 1.3'
+gem 'sinatra-flash', '~> 0.3'
+gem 'sinatra-redirect-with-flash', '~> 0.2'
 gem 'haml', '~> 4.0'
 gem 'childprocess', '~> 0.4'
 

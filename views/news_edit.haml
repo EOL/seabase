@@ -1,0 +1,5 @@
+%h3 News Edit
+
+%form{ id: :add_news_post, action: '/news_posts', method: :post }
+  %legend{ for: :add_news_item } Add News Item
+  %textarea{ id: :add_news_item, rows: 10, cols: 100, autofocus: true }

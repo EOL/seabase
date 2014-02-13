@@ -42,3 +42,10 @@ def os
   res = 'mac' if (/darwin/ =~ RUBY_PLATFORM) 
   res
 end
+
+def login_as_admin
+  visit '/login'
+  fill_in 'login_email', with: 'jane.doe@example.org'
+  fill_in 'login_password', with: 'secret'
+  click_button 'login_submit'
+end

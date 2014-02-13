@@ -14,6 +14,8 @@
       .header
         %h1{ id: 'title' }
           %a{ href: '/' } SeaBase
+          - if current_user
+            %span (logged in as #{current_user.name})
         .menu
           %ul
             %li
@@ -22,6 +24,9 @@
               %a{ href: '/search' } Search
             %li
               %a{ href: '/blast' } Blast
+            - if current_user
+              %li
+                %a{ href: '/logout' } Logout
     .container
       #search
         .ui-widget
@@ -41,19 +46,22 @@
             %input{ type: 'submit', value: 'Search' }
 
     .container
-        
-        
+      = styled_flash
+
+    .container
       #content
         = yield
-    .clear &nbsp;
-    #footer
-      %a{ href: 'http://mbl.edu' } Marine Biological Laboratory
-      |
-      %a{ href: 'http://opensource.org/licenses/MIT' } MIT License
-      | 
-      %a{ href: 'https://github.com/EOL/seabase/releases' }
-        Version
-        = Seabase.version
+
+    .container
+      #footer
+        %a{ href: 'http://mbl.edu' } Marine Biological Laboratory
+        |
+        %a{ href: 'https://github.com/EOL/seabase/blob/master/LICENSE' } 
+          MIT License
+        | 
+        %a{ href: 'https://github.com/EOL/seabase/releases' }
+          Version
+          = Seabase.version
 
 :javascript
   $(function() {
