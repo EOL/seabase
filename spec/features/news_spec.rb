@@ -41,6 +41,7 @@ describe '/news_edit' do
 
   context 'news edit' do
     before(:all) { login_as_admin }
+    before(:each) { truncate_db }
 
     it 'allows to add news item' do
       visit '/news_edit'
