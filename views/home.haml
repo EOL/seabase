@@ -39,7 +39,7 @@
     %p 
       For updates and to give us suggestions, follow us on Twitter @MBLSeaBase.
 
-  - if @news
+  - if @news && !@news.empty?
     .container
       %h2 News
       - @news.each do |n|
