@@ -25,6 +25,9 @@
             %li
               %a{ href: '/blast' } Blast
             - if current_user
+              - if current_user.admin?
+                %li
+                  %a{ href: '/news' } News Edit
               %li
                 %a{ href: '/logout' } Logout
     .container

@@ -18,19 +18,17 @@ $light_grey: #efefef;
   padding: 0px;
 }
 
-html, button, input, select, textarea {                                          
+html, button, input, select, textarea {
   font-family: "Open sans", 
                "Helvetica Neue", 
                "HelveticaNeue", 
-               Helvetica, 
-               Arial, 
-               sans-serif;
-  font-weight: 400; /* normal */                                                 
+               Helvetica, Arial, sans-serif;
+  font-weight: 400; /* normal */
   font-size: 1em;
-  color: #333;                                                                   
-  font-smooth:always;                                                            
-  -webkit-font-smoothing: antialiased;                                           
-  font-smoothing: antialiased;                                                   
+  color: #333;
+  font-smooth:always;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 
@@ -40,6 +38,7 @@ a {
 }
 
 .container {
+  @include zen-clear;
   @include zen-grid-container;
   @include size-params;
   background-color: white;
@@ -48,6 +47,40 @@ a {
 
 .item {
   margin-bottom: 0.5em;
+}
+
+.item_delete {
+  @include brd(8px);
+  background-color: #fdd;
+  padding: 1em;
+  margin-bottom: 0.5em;
+  border: 1px solid red; 
+}
+
+.news_item {
+  @include brd(8px);
+  border: 1px solid $light_grey - #333;
+  padding: 1em;
+  padding-top: 0.5em;
+  margin-bottom: 0.5em;
+  .news_controls {
+    display: block;
+    float: right;
+  }
+  .news_date {
+    color: #aa4800; 
+  }
+  .news_subject {
+    padding: 0.5em;
+    font-weight: bold;
+  }
+  .news_body {
+    padding: 0.5em;
+  }
+}
+
+.news_hidden {
+  border: 2px solid red;
 }
 
 .header {

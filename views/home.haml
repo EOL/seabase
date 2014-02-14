@@ -1,39 +1,49 @@
-%div{ class: 'home_img'}
-  %img{ src: 'http://media.eol.org/content/2010/03/30/04/78734_orig.jpg', width: '400px' }
-  %p
-    %a{ href: "http://eol.org/pages/704294/overview"}
-      %i Nematostella vectensis
-  %div{ style: "font-size: 0.8em"}
-    %a{ href: "http://creativecommons.org/licenses/by-nc-sa/3.0/", rel: "nofollow"}<
-      %img{ alt: "Creative Commons Attribution Non Commercial Share Alike 3.0 (CC BY-NC-SA 3.0)",
-            src: "http://eol.org/assets/licenses/cc_by_nc_sa_small-ea11f64e060cabdd8948e4a50954fc83.png"}
-    &copy; National Museums Northern Ireland and its licensors
-  %div{ style: "font-size: 0.8em"}
-    Source:
-    %a{ href: "http://www.habitas.org.uk/marinelife/species.asp?item=D13310"}
-      Encyclopedia of Marine Life of Britain and Ireland
+.container
+  %div{ class: 'home_img'}
+    %img{ src: 'http://media.eol.org/content/2010/03/30/04/78734_orig.jpg', width: '400px' }
+    %p
+      %a{ href: "http://eol.org/pages/704294/overview"}
+        %i Nematostella vectensis
+    %div{ style: "font-size: 0.8em"}
+      %a{ href: "http://creativecommons.org/licenses/by-nc-sa/3.0/", rel: "nofollow"}<
+        %img{ alt: "Creative Commons Attribution Non Commercial Share Alike 3.0 (CC BY-NC-SA 3.0)",
+              src: "http://eol.org/assets/licenses/cc_by_nc_sa_small-ea11f64e060cabdd8948e4a50954fc83.png"}
+      &copy; National Museums Northern Ireland and its licensors
+    %div{ style: "font-size: 0.8em"}
+      Source:
+      %a{ href: "http://www.habitas.org.uk/marinelife/species.asp?item=D13310"}
+        Encyclopedia of Marine Life of Britain and Ireland
 
-.center_this_thing{ style: 'margin-top: 5em' }
-  %p 
-    SeaBase provides a platform for sharing, searching and analyzing
-    quantitative gene expression data. Please feel free to look around, find your
-    favorite gene (or genes) and plot their temporal expression, or browse
-    RNA-seq data from your favorite marine/aquatic organism.
+  .center_this_thing{ style: 'margin-top: 5em' }
+    %p 
+      SeaBase provides a platform for sharing, searching and analyzing
+      quantitative gene expression data. Please feel free to look around, find your
+      favorite gene (or genes) and plot their temporal expression, or browse
+      RNA-seq data from your favorite marine/aquatic organism.
 
-  %p 
-    Have data to contribute? Please let us know. We will be happy to include it.
+    %p 
+      Have data to contribute? Please let us know. We will be happy to include it.
 
-  %p 
-    We currently support a plotting function, e.g., for differential expression
-    analysis or for time series expression plots. We will be adding more
-    functions soon. Next on the list is a clustering tool for identifying
-    synexpression networks. Stay tuned: more tools - all geared for determining
-    Gene Networks - are to follow.
+    %p 
+      We currently support a plotting function, e.g., for differential expression
+      analysis or for time series expression plots. We will be adding more
+      functions soon. Next on the list is a clustering tool for identifying
+      synexpression networks. Stay tuned: more tools - all geared for determining
+      Gene Networks - are to follow.
 
-  %p
-    Interested in the code? Checkout our
-    %a{ href: "https://github.com/EOL/seabase"}
-      GitHub repository
-	
-  %p 
-    For updates and to give us suggestions, follow us on Twitter @MBLSeaBase.
+    %p
+      Interested in the code? Checkout our
+      %a{ href: "https://github.com/EOL/seabase"}
+        GitHub repository
+    
+    %p 
+      For updates and to give us suggestions, follow us on Twitter @MBLSeaBase.
+
+  - if @news
+    .container
+      %h2 News
+      - @news.each do |n|
+        .news_item
+          .news_date= n.created_at.strftime('%d %b %Y')
+          .news_subject= n.subject
+          .news_body= n.body

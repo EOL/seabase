@@ -3,6 +3,7 @@ get '/css/:filename.css' do
 end
 
 get '/' do
+  @news = NewsPost.visible_news
   haml :home
 end
 
@@ -22,10 +23,38 @@ get '/logout' do
   redirect '/', info: 'You logged out'
 end
 
-get '/news_edit' do
+get '/news' do
   authentication_required
   authorized_for_roles(['admin'])
+  haml :news
+end
+
+post '/news_posts' do 
+  NewsPost.create(user: current_user, 
+                  subject: params[:subject], 
+                  body: params[:body])
+  redirect '/news'
+end
+
+get '/news/:id' do
+  authentication_required
+  authorized_for_roles(['admin'])
+  @news_post = NewsPost.find(params[:id])
   haml :news_edit
+end
+
+put '/news' do
+  @news_post = NewsPost.find(params[:id])
+  @news_post.update(deleted: params[:deleted], 
+                    subject: params[:subject], 
+                    body: params[:body])
+  haml :news_edit
+end
+
+delete '/news' do
+  @news_post = NewsPost.find(params[:id])
+  @news_post.delete
+  haml :news
 end
 
 get '/blast' do

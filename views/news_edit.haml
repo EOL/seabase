@@ -1,5 +1,35 @@
-%h3 News Edit
+%h3 Edit News Post
 
-%form{ id: :add_news_post, action: '/news_posts', method: :post }
-  %legend{ for: :add_news_item } Add News Item
-  %textarea{ id: :add_news_item, rows: 10, cols: 100, autofocus: true }
+%form{ id: :add_news_post, action: '/news', method: :post }
+  %input{ type: :hidden, name: :_method, value: :put }
+  %input{ type: :hidden, name: :id, value: @news_post.id }
+  .item
+    - checked = @news_post.deleted?
+    %label{ for: :hide_news_item } Hide
+    %input{ id: :hide_news_item, type: :checkbox, name: :deleted, checked: checked }
+  .item
+    %label{ for: :add_subject, style: 'display: block' } News Subject
+    %input{ id: :add_subject, type: :text, name: :subject, value: @news_post.subject }
+  .item
+    %label{ for: :add_news_item, style: 'display: block' } News Body
+    %textarea{ id: :add_news_item, name: :body, rows: 10, cols: 100, autofocus: true }= @news_post.body
+  .item
+    %input{ id: :submit_news_item, type: :submit, value: 'Update' }
+.item_delete
+  %p Delete this news item (Use Hide if you want to preserve item in the database)
+  %form{ id: :delete_news_post, action: '/news', method: :post }
+    %input{ type: :hidden, name: :_method, value: :delete }
+    %input{ type: :hidden, name: :id, value: @news_post.id }
+    %input{ id: :delete_news_item, type: :submit, value: 'Delete' }
+  
+  
+
+%h3 Preview
+
+- deleted_class = @news_post.deleted? ? 'deleted' : nil 
+.news_item{ class: deleted_class }
+  .news_date= @news_post.created_at.strftime('%d %b %Y')
+  - subject = @news_post.subject
+  - subject = '(Hidden) ' + subject if @news_post.deleted? 
+  .news_subject= subject
+  .news_body= @news_post.body

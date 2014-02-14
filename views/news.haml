@@ -1,0 +1,25 @@
+%h3 News Edit
+
+%form{ id: :add_news_post, action: '/news_posts', method: :post }
+  .item
+    %label{ for: :add_subject, style: 'display: block' } News Subject
+    %input{ id: :add_subject, type: :text, name: :subject }
+  .item
+    %label{ for: :add_news_item, style: 'display: block' } News Body
+    %textarea{ id: :add_news_item, name: :body, rows: 10, cols: 100, autofocus: true }
+  .item
+    %input{ id: :submit_news_item, type: :submit, value: 'Add' }
+
+- NewsPost.all.order(created_at: :desc).each do |n|
+  - deleted_class = n.deleted? ? 'news_hidden' : nil 
+  .news_item{ class: deleted_class }
+    .news_controls
+      - if n.deleted
+        %a{ href: "/news/%s" % n.id } Unhide/Edit/Delete 
+      - else
+        %a{ href: "/news/%s" % n.id, } Edit/Hide
+
+    .news_date= n.created_at.strftime('%d %b %Y')
+    - subject = n.deleted? ? "(Hidden) %s" % n.subject : n.subject
+    .news_subject= subject
+    .news_body= n.body

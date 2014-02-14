@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :roles_users
+  has_many :news_posts
   has_many :roles, through: :roles_users
 
   def roles_names
