@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140214102955) do
   add_index "mapping_counts", ["transcript_id"], name: "index_mapping_counts_on_transcript_id", using: :btree
 
   create_table "news_posts", force: true do |t|
+    t.integer  "user_id"
     t.string   "subject"
     t.text     "body"
     t.datetime "created_at"
