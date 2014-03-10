@@ -7,14 +7,14 @@ gem 'rack', '~> 1.5'
 gem 'rack-test', '~> 0.6'
 gem 'rack-timeout', '~> 0.0.4'
 gem 'compass', '~> 0.12'
-gem 'sass', '~> 3.2'
+gem 'sass', '~> 3.2' # sass 3.3 would need alpha compass 0.13
 gem 'zen-grids', '~> 1.4'
 gem 'sinatra', '~> 1.4'
-gem 'sinatra-activerecord', '~> 1.3'
+gem 'sinatra-activerecord', '~> 1.4'
 gem 'sinatra-flash', '~> 0.3'
 gem 'sinatra-redirect-with-flash', '~> 0.2'
 gem 'haml', '~> 4.0'
-gem 'childprocess', '~> 0.4'
+gem 'childprocess', '~> 0.5'
 
 group :development do
   gem 'debugger', '~> 1.6'
