@@ -6,7 +6,7 @@ $light_grey: #efefef;
 @mixin brd($radius){
   border-style: solid;
   border-width: 1px;
-  border-color: #ddd;
+  border-color: #e8e8e8;
   -moz-border-radius: $radius;
   border-radius: $radius;
 }
@@ -45,6 +45,33 @@ a {
   background-repeat: no-repeat;
 }
 
+.news_container {
+  h3 {
+    color: black;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+  }
+  @include brd(5px);
+  width: 518px;
+  float: left;
+  margin-right: 1em;
+  margin-top: 1em;
+  .news_header {
+    padding: 10px;
+    box-shadow: 0 0 0 -3px rgba(0,0,0,0);
+    -webkit-transition: box-shadow .3s ease-out;
+    -moz-transition: box-shadow .3s ease-out;
+    -o-transition: box-shadow .3s ease-out;
+    transition: box-shadow .3s ease-out;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.twitter_container {
+  margin: 1em;
+}
+
 .item {
   margin-bottom: 0.5em;
 }
@@ -58,24 +85,29 @@ a {
 }
 
 .news_item {
-  @include brd(8px);
-  border: 1px solid $light_grey - #333;
-  padding: 1em;
-  padding-top: 0.5em;
-  margin-bottom: 0.5em;
   .news_controls {
     display: block;
-    float: right;
-  }
-  .news_date {
-    color: #aa4800; 
-  }
-  .news_subject {
     padding: 0.5em;
-    font-weight: bold;
+    text-align: right;
+  }
+  .news_item_header {
+    margin-top: 0.5em;
+    .news_date {
+      display: inline-block;
+      float: right;
+      padding: 0.5em;
+      margin: 0;
+      color: #666; 
+      font-size: 0.8em;
+    }
+    .news_subject {
+      padding-left: 1em;
+      font-weight: bold;
+    }
   }
   .news_body {
-    padding: 0.5em;
+    padding-left: 1em;
+    border-bottom: 1px solid #e8e8e8;
   }
 }
 

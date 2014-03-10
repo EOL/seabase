@@ -39,11 +39,27 @@
     %p 
       For updates and to give us suggestions, follow us on Twitter @MBLSeaBase.
 
-  - if @news && !@news.empty?
-    .container
-      %h2 News
+- unless @news.empty?
+  .container
+    .news_container
+      .news_header
+        %h3 News
       - @news.each do |n|
         .news_item
-          .news_date= n.created_at.strftime('%d %b %Y')
-          .news_subject= n.subject
+          .news_item_header
+            .news_date= n.created_at.strftime('%d %b %Y')
+            .news_subject= n.subject
           .news_body= n.body
+    .twitter_container
+      %a.twitter-timeline{ href: 'https://twitter.com/MBLSeaBase', 'data-widget-id' => '443045596794871809' } Tweets by @MBLSeaBase
+  :javascript
+    !function(d,s,id){
+      var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+      if(!d.getElementById(id)) {
+        js=d.createElement(s);js.id=id;
+        js.src=p+"://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+      }
+    }(document,"script","twitter-wjs");
+
+      
