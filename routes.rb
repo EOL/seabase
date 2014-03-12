@@ -77,6 +77,7 @@ get '/search.?:format?' do
     exact_search: (params[:exact_search] == 'true'),
     callback: params[:callback]
   }
+  session[:scientific_name] = opts[:scientific_name]
   @external_names = perform_search(opts)
   format_search_results(opts)
 end
@@ -110,6 +111,7 @@ get '/test_charts' do
                                  from transcripts 
                                  where name 
                                  like '%s%%'" % l.strip)
+
     transcripts.each do |tr|
       d = tr.table_items.unshift(Replicate.all_stages)
       d[-1][0] = tr.name
@@ -121,6 +123,9 @@ get '/test_charts' do
   end
   @max_y = max_y
   @table_data = data 
+  @fold_plot_data = File.read(File.join(settings.root, 'technical_files',
+                                        'fold_plot_data.json')).strip
+  @fold_plot_max = find_fold_plot_max(@fold_plot_data)
   haml :test_charts
 end
 
@@ -129,6 +134,16 @@ get '/test_d3' do
 end
 
 private
+
+def find_fold_plot_max(data)
+  data = JSON.parse(data)
+  data.shift
+  data = data.transpose
+  max_y = data.shift.max
+  max_x = data.shift.max
+  max = [max_y, max_x].max
+  Seabase.maxup(max)
+end
 
 def perform_search(opts)
   if opts[:exact_search]

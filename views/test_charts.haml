@@ -14,6 +14,8 @@
 %h3 Regression
 
 #regression_chart_container
+  #fold_plot_vertical_slider_container
+    #fold_plot_vertical_slider{ style: 'text-align: center;' }
   #regression_chart
 
 - google_chart_data = format_graph_data(@table_data)
@@ -26,6 +28,9 @@
   max_y = #{@max_y};
   min_y = 0;
 
+  fold_plot_max = #{@fold_plot_max};
+  fold_plot_min = 0;
+
   $(function() {
     $('#vertical_slider').slider({
       orientation: 'vertical',
@@ -36,13 +41,32 @@
       change: function(event, ui) {
         min_y = ui.values[0];
         max_y = ui.values[1];
-        drawChartSeparate();
+        drawOverlay();
+      }
+    });
+  });
+  
+  $(function() {
+    $('#fold_plot_vertical_slider').slider({
+      orientation: 'vertical',
+      range: true,
+      values: [fold_plot_min, fold_plot_max],
+      min: 0,
+      max: #{@fold_plot_max},
+      change: function(event, ui) {
+        fold_plot_min = ui.values[0];
+        fold_plot_max = ui.values[1];
+        drawFoldPlot();
       }
     });
   });
 
   function drawChartSeparate() {
+    drawOverlay();
+    drawFoldPlot();
+  }
 
+  function drawOverlay() {
     var combined_data = google
       .visualization
       .arrayToDataTable(#{google_chart_data});
@@ -100,18 +124,31 @@
     google.visualization.events.addListener(combined_table, 'select', function() {
       trace_chart.setSelection(combined_table.getSelection());
     });
-    //-----REGRESSION placeholder
+  }
 
-    var regr_data = google.visualization.arrayToDataTable([
-      ['set1', 'set2'],
-      [8, 37], [4, 19.5], [11, 52], [4, 22], [3, 16.5], [6.5, 32.8], [14, 72]]);
+  function drawFoldPlot() {
+    var regr_data = google.visualization.arrayToDataTable(#{@fold_plot_data});
 
     var regr_options = {
-      width: 1100,
-      height: 500,
-      title: 'Linear regression test',
+      trendlines: { 0: {} },   // Draw a trendline for data series 0.
+      width: 1000,
+      height:1000,
+      title: 'Fold Difference',
       legend: 'none',
-      trendlines: { 0: {} }    // Draw a trendline for data series 0.
+      vAxis: { 
+        title: 'Control Count',
+        viewWindow: {
+          max: fold_plot_max, 
+          min: fold_plot_min,
+        }
+      },
+      hAxis: { 
+        title: 'Experiment Count',
+        viewWindow: {
+          max: fold_plot_max, 
+          min: fold_plot_min,
+        }
+      }
     };
 
     var regr_chart = new google.visualization.ScatterChart(document.getElementById('regression_chart'));

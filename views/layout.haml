@@ -37,11 +37,11 @@
             Search for
             %em Nematostella vectensis 
             transcripts by 
-
+            - scientific_name = session[:scientific_name] || 'Mus musculus'
             %select{ name: 'scientific_name', id: 'scientific_name' }
-              %option{ value: 'Homo sapiens' } Human orthologs 
-              %option{ value: 'Mus musculus', selected: true } Mouse orthologs
-              %option{ value: 'Nematostella vectensis' } Nematostella annotations
+              %option{ value: 'Homo sapiens', selected: scientific_name == 'Homo sapiens'} Human orthologs 
+              %option{ value: 'Mus musculus', selected: scientific_name == 'Mus musculus' } Mouse orthologs
+              %option{ value: 'Nematostella vectensis', selected: scientific_name == 'Nematostella vectensis' } Nematostella annotations
             
             Name: 
             %input#term_search{ type: 'text', name: 'term', autofocus: true }

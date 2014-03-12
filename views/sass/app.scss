@@ -256,6 +256,21 @@ a {
   }
 }
 
+#regression_chart_container {
+  #fold_plot_vertical_slider_container {
+    float: right;
+    #fold_plot_vertical_slider{
+      positon: relative;
+      top: 198px;
+      left: -1100px;
+      height: 600px;
+      z-index: 10;
+    }
+  }
+
+  #regression_chart {}
+}
+
 .dir_item {
   @include brd(8px);
   padding: 10px;
