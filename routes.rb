@@ -11,6 +11,10 @@ get '/login' do
   haml :login
 end
 
+put '/default_ortholog' do
+  session[:scientific_name] = params[:scientific_name]
+end
+
 post '/login' do
   eperson = password_authorization(email: params[:email], 
                                                password: params[:password])
@@ -77,7 +81,6 @@ get '/search.?:format?' do
     exact_search: (params[:exact_search] == 'true'),
     callback: params[:callback]
   }
-  session[:scientific_name] = opts[:scientific_name]
   @external_names = perform_search(opts)
   format_search_results(opts)
 end

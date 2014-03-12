@@ -68,7 +68,7 @@
 
 :javascript
   $(function() {
-    $( "#term_search" ).autocomplete({
+    $("#term_search").autocomplete({
       source: function( request, response ) {
         $.ajax({
           url: "/search.json",
@@ -91,6 +91,18 @@
         $("#term_search").val(ui.item.label);
         $("#search_form").submit();
       },
+    });
+  });
+
+  $(function() {
+    $("#scientific_name").change(function() {
+      $.ajax({
+        url: "/default_ortholog",
+        method: "put",
+        data: {
+          scientific_name: $("#scientific_name option:selected").attr('value') 
+        }
+      });
     });
   });
 
