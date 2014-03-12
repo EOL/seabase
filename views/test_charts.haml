@@ -1,17 +1,16 @@
-%h2 Overlay
+%h2 Test Charts
 
 #chart_container
   #vertical_slider_container
     #vertical_slider{ style: 'text-align: center;' }
   #chart
-#table
-
-%h2 Trace
-
+    
 #trace_chart_container
   #trace_chart
+#average_chart_container
+  #average_chart
+#table
 
-%h3 Regression
 
 #regression_chart_container
   #fold_plot_vertical_slider_container
@@ -63,6 +62,7 @@
 
   function drawChartSeparate() {
     drawOverlay();
+    drawAverage();
     drawFoldPlot();
   }
 
@@ -74,7 +74,7 @@
     var combined_chart_options = {
       width: 1100,
       height: 500,
-      title: '#{@chart_title}',
+      title: 'Overlay Data',
       titleTextStyle: { fontSize: 18 },
       chartArea: { 
         width: '60%', 
@@ -98,6 +98,8 @@
       height: 500,
       isStacked: true,
       legend: 'none',
+      title: 'Cumulative Trace Data',
+      titleTextStyle: { fontSize: 18 },
       chartArea: { 
         width: '60%', 
       },
@@ -124,6 +126,29 @@
     google.visualization.events.addListener(combined_table, 'select', function() {
       trace_chart.setSelection(combined_table.getSelection());
     });
+  }
+  
+  function drawAverage() {
+    var avg_data = google
+      .visualization
+      .arrayToDataTable(#{@average_data});
+
+    var avg_chart_options = {
+      width: 1100,
+      height: 500,
+      title: 'Average Trace Data',
+      titleTextStyle: { fontSize: 18 },
+      chartArea: { 
+        width: '60%', 
+      },
+      hAxis: { title: 'Hours' }, 
+      vAxis: { 
+        title: 'Molecules per Embryo',
+      },
+    };
+
+    var avg_chart = new google.visualization.LineChart(document.getElementById('average_chart'));
+    avg_chart.draw(avg_data, avg_chart_options);
   }
 
   function drawFoldPlot() {

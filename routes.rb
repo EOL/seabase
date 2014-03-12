@@ -123,6 +123,7 @@ get '/test_charts' do
   end
   @max_y = max_y
   @table_data = data 
+  @average_data = format_graph_data(get_average_data(data))
   @fold_plot_data = File.read(File.join(settings.root, 'technical_files',
                                         'fold_plot_data.json')).strip
   @fold_plot_max = find_fold_plot_max(@fold_plot_data)
@@ -134,6 +135,20 @@ get '/test_d3' do
 end
 
 private
+
+def get_average_data(data)
+  head = data[0]
+  data = data.transpose
+  data.shift
+  data = data.map do |d|
+    avg = d.inject { |sum, i| sum + i }/d.size.to_f
+    avg = 0.0 if avg < 0
+    avg
+  end
+  data.unshift("Average")
+  data = [data]
+  data.unshift(head)
+end
 
 def find_fold_plot_max(data)
   data = JSON.parse(data)
