@@ -4,7 +4,6 @@ gem 'rake', '~> 10.1'
 gem 'activerecord', '~> 4.0'
 gem 'mysql2', '~> 0.3'
 gem 'rack', '~> 1.5'
-gem 'rack-test', '~> 0.6'
 gem 'rack-timeout', '~> 0.0.4'
 gem 'compass', '~> 0.12'
 gem 'sass', '~> 3.2' # sass 3.3 would need alpha compass 0.13
@@ -34,6 +33,7 @@ group :test do
   gem 'travis-lint', '~> 1.7'
   gem 'launchy', '~> 2.4'
   gem 'git', '~> 1.2'
+  gem 'rack-test', '~> 0.6'
 end
 
 

@@ -2,8 +2,9 @@ require_relative '../environment'
 require_relative 'seabase/version'
 require_relative 'seabase/normalizer'
 require_relative 'seabase/blast_cgi'
+require_relative 'seabase/cosine_similarity'
 
-class Seabase
+module Seabase
 
   def self.maxup(num)
     digits = 10 ** Math.log10(num).floor

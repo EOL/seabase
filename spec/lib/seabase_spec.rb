@@ -8,12 +8,6 @@ describe Seabase do
 
   end
 
-  describe '.new' do
-    it 'initializes' do
-      expect(seabase).to be_kind_of Seabase
-    end
-  end
-
   describe '.maxup' do
     it 'finds number reasonable to display on graphs axes' do
       data = [[1234, 1300], [12, 13], [234, 240], [1, 1], [34, 35], [999, 1010]]

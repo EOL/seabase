@@ -1,6 +1,6 @@
 require 'set'
 
-class Seabase
+module Seabase
 
   class SetLookup
 

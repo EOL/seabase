@@ -2,7 +2,7 @@ require 'ostruct'
 require 'yaml'
 require 'active_record'
 
-class Seabase
+module Seabase
 
   def self.env
     @env ||= ENV['SEABASE_ENV'] ? ENV['SEABASE_ENV'].to_sym : :development
