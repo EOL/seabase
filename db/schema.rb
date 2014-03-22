@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140214102955) do
+ActiveRecord::Schema.define(version: 20140321233101) do
 
   create_table "comments", force: true do |t|
     t.integer  "news_post_id"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20140214102955) do
 
   create_table "conditions", force: true do |t|
     t.text "description"
+  end
+
+  create_table "expression_similarities", force: true do |t|
+    t.integer "transcript_id1", null: false
+    t.integer "transcript_id2", null: false
+    t.float   "score"
   end
 
   create_table "external_matches", force: true do |t|
@@ -57,6 +63,7 @@ ActiveRecord::Schema.define(version: 20140214102955) do
     t.integer "replicate_id"
     t.integer "transcript_id"
     t.integer "mapping_count"
+    t.float   "normalized_count"
   end
 
   add_index "mapping_counts", ["replicate_id"], name: "index_mapping_counts_on_replicate_id", using: :btree
@@ -71,6 +78,15 @@ ActiveRecord::Schema.define(version: 20140214102955) do
     t.datetime "updated_at"
     t.boolean  "deleted",    default: false
   end
+
+  create_table "normalized_counts", force: true do |t|
+    t.integer "transcript_id",       null: false
+    t.integer "stage"
+    t.integer "technical_replicate"
+    t.float   "count"
+  end
+
+  add_index "normalized_counts", ["transcript_id"], name: "index_normalized_counts_on_transcript_id", using: :btree
 
   create_table "replicates", force: true do |t|
     t.integer "taxon_id"

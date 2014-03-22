@@ -47,6 +47,17 @@ describe Seabase::CosineSimilarity do
       it { should eq -0.05 }
     end
   
+    context 'similar vectors with mismatched nulls' do
+      let (:v1) { [0, 40.3, nil, 6.8, 27, 29] }
+      let (:v2) { [0, 79.44, 1, 10, 30, 57] }
+      it { should eq 0.98 }
+    end
+    
+    context 'similar vectors with matched nulls' do
+      let (:v1) { [0, 40.3, nil, 6.8, 27, 29] }
+      let (:v2) { [0, 79.44, nil, 10, 30, 57] }
+      it { should eq 0.98 }
+    end
   end
 
 end
