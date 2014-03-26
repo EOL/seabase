@@ -7,7 +7,7 @@ module Seabase::CosineSimilarity
     len1 = Math.sqrt(dot_product(a, a))
     len2 = Math.sqrt(dot_product(b, b))
     cosine = prod / (len1 * len2)
-    cosine.round(2)
+    cosine.round(3)
   end
 
   private

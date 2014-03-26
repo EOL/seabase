@@ -1,6 +1,7 @@
 class Transcript < ActiveRecord::Base
   has_many :external_matches
   has_many :external_names, through: :external_matches
+  has_many :normalized_counts
   def table_items
     Seabase::Normalizer.new(Replicate.all(), 
                             [self], 
@@ -12,5 +13,18 @@ class Transcript < ActiveRecord::Base
 
   def fasta_sequence
     ">%s\n%s" % [name, transcript_sequence]
+  end
+
+  def vector
+    Transcript.connection.select_values("
+      select sum(count) 
+      from normalized_counts
+      where transcript_id = %s
+      group by stage
+      order by stage" % id)
+  end
+
+  def similarity(transcript)
+    Seabase::CosineSimilarity.calculate(vector, transcript.vector)
   end
 end
