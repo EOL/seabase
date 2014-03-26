@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20140321233101) do
     t.integer "replicate_id"
     t.integer "transcript_id"
     t.integer "mapping_count"
-    t.float   "normalized_count"
   end
 
   add_index "mapping_counts", ["replicate_id"], name: "index_mapping_counts_on_replicate_id", using: :btree

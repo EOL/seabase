@@ -32,17 +32,17 @@ public class CosineCalc {
 
   private static Double cosine_similarity(List<Integer> a, 
       List<Integer> b) {
-    Integer prod = dot_product(a, b);
+    Double prod = dot_product(a, b);
     Double len1 = Math.sqrt(dot_product(a, a));
     Double len2 = Math.sqrt(dot_product(b, b));
     Double cosine = prod / (len1 * len2);
     return cosine;
   }
 
-  private static Integer dot_product(List<Integer> a,
+  private static Double dot_product(List<Integer> a,
       List<Integer> b) {
-    Integer result = 0;
-    for (Integer i = 0; i < a.size(); i++) {
+    Double result = 0.0;
+    for (Integer i = 0; i < a.size(); ++i) {
       result += a.get(i) * b.get(i);
     }
     return result;
@@ -50,7 +50,7 @@ public class CosineCalc {
 
   private static void calculate(){
     try {
-      PrintWriter writer = new PrintWriter("similarities.tcv", "UTF-8");
+      PrintWriter writer = new PrintWriter("similarities.tsv", "UTF-8");
       System.out.println("Calculating cosine");
       for (Map.Entry<Integer, 
           List<Integer>> entry1: vectors.entrySet()) {
@@ -62,13 +62,14 @@ public class CosineCalc {
           if(key1 != key2) {
             Double similarity = cosine_similarity(entry1.getValue(), 
                 entry2.getValue());
-            String result = String.format("%s\t%s\t%.2f", 
+            String result = String.format("%s\t%s\t%.3f", 
                 key1, key2, similarity);
             writer.println(result);
             /* System.out.println(result); */
           }
         }
       }
+      writer.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -123,7 +124,7 @@ private static void get_vectors() {
   private static void get_transcript_ids() {
     try {
       st = c.createStatement();
-      rs = st.executeQuery("select id from transcripts");
+      rs = st.executeQuery("select id from transcripts limit 10000");
 
         while (rs.next()) {
             transcripts_ids.add(rs.getInt(1));

@@ -31,7 +31,7 @@ describe Seabase::CosineSimilarity do
     context 'dissimilar vectors' do 
       let (:v1) { [40.3, 0, 15, 0.8, 7, 1157] }
       let (:v2) { [0, 79.44, 1, 10, 30, 1] }
-      it { should eq 0.01 }
+      it { should eq 0.014 }
     end
 
     context 'externally calculated vectors' do
@@ -44,7 +44,7 @@ describe Seabase::CosineSimilarity do
                   0.24819750,  0.09406221, 0.16681692, 
                   -0.04211932, -0.07130129, -0.08182200, 
                   -0.08266852, -0.07215885] }
-      it { should eq -0.05 }
+      it { should eq -0.054 }
     end
   
     context 'similar vectors with mismatched nulls' do
