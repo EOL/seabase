@@ -32,7 +32,8 @@ class Seabase::GephiGexfBuilder
   end
 
   def stop
-    File.open(@path_out, 'w:utf-8') { |f| @doc.write_xml_to f }
+    Seabase.logger.info "Saving xml to a %s" % @path_out
+    File.open(@path_out, 'w:utf-8') { |f| f.write @doc.to_xml }
   end
 
   def template

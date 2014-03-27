@@ -3,6 +3,7 @@ require 'yaml'
 require 'active_record'
 require 'csv'
 require 'fileutils'
+require 'nokogiri'
 
 module Seabase
 
