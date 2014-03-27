@@ -1,6 +1,8 @@
 require 'ostruct'
 require 'yaml'
 require 'active_record'
+require 'csv'
+require 'fileutils'
 
 module Seabase
 

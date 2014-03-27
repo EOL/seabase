@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 public class CosineCalc {
   private static final String dbClassName = "com.mysql.jdbc.Driver";
   private static final String CONNECTION =
-    "jdbc:mysql://localhost/seabase_dev";
+    "jdbc:mysql://localhost/seabase_test";
   private static List<Integer> transcripts_ids = 
     new ArrayList<Integer>();
   private static HashMap<Integer, List<Integer>> vectors = 
@@ -124,7 +124,7 @@ private static void get_vectors() {
   private static void get_transcript_ids() {
     try {
       st = c.createStatement();
-      rs = st.executeQuery("select id from transcripts limit 10000");
+      rs = st.executeQuery("select id from transcripts");
 
         while (rs.next()) {
             transcripts_ids.add(rs.getInt(1));
