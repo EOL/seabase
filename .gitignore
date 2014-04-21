@@ -46,5 +46,5 @@ blast/TmpGifs/*.gif
 .yardoc
 _yardoc
 doc/
-java/similarities.tsv
+java/similarities*
 java/*.class

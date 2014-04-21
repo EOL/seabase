@@ -21,6 +21,7 @@ public class CosineCalc {
   private static Statement st;
   private static ResultSet rs;
   private static Integer tr_id;
+  private static int time_offset[] = {-1, 0, 1};
 
   public static void main(String[] args) {
     get_connection();
@@ -43,29 +44,58 @@ public class CosineCalc {
       List<Integer> b) {
     Double result = 0.0;
     for (Integer i = 0; i < a.size(); ++i) {
-      result += a.get(i) * b.get(i);
+      result += (double) a.get(i) * (double) b.get(i);
     }
     return result;
   }
 
   private static void calculate(){
     try {
-      PrintWriter writer = new PrintWriter("similarities.tsv", "UTF-8");
       System.out.println("Calculating cosine");
+      for ( Integer i = 0; i < time_offset.length; ++i ) {
+        calculate_offset(i);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+  
+  private static void calculate_offset(Integer offset_index) {
+    List<Integer> entry1_vector;
+    List<Integer> entry2_vector;
+
+    try {
+      String info = String.format("Calculating offset %s",
+         offset_index);
+      System.out.println(info);
+
+      String file_name = String.format("similarities_%s.tsv", offset_index);
+      PrintWriter writer = new PrintWriter(file_name, "UTF-8");
+      Integer count = 0;
+      Integer inverted_offset_index = invert_offset_index(offset_index);
       for (Map.Entry<Integer, 
           List<Integer>> entry1: vectors.entrySet()) {
+        count += 1;
         Integer key1 = entry1.getKey();
-        System.out.println(key1);
+        entry1_vector = get_vector(entry1.getValue(),
+            offset_index);
+        if (count % 1000 == 0) {
+          String result = String.format("Going through %s's transcript",
+             count);
+          System.out.println(result);
+        }
         for (Map.Entry<Integer, List<Integer>> entry2: 
             vectors.entrySet()) {
           Integer key2 = entry2.getKey();
+           
           if(key1 != key2) {
-            Double similarity = cosine_similarity(entry1.getValue(), 
-                entry2.getValue());
+            entry2_vector = get_vector(entry2.getValue(),
+                inverted_offset_index);
+            Double similarity = cosine_similarity(entry1_vector, 
+                entry2_vector);
             String result = String.format("%s\t%s\t%.3f", 
                 key1, key2, similarity);
             writer.println(result);
-            /* System.out.println(result); */
           }
         }
       }
@@ -74,7 +104,40 @@ public class CosineCalc {
       System.out.println(e.getMessage());
     }
   }
-private static void get_vectors() {
+
+
+  private static List<Integer> get_vector(List<Integer> list1, 
+      Integer offset_index) {
+    List<Integer> values = new ArrayList<Integer>();
+    Integer count = -1;
+    for(Integer value : list1) {
+      count += 1;
+      if (count == 0) {
+        if (offset_index != 0) {
+          values.add(value);
+        }
+      } else if (count == 19) {
+        if (offset_index != 2) {
+          values.add(value);
+        }
+      } else {
+        values.add(value);
+      }
+    }
+    return values;
+  }
+
+  private static Integer invert_offset_index(Integer offset_index) {
+    Integer inverted_index = offset_index;
+    if (offset_index == 0) {
+      inverted_index = 2;
+    } else if (offset_index == 2) {
+      inverted_index = 0;
+    }
+    return inverted_index;
+  }
+
+  private static void get_vectors() {
     try {
       System.out.println("Collecting vectors");
 
@@ -124,7 +187,12 @@ private static void get_vectors() {
   private static void get_transcript_ids() {
     try {
       st = c.createStatement();
-      rs = st.executeQuery("select id from transcripts limit 10200");
+      /* rs = st.executeQuery("select id from transcripts"); */
+      rs = st.executeQuery("select transcript_id, max(`count`) as max_count " +
+                           "from normalized_counts " + 
+                           "group by transcript_id " + 
+                           "having max_count > 1000 " +
+                           "order by transcript_id");
 
         while (rs.next()) {
             transcripts_ids.add(rs.getInt(1));

@@ -18,14 +18,20 @@ require_relative '../lib/seabase'
 
 Seabase.logger = Logger.new($stdout)
 
-path_in = File.expand_path('../../java/similarities.tsv', __FILE__)
-path_out = File.expand_path("../../tmp/seabase.%s" % FORMAT, __FILE__)
-threshold = THRESHOLD.to_f
-format = FORMAT
+path = File.expand_path('../../java', __FILE__)
 
-ge = Seabase::GephiExporter.new(path_in: path_in,
-                           path_out: path_out,
-                           threshold: threshold,
-                           format: format)
+Dir.entries(path).select { |f| f.match(/similarities_\d.tsv/) }.each do |file|
+  Seabase.logger.info("Generating %s for %s" % [FORMAT, file])
+  path_in = File.join(path, file)
+  file_out = file.gsub('tsv', FORMAT)
+  path_out = File.expand_path("../../tmp/%s" % file_out, __FILE__)
+  threshold = THRESHOLD.to_f
+  format = FORMAT
 
-ge.export
+  ge = Seabase::GephiExporter.new(path_in: path_in,
+                             path_out: path_out,
+                             threshold: threshold,
+                             format: format)
+
+  ge.export
+end
