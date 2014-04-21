@@ -40,4 +40,13 @@ helpers do
     end
     res
   end
+
+  def current_taxon
+    #TODO we have to save taxon_id, not name
+    scientific_name = 'Mus musculus'
+    if session and session[:scientific_name]
+      scientific_name = session[:scientific_name]
+    end
+    Taxon.find_by_scientific_name(scientific_name) 
+  end
 end

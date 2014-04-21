@@ -101,6 +101,10 @@ get '/transcript/?:id?' do
   @chart_title = "Transcript %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
+  @ens, @other_ens = @tr.external_names.partition do |t| 
+    t.taxon_id == current_taxon.id
+  end
+  @en = @ens.first
   haml :transcript
 end
 
