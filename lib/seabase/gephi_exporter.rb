@@ -17,8 +17,6 @@ class Seabase::GephiExporter
     CSV.open(@path_in, args).each do |r|
       count += 1
       if (r[2].to_f > @threshold) && not_duplicate(r)
-        r[0] = url_id r[0]
-        r[1] = url_id r[1]
         @builder.add_row(r)
       end
       if count % 1_000_000 == 0
@@ -29,10 +27,6 @@ class Seabase::GephiExporter
   end
 
   private
-
-  def url_id(id)
-    "http://seabase.core.cli.mbl.edu/transcript/%s" % id
-  end
   
   def not_duplicate(r)
     node = r[0..1].sort.join('-')

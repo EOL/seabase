@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321233101) do
+ActiveRecord::Schema.define(version: 20140422182104) do
 
   create_table "comments", force: true do |t|
     t.integer  "news_post_id"
@@ -23,12 +23,6 @@ ActiveRecord::Schema.define(version: 20140321233101) do
 
   create_table "conditions", force: true do |t|
     t.text "description"
-  end
-
-  create_table "expression_similarities", force: true do |t|
-    t.integer "transcript_id1", null: false
-    t.integer "transcript_id2", null: false
-    t.float   "score"
   end
 
   create_table "external_matches", force: true do |t|
@@ -57,6 +51,17 @@ ActiveRecord::Schema.define(version: 20140321233101) do
 
   create_table "external_sources", force: true do |t|
     t.string "name"
+  end
+
+  create_table "gephi_imports", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "gephi_records", force: true do |t|
+    t.integer "gephi_import_id"
+    t.integer "transcript_id"
+    t.integer "modularity"
+    t.float   "page_rank"
   end
 
   create_table "mapping_counts", force: true do |t|

@@ -3,5 +3,7 @@ module Seabase
   end
   class FileExtensionError < RuntimeError
   end
+  class GephiImportError < RuntimeError
+  end
 end
 

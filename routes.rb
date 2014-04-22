@@ -116,6 +116,16 @@ get '/import' do
   haml :import
 end
 
+post 'upload_gephi' do
+  file_name = file[:filename]
+  file_path = File.join([Dir.mktmpdir] +
+    [file_name.gsub( /[^a-zA-Z0-9_\.]/, '_')])
+  FileUtils.mv(file[:tempfile].path, file_path)
+    sha = Digest::SHA1.file(file_path).hexdigest
+  GephiImporter.process_upload(file_path)
+  redirect '/'
+end
+
 get '/test_charts' do
   data = []
   f = File.open(File.join(settings.root, 'technical_files', 'test_set'))

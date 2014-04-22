@@ -34,7 +34,7 @@ describe Seabase::GephiCsvBuilder do
       subject.start
       subject.add_row([1, 2, 0.99])
       subject.stop
-      expect(File.read(path_out)).to eq "1;2\n"
+      expect(File.read(path_out)).to eq "http://seabase.core.cli.mbl.edu/transcript/1;http://seabase.core.cli.mbl.edu/transcript/2\n" 
     end
   end
 end

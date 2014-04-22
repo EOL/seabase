@@ -1,0 +1,20 @@
+%p 
+  You can import data from Gephi calculations back to seabase. At the moment
+  %a{ href: 'http://en.wikipedia.org/wiki/Modularity_(networks)' } Modularity 
+  and 
+  %a{ href: 'http://en.wikipedia.org/wiki/PageRan' } PageRank 
+  calculations are supported.
+
+%p 
+  To proceed calculate PageRank and Modularity in Gephi Overview tab, then
+  change to 'Data Laboratory' tab and export data into a csv file (only ID,
+  PageRank, Modularity fields are needed). Then upload resulting file to 
+  Seabase using this page.
+
+%form{ method: :post, action: '/upload_gephi', enctype: 'multipart/form-data', 'accept-charset' => 'UTF-8' }
+  %label{ for: 'import_name' } Name of the import
+  %input#import_name{ type: :text, size: 40 }
+  %label{ for: 'gephi_upload' } Upload
+  %input#gephi_upload{ type: :file, size: 40 }
+  %input{ type: :submit, value: :Upload }
+

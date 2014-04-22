@@ -12,7 +12,7 @@ end
 
 ENV['SEABASE_ENV'] = OPTS[:environment] || 'development'
 FORMAT = OPTS[:format] || 'csv'
-THRESHOLD = OPTS[:threshold] || '0.99'
+THRESHOLD = OPTS[:threshold] || '0.995'
 
 require_relative '../lib/seabase'
 

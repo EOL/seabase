@@ -17,7 +17,13 @@ class Seabase::GephiCsvBuilder
   end
 
   def add_row(ary)
-    @file.write("%s;%s\n" % ary[0..1])
+    @file.write("%s;%s\n" % ary[0..1].map {|id| url_id(id)})
+  end
+  
+  private
+
+  def url_id(id)
+    "http://seabase.core.cli.mbl.edu/transcript/%s" % id
   end
 
 end
