@@ -1,0 +1,34 @@
+%h3 Export
+
+%p 
+  At this stage we use cosine similarity to find similar expression 
+  patterns and then we export similarity data to the network visualization 
+  and analysis application 
+  %a{ href: 'http://gephi.org' } Gephi.
+  The process takes two stages.
+
+%h4 Stage 1: Similarity calculations
+
+This stage has to be performed only once. As soon as similarity is calculated 
+the date can be reused. 
+
+%form#cosine{ method: :post, action: '/cosine_calculate' }
+  %input#cosine_submit{ type: :submit, value: 'Calculate similarity', disabled: true }
+
+%p Calculation is finished and button is disabled
+
+%h4 Stage 2: Download files to open in Gephi
+
+%p 
+  These file represent undirectional graph where nodes are transcripts and
+  edges represent existance of a strong similarity. Offset in one hour 
+  represents similarity calculated with shift (for example 5 hour data point 
+  in one transcript was matchres with 4 and 6 hours of all other matches
+
+.item
+  %a{ href: '/nematostella_0h_offset.csv' } 
+    Nematostella, 0h offset, 99.5% similarity 
+
+.item
+  %a{ href: '/nematostella_1h_offset.csv' } 
+    Nematostella, 1h offset, 99% similarity 

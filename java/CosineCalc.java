@@ -21,7 +21,7 @@ public class CosineCalc {
   private static Statement st;
   private static ResultSet rs;
   private static Integer tr_id;
-  private static int time_offset[] = {-1, 0, 1};
+  private static int time_offset[] = {-1, 0};
 
   public static void main(String[] args) {
     get_connection();

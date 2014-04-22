@@ -136,7 +136,7 @@ describe '/transcript' do
   it 'renders' do
     visit '/transcript/17065?external_name_id=25360'
     expect(page.status_code).to eq 200
-    expect(page.body).to match /transcript comp12135_c0_seq1.+ QSOX1/m
+    expect(page.body).to match /transcript comp12135_c0_seq1/m
     expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
   end
   
@@ -150,6 +150,20 @@ describe '/transcript' do
     expect(page.status_code).to eq 200
     expect(page.body).to match /transcript comp12135_c0_seq1/
     expect(page.body).to match /ATCTCATGTAAAAGGTTGAGAAA/
+  end
+end
+
+describe '/export' do
+  it 'renders' do
+    visit '/export'
+    expect(page.status_code).to eq 200
+  end
+end
+
+describe '/import' do
+  it 'renders' do
+    visit '/import'
+    expect(page.status_code).to eq 200
   end
 end
 

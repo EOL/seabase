@@ -108,6 +108,14 @@ get '/transcript/?:id?' do
   haml :transcript
 end
 
+get '/export' do
+  haml :export
+end
+
+get '/import' do
+  haml :import
+end
+
 get '/test_charts' do
   data = []
   f = File.open(File.join(settings.root, 'technical_files', 'test_set'))

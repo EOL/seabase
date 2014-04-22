@@ -24,6 +24,10 @@
               %a{ href: '/search' } Search
             %li
               %a{ href: '/blast' } Blast
+            %li
+              %a{ href: '/export' } Export
+            %li
+              %a{ href: '/import' } Import
             - if current_user
               - if current_user.admin?
                 %li
