@@ -9,8 +9,6 @@
   #trace_chart
 #table
 
-- google_chart_data = format_graph_data(@table_data)
-
 :javascript
   google.load('visualization', '1', {packages:["corechart"]});
   google.load('visualization', '1', {packages:['table']});
@@ -18,9 +16,6 @@
   
   max_y = #{@max_y};
   min_y = 0;
-
-  fold_plot_max = #{@fold_plot_max};
-  fold_plot_min = 0;
 
   $(function() {
     $('#vertical_slider').slider({
@@ -37,21 +32,6 @@
     });
   });
   
-  $(function() {
-    $('#fold_plot_vertical_slider').slider({
-      orientation: 'vertical',
-      range: true,
-      values: [fold_plot_min, fold_plot_max],
-      min: 0,
-      max: #{@fold_plot_max},
-      change: function(event, ui) {
-        fold_plot_min = ui.values[0];
-        fold_plot_max = ui.values[1];
-        drawFoldPlot();
-      }
-    });
-  });
-
   function drawChartSeparate() {
     drawOverlay();
   }

@@ -7,7 +7,7 @@ describe Transcript do
     it 'returns array of averaged horly samples sorted by time' do
       expect(t1.vector).to be_kind_of Array
       expect(t1.vector.size).to eq 20
-      expect(t1.vector[0]).to be_close(4.24, 0.01)
+      expect(t1.vector[0]).to be_within(0.01).of(4.24)
     end
   end
 

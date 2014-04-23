@@ -124,7 +124,8 @@ end
 
 get '/traces/:trace_id' do
   @trace = Trace.find(params[:trace_id])
-  @transcript_data = transcripts_json(@trace)
+  @table_data, @max_y = transcripts_data(@trace)
+  @transcripts_json = format_graph_data(@table_data) 
   haml :trace
 end
 
@@ -168,6 +169,27 @@ get '/test_d3' do
 end
 
 private
+
+def transcripts_data(trace)
+  data = [["Hours", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
+           11, 12, 13, 14, 15, 16, 17, 18, 19]]
+  transcript_ids = trace.gephi_records.map(&:transcript_id)
+  max_y = 0
+  transcript_ids.each do |id|
+    tr = Transcript.find(id)
+    values = Transcript.connection.select_values("
+      select sum(count) 
+      from normalized_counts 
+      where transcript_id = %s 
+      group by stage order by stage" % id)
+    max = values.max
+    max_y = max if max > max_y
+    values.unshift(tr.name)
+    data << values
+  end
+
+  [data, max_y]
+end
 
 def get_average_data(data)
   head = data[0]
