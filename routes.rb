@@ -116,15 +116,22 @@ get '/import' do
   haml :import
 end
 
-get '/traits/:gephi_import_id' do
+get '/gephi_imports/:gephi_import_id' do
   @gephi_import = GephiImport.find(params[:gephi_import_id])
-  haml :traits
+  @traces = Trace.where(gephi_import_id: @gephi_import.id)
+  haml :gephi_import
+end
+
+get '/traces/:trace_id' do
+  @trace = Trace.find(params[:trace_id])
+  @transcript_data = transcripts_json(@trace)
+  haml :trace
 end
 
 post '/upload_gephi' do
   file = params[:file]
   @gephi_import = GephiImport.process_file(file[:tempfile], params[:name])
-  redirect "/traits/%s" % @gephi_import.id
+  redirect "/gephi_imports/%s" % @gephi_import.id
 end
 
 get '/test_charts' do

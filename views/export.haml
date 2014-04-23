@@ -1,4 +1,4 @@
-%h3 Export
+%h3 Export to Gephi
 
 %p 
   At this stage we use cosine similarity to find similar expression 
@@ -13,7 +13,9 @@ This stage has to be performed only once. As soon as similarity is calculated
 the date can be reused. 
 
 %form#cosine{ method: :post, action: '/cosine_calculate' }
-  %input#cosine_submit{ type: :submit, value: 'Calculate similarity', disabled: true }
+  .item
+  .item
+    %input#cosine_submit{ type: :submit, value: 'Calculate similarity', disabled: true }
 
 %p Calculation is finished and button is disabled
 
@@ -26,9 +28,9 @@ the date can be reused.
   in one transcript was matchres with 4 and 6 hours of all other matches
 
 .item
-  %a{ href: '/nematostella_0h_offset.csv' } 
+  %a{ href: '/nematostella_0h.csv' } 
     Nematostella, 0h offset, 99.5% similarity 
 
 .item
-  %a{ href: '/nematostella_1h_offset.csv' } 
+  %a{ href: '/nematostella_1h.csv' } 
     Nematostella, 1h offset, 99% similarity 

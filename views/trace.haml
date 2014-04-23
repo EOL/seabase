@@ -1,0 +1,120 @@
+%h2= "Trace (with %s transcripts)" % @trace.gephi_records.count
+
+#chart_container
+  #vertical_slider_container
+    #vertical_slider{ style: 'text-align: center;' }
+  #chart
+    
+#trace_chart_container
+  #trace_chart
+#table
+
+- google_chart_data = format_graph_data(@table_data)
+
+:javascript
+  google.load('visualization', '1', {packages:["corechart"]});
+  google.load('visualization', '1', {packages:['table']});
+  google.setOnLoadCallback(drawChartSeparate);
+  
+  max_y = #{@max_y};
+  min_y = 0;
+
+  fold_plot_max = #{@fold_plot_max};
+  fold_plot_min = 0;
+
+  $(function() {
+    $('#vertical_slider').slider({
+      orientation: 'vertical',
+      range: true,
+      values: [min_y, max_y],
+      min: 0,
+      max: #{@max_y},
+      change: function(event, ui) {
+        min_y = ui.values[0];
+        max_y = ui.values[1];
+        drawOverlay();
+      }
+    });
+  });
+  
+  $(function() {
+    $('#fold_plot_vertical_slider').slider({
+      orientation: 'vertical',
+      range: true,
+      values: [fold_plot_min, fold_plot_max],
+      min: 0,
+      max: #{@fold_plot_max},
+      change: function(event, ui) {
+        fold_plot_min = ui.values[0];
+        fold_plot_max = ui.values[1];
+        drawFoldPlot();
+      }
+    });
+  });
+
+  function drawChartSeparate() {
+    drawOverlay();
+  }
+
+  function drawOverlay() {
+    var combined_data = google
+      .visualization
+      .arrayToDataTable(#{@transcripts_json});
+
+    var combined_chart_options = {
+      width: 1100,
+      height: 500,
+      title: 'Overlay Data',
+      titleTextStyle: { fontSize: 18 },
+      chartArea: { 
+        width: '60%', 
+      },
+      hAxis: { title: 'Hours' }, 
+      vAxis: { 
+        title: 'Molecules per Embryo',
+        viewWindow: {
+          max: max_y, 
+          min: min_y,
+        }
+      },
+    };
+
+    var combined_table_options = {
+      width: 1100,
+    }
+
+    var trace_chart_options = {
+      width: 1100,
+      height: 500,
+      isStacked: true,
+      legend: 'none',
+      title: 'Cumulative Trace Data',
+      titleTextStyle: { fontSize: 18 },
+      chartArea: { 
+        width: '60%', 
+      },
+      hAxis: { title: 'Hours' }, 
+      vAxis: { 
+        title: 'Molecules per Embryo',
+      },
+
+    };
+
+    data_view = new google.visualization.DataView(combined_data);
+    
+    var combined_chart = new google.visualization.LineChart(document.getElementById('chart'));
+    combined_chart.draw(combined_data, combined_chart_options);
+    var combined_table = new google.visualization.Table(document.getElementById('table'));
+    combined_table.draw(data_view, combined_table_options);
+    var trace_chart = new google.visualization.AreaChart(document.getElementById('trace_chart'));
+    trace_chart.draw(combined_data, trace_chart_options);
+
+    google.visualization.events.addListener(combined_table, 'select', function() {
+      combined_chart.setSelection(combined_table.getSelection());
+    });
+
+    google.visualization.events.addListener(combined_table, 'select', function() {
+      trace_chart.setSelection(combined_table.getSelection());
+    });
+  }
+  

@@ -14,7 +14,7 @@
 %form{ method: :post, action: '/upload_gephi', enctype: 'multipart/form-data', 'accept-charset' => 'UTF-8' }
   .item
     %label{ for: 'import_name' } Name of the import
-    %input#import_name{ type: :text, size: 40 }
+    %input#import_name{ type: :text, size: 40, name: :name }
   .item
     %label{ for: 'gephi_upload' } Upload
     %input#gephi_upload{ type: :file, name: :file, accept: 'text/csv' }

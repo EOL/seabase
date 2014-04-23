@@ -1,6 +1,6 @@
-class CreateTraits < ActiveRecord::Migration
+class CreateTraces < ActiveRecord::Migration
   def change
-    create_table :traits do |t|
+    create_table :traces do |t|
       t.references :gephi_import, index: true
     end
   end

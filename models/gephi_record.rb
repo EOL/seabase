@@ -1,3 +1,3 @@
 class GephiRecord < ActiveRecord::Base
-  belongs_to :trait
+  belongs_to :trace
 end

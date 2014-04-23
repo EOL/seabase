@@ -29,7 +29,7 @@ def login_as_admin
 end
 
 def truncate_db
-  %w(comments news_posts gephi_imports gephi_records traits).each do |t|
+  %w(comments news_posts gephi_imports gephi_records traces).each do |t|
     Taxon.connection.execute("truncate table %s" % t)
   end
 end
