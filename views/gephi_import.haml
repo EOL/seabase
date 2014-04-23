@@ -4,6 +4,6 @@
 - if @gephi_import.name.to_s.strip != ''
   %h3= "Name: " + @gephi_import.name
 
-- @traces.each_with_index do |trace, i|
+- @traces.sort_by(&:transcript_count).reverse.each_with_index do |trace, i|
   .item
     %a{ href: "/traces/%s" % trace.id }= "Trace %s: %s transcripts" % [(i + 1), trace.gephi_records.count]
