@@ -101,10 +101,7 @@ get '/transcript/?:id?' do
   @chart_title = "Transcript %s" % @tr.name
   @table_data = @tr.table_items.unshift(Replicate.all_stages)
   @name = "Transcript #{@tr.name}"
-  @ens, @other_ens = @tr.external_names.partition do |t| 
-    t.taxon_id == current_taxon.id
-  end
-  @en = @ens.first
+  @en = get_homolog(@tr)
   haml :transcript
 end
 
@@ -170,6 +167,12 @@ end
 
 private
 
+def get_homolog(transcript)
+  transcript.external_names.select do |t| 
+    t.taxon_id == current_taxon.id
+  end.first
+end
+
 def transcripts_data(trace)
   data = [["Hours", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
            11, 12, 13, 14, 15, 16, 17, 18, 19]]
@@ -182,9 +185,11 @@ def transcripts_data(trace)
       from normalized_counts 
       where transcript_id = %s 
       group by stage order by stage" % id)
-    max = values.max
-    max_y = max if max > max_y
-    values.unshift(tr.name)
+    max_val = values.max
+    max_y = max_val if max_val && max_val > max_y
+    homolog = get_homolog(tr)
+    name = homolog ? homolog.name : tr.name
+    values.unshift(name)
     data << values
   end
 
