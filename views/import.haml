@@ -12,9 +12,11 @@
   Seabase using this page.
 
 %form{ method: :post, action: '/upload_gephi', enctype: 'multipart/form-data', 'accept-charset' => 'UTF-8' }
-  %label{ for: 'import_name' } Name of the import
-  %input#import_name{ type: :text, size: 40 }
-  %label{ for: 'gephi_upload' } Upload
-  %input#gephi_upload{ type: :file, size: 40 }
-  %input{ type: :submit, value: :Upload }
-
+  .item
+    %label{ for: 'import_name' } Name of the import
+    %input#import_name{ type: :text, size: 40 }
+  .item
+    %label{ for: 'gephi_upload' } Upload
+    %input#gephi_upload{ type: :file, name: :file, accept: 'text/csv' }
+  .item
+    %input{ type: :submit, value: :Upload }

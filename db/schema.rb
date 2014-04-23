@@ -58,9 +58,8 @@ ActiveRecord::Schema.define(version: 20140422182104) do
   end
 
   create_table "gephi_records", force: true do |t|
-    t.integer "gephi_import_id"
+    t.integer "trait_id"
     t.integer "transcript_id"
-    t.integer "modularity"
     t.float   "page_rank"
   end
 
@@ -131,6 +130,12 @@ ActiveRecord::Schema.define(version: 20140422182104) do
     t.string "unit"
     t.string "abbreviation"
   end
+
+  create_table "traits", force: true do |t|
+    t.integer "gephi_import_id"
+  end
+
+  add_index "traits", ["gephi_import_id"], name: "index_traits_on_gephi_import_id", using: :btree
 
   create_table "transcripts", force: true do |t|
     t.string  "name"

@@ -1,3 +1,3 @@
 class GephiRecord < ActiveRecord::Base
-  belongs_to :gephi_imports
+  belongs_to :trait
 end

@@ -116,14 +116,15 @@ get '/import' do
   haml :import
 end
 
-post 'upload_gephi' do
-  file_name = file[:filename]
-  file_path = File.join([Dir.mktmpdir] +
-    [file_name.gsub( /[^a-zA-Z0-9_\.]/, '_')])
-  FileUtils.mv(file[:tempfile].path, file_path)
-    sha = Digest::SHA1.file(file_path).hexdigest
-  GephiImporter.process_upload(file_path)
-  redirect '/'
+get '/traits/:gephi_import_id' do
+  @gephi_import = GephiImport.find(params[:gephi_import_id])
+  haml :traits
+end
+
+post '/upload_gephi' do
+  file = params[:file]
+  @gephi_import = GephiImport.process_file(file[:tempfile], params[:name])
+  redirect "/traits/%s" % @gephi_import.id
 end
 
 get '/test_charts' do
