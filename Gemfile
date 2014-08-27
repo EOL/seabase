@@ -16,7 +16,7 @@ gem 'haml', '~> 4.0'
 gem 'childprocess', '~> 0.5'
 
 group :development do
-  gem 'debugger', '~> 1.6'
+  gem 'byebug'
   gem 'sinatra-reloader', '~> 1.0'
 end
 
