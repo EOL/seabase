@@ -14,7 +14,7 @@ RSpec::Core::RakeTask.new do |t|
 end
 
 include ActiveRecord::Tasks
-ActiveRecord::Base.configurations = YAML.load(File.read('config/config.yml'))
+ActiveRecord::Base.configurations = YAML.load(File.read('config/config.yml'))[:database]
 
 namespace :db do
   desc 'create all the databases from config.yml'

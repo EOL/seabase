@@ -20,39 +20,35 @@ module Seabase
   end
 
   def self.db_conf
-    @db_conf ||= self.get_db_conf
+    @db_conf ||= get_db_conf
   end
 
   def self.conf
-    @conf ||= self.get_conf
+    @conf ||= get_conf
   end
 
   def self.get_db_connection
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Base.logger.level = Logger::WARN
-    ActiveRecord::Base.establish_connection(self.db_conf[self.env.to_s])
+    ActiveRecord::Base.establish_connection(db_conf[env.to_s])
   end
 
   private
 
   def self.get_db_conf
-    conf = File.read(File.join(File.dirname(__FILE__),
-                          'config', 'config.yml'))
-    @db_conf = YAML.load(conf)
+    @db_conf = get_conf.database
   end
 
   def self.get_conf
-    conf = self.db_conf[self.env.to_s]
-    @conf = OpenStruct.new(
-                            ga_id:            conf['google_analytics_id'],
-                            ga_domain:        conf['google_analytics_domain'],
-                            session_secret:   conf['session_secret'],
-                            adapter:          conf['adapter'],
-                            host:             conf['host'],
-                            username:         conf['username'],
-                            password:         conf['password'],
-                            database:         conf['database'],
-                           )
+    raw_conf = File.read(File.join(File.dirname(__FILE__),
+                         'config', 'config.yml'))
+    conf = YAML.load(raw_conf)
+    OpenStruct.new(
+      ga_id:            conf['google_analytics_id'],
+      ga_domain:        conf['google_analytics_domain'],
+      session_secret:   conf['session_secret'],
+      database:         conf['database'],
+     )
   end
 end
 

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 20140422182104) do
   create_table "gephi_records", force: true do |t|
     t.integer "trace_id"
     t.integer "transcript_id"
-    t.float   "page_rank"
+    t.float   "page_rank",     limit: 24
   end
 
   create_table "mapping_counts", force: true do |t|
@@ -83,10 +84,10 @@ ActiveRecord::Schema.define(version: 20140422182104) do
   end
 
   create_table "normalized_counts", force: true do |t|
-    t.integer "transcript_id",       null: false
+    t.integer "transcript_id",                  null: false
     t.integer "stage"
     t.integer "technical_replicate"
-    t.float   "count"
+    t.float   "count",               limit: 24
   end
 
   add_index "normalized_counts", ["transcript_id"], name: "index_normalized_counts_on_transcript_id", using: :btree
@@ -98,8 +99,8 @@ ActiveRecord::Schema.define(version: 20140422182104) do
     t.integer "condition_id"
     t.integer "technical_replicate"
     t.integer "lane_replicate"
-    t.float   "y_intercept"
-    t.float   "slope"
+    t.float   "y_intercept",         limit: 24
+    t.float   "slope",               limit: 24
     t.integer "total_mapping"
   end
 
@@ -148,7 +149,7 @@ ActiveRecord::Schema.define(version: 20140422182104) do
     t.integer "transcript_id"
     t.integer "time_point"
     t.integer "time_unit_id"
-    t.float   "quantity"
+    t.float   "quantity",       limit: 24
     t.boolean "averaged"
     t.integer "set_name_id_id"
   end
