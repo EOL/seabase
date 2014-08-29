@@ -8,9 +8,9 @@ describe Seabase::GephiGexfBuilder do
   describe '.new' do
     it 'initializes' do
       `touch #{path_out}`
-      expect(File.exists?(path_out)).to be_true
+      expect(File.exists?(path_out)).to be true
       expect(subject).to be_kind_of Seabase::GephiGexfBuilder 
-      expect(File.exists?(path_out)).to be_false
+      expect(File.exists?(path_out)).to be false
     end
 
     context 'wrong file extension' do
@@ -23,7 +23,7 @@ describe Seabase::GephiGexfBuilder do
     end
   end
 
-  describe '#start' do 
+  describe '#start' do
     it 'does not create file, creates doc' do
       subject.start
       expect(subject.doc.root.name).to eq 'gexf'

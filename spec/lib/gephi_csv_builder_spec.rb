@@ -5,9 +5,9 @@ describe Seabase::GephiCsvBuilder do
   describe '.new' do
     it 'initializes' do
       `touch #{path_out}`
-      expect(File.exists?(path_out)).to be_true
+      expect(File.exists?(path_out)).to be true
       expect(subject).to be_kind_of Seabase::GephiCsvBuilder 
-      expect(File.exists?(path_out)).to be_false
+      expect(File.exists?(path_out)).to be false
     end
 
     context 'wrong file extension' do
@@ -23,7 +23,7 @@ describe Seabase::GephiCsvBuilder do
   describe '#open' do 
     it 'creates empty file' do
       subject.start
-      expect(File.exists?(path_out)).to be_true
+      expect(File.exists?(path_out)).to be true
       expect(File.read(path_out)).to eq ''
       subject.stop
     end
@@ -34,7 +34,10 @@ describe Seabase::GephiCsvBuilder do
       subject.start
       subject.add_row([1, 2, 0.99])
       subject.stop
-      expect(File.read(path_out)).to eq "http://seabase.core.cli.mbl.edu/transcript/1;http://seabase.core.cli.mbl.edu/transcript/2\n" 
+      expect(File.read(path_out)).to eq(
+        "http://seabase.core.cli.mbl.edu/transcript/1;"\
+        "http://seabase.core.cli.mbl.edu/transcript/2\n" 
+      )
     end
   end
 end

@@ -1,27 +1,32 @@
+# Describes sequenced transcripts from the embryo
 class Transcript < ActiveRecord::Base
   has_many :external_matches
   has_many :external_names, through: :external_matches
   has_many :normalized_counts
   def table_items
-    Seabase::Normalizer.new(Replicate.all(), 
-                            [self], 
-                            Transcript.connection.select_rows("
-                              SELECT mc.mapping_count, mc.replicate_id, #{id}
-                              FROM mapping_counts mc
-                              WHERE mc.transcript_id = #{id}")).table
+    Seabase::Normalizer.new(
+      Replicate.all,
+      [self],
+      Transcript.connection.select_rows("
+        SELECT mc.mapping_count, mc.replicate_id, #{id}
+        FROM mapping_counts mc
+        WHERE mc.transcript_id = #{id}"
+      )
+    ).table
   end
 
   def fasta_sequence
-    ">%s\n%s" % [name, transcript_sequence]
+    format(">%s\n%s", name, transcript_sequence)
   end
 
   def vector
     Transcript.connection.select_values("
-      select sum(count) 
-      from normalized_counts
-      where transcript_id = %s
-      group by stage
-      order by stage" % id)
+      SELECT sum(count)
+      FROM normalized_counts
+      WHERE transcript_id = #{id}
+      GROUP BY stage
+      ORDER BY stage"
+    )
   end
 
   def similarity(transcript)

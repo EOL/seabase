@@ -1,3 +1,4 @@
+# News feed post about Seabase
 class NewsPost < ActiveRecord::Base
   belongs_to :user
 

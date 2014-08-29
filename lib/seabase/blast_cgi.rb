@@ -1,3 +1,4 @@
+# Wrapper around Blast package
 class Seabase::BlastCgi
   def initialize(env, path)
     @env = env
@@ -12,12 +13,12 @@ class Seabase::BlastCgi
   end
 
   private
-  
+
   def adjust_body(text)
     text.gsub!(%r|.*?(<pre>.*</pre>).*|mi, '\1')
     text.gsub!(/nph-viewgif.cgi\?/, '/TmpGifs/')
     text.gsub!(%r|"\.\./blast/|, '"/')
-    text.gsub!(%r#^(><a name = [\d]+></a>|\s*)(NVT-)(\S+)(\s.+)$#, 
+    text.gsub!(%r#^(><a name = [\d]+></a>|\s*)(NVT-)(\S+)(\s.+)$#,
                '\1<a href="/transcript?name=\3">\2\3</a>\4')
     text
   end
@@ -27,7 +28,7 @@ class Seabase::BlastCgi
     cgi = ChildProcess.build(@path)
     cgi.duplex = true
     cgi.cwd = File.dirname(@path)
-    
+
     cgi_out, cgi.io.stdout = IO.pipe
     cgi.io.stderr = $stderr
     set_cgi_environment(cgi)
@@ -35,8 +36,8 @@ class Seabase::BlastCgi
   end
 
   def set_cgi_environment(cgi)
-    cgi.environment['DOCUMENT_ROOT'] = 'public'
-    cgi.environment['SERVER_SOFTWARE'] = 'CGI Blast'
+    cgi.environment["DOCUMENT_ROOT"] = "public"
+    cgi.environment["SERVER_SOFTWARE"] = "CGI Blast"
     @env.each do |key, value|
       cgi.environment[key] = value if
         value.respond_to?(:to_str) && key =~ /^[A-Z_]+$/
@@ -45,9 +46,8 @@ class Seabase::BlastCgi
 
   def cgi_execute(cgi)
     cgi.start
-    cgi.io.stdin.write @env['rack.input'].read
+    cgi.io.stdin.write @env["rack.input"].read
     cgi.io.stdout.close
     raise Seabase::ExecutionError if cgi.crashed?
   end
-
 end

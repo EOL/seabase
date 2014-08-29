@@ -3,7 +3,7 @@ describe User do
 
   context 'user does not exist' do
     let(:user_id) { 987797 }
-    
+
     it 'returns nil' do
       expect(user).to be_nil
     end
@@ -15,7 +15,7 @@ describe User do
         expect(user).to be_kind_of User
         expect(user.name).to eq 'John Doe'
       end
-      
+
       describe '#roles' do
         it 'returns empty array' do
           expect(user.roles).to eq []
@@ -30,7 +30,7 @@ describe User do
 
       describe '#admin?' do
         it 'returns false' do
-          expect(user.admin?).to be_false
+          expect(user.admin?).to be false
         end
       end
 
@@ -59,10 +59,10 @@ describe User do
 
       describe '#admin?' do
         it 'returns true' do
-          expect(user.admin?).to be_true
+          expect(user.admin?).to be true
         end
       end
-    
+
     end
   end
 end

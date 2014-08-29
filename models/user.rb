@@ -1,3 +1,4 @@
+# Describes Seabase's user
 class User < ActiveRecord::Base
   has_many :roles_users
   has_many :news_posts
@@ -8,6 +9,6 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    roles_names.include?('admin')
+    roles_names.include?("admin")
   end
 end

@@ -1,5 +1,5 @@
+# Exports data from Seabase to Gephi-compatible format
 class Seabase::GephiExporter
-  
   def initialize(opts)
     @path_in = opts[:path_in]
     @path_out = opts[:path_out]
@@ -12,7 +12,7 @@ class Seabase::GephiExporter
     @builder.start
     Seabase.logger.info("Exporting Similarity for Gephi")
     args = { col_sep: "\t" }
-    graph = open(@path_out, 'w:utf-8')
+    graph = open(@path_out, "w:utf-8")
     count = 0
     CSV.open(@path_in, args).each do |r|
       count += 1
@@ -27,9 +27,9 @@ class Seabase::GephiExporter
   end
 
   private
-  
+
   def not_duplicate(r)
-    node = r[0..1].sort.join('-')
+    node = r[0..1].sort.join("-")
     if @existing_nodes.has_key?(node)
       false
     else
@@ -39,14 +39,13 @@ class Seabase::GephiExporter
 
   def builder_factory(format)
     case format
-    when 'csv'
+    when "csv"
       Seabase::GephiCsvBuilder.new(@path_out)
-    when 'gexf'
+    when "gexf"
       Seabase::GephiGexfBuilder.new(@path_out)
     else
       raise Seabase::UnknownFormatError.
         new("%s is unknown use 'csv' or 'gexf'")
     end
   end
-
 end
