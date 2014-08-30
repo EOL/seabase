@@ -19,9 +19,9 @@ $light_grey: #efefef;
 }
 
 html, button, input, select, textarea {
-  font-family: "Open sans", 
-               "Helvetica Neue", 
-               "HelveticaNeue", 
+  font-family: "Open sans",
+               "Helvetica Neue",
+               "HelveticaNeue",
                Helvetica, Arial, sans-serif;
   font-weight: 400; /* normal */
   font-size: 1em;
@@ -81,7 +81,7 @@ a {
   background-color: #fdd;
   padding: 1em;
   margin-bottom: 0.5em;
-  border: 1px solid red; 
+  border: 1px solid red;
 }
 
 .news_item {
@@ -97,7 +97,7 @@ a {
       float: right;
       padding: 0.5em;
       margin: 0;
-      color: #666; 
+      color: #666;
       font-size: 0.8em;
     }
     .news_subject {
@@ -132,15 +132,15 @@ a {
       font-size: 0.5em;
     }
   }
-  a { 
+  a {
     color: white;
     text-decoration: none;
   }
   .menu {
     font-size: 1.4em;
-    text-align: right; 
+    text-align: right;
     list-style-type: none;
-    ul { 
+    ul {
       padding-top: 0.4em;
       margin: 0;
     }
@@ -197,7 +197,7 @@ a {
   @include zen-clear;
   @include size-params;
   padding: 0.5em;
-  a { 
+  a {
     text-decoration: none;
     color:   #30659b;
   }
@@ -211,11 +211,11 @@ a {
   padding: 0.5em;
   background-color: #30659b;
   color: #fff;
-  a { 
+  a {
     text-decoration: none;
     color: #fff;
   }
-    
+
 }
 
 #data_chart {
