@@ -24,7 +24,7 @@ module Seabase
     private
 
     def url_id(id)
-      "http://seabase.core.cli.mbl.edu/transcript/%s" % id
+      "http://seabase.core.cli.mbl.edu/transcript/#{id}"
     end
   end
 end
