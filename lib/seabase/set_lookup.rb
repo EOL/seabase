@@ -25,7 +25,7 @@ module Seabase
       end
     end
 
-    # It's not clear if this is still necessary, 
+    # It's not clear if this is still necessary,
     # but logically it doesn't hurt.
     def context?(value)
       (value.class == TranscriptContext) &&

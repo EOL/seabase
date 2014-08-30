@@ -14,15 +14,15 @@ module Seabase
     def length
       @transcript.length
     end
-    
+
     def total_mapping
       @replicate.total_mapping
     end
-    
+
     def y_intercept
       @replicate.y_intercept
     end
-    
+
     def slope
       @replicate.slope
     end

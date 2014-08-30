@@ -7,7 +7,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install csh
   - sudo apt-get install libqt4-dev
-  - "export DISPLAY=:99.0" 
+  - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 before_script:
   - cp config/config.yml.example config/config.yml
@@ -16,5 +16,5 @@ before_script:
   - bundle exec rake db:migrate SEABASE_ENV=test
   - bundle exec rake seed SEABASE_ENV=test
 script:
-  - bundle exec rake 
+  - bundle exec rake
 

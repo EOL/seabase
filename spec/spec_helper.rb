@@ -9,6 +9,7 @@ require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'capybara/webkit'
+require 'byebug'
 require_relative 'support/helpers'
 
 ENV['SEABASE_ENV'] = 'test'

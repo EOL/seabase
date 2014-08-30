@@ -12,16 +12,16 @@ require_relative "seabase/gephi_gexf_builder"
 
 # All-encompassing module of the project
 module Seabase
-  def self.maxup(num)
-    digits = 10 ** Math.log10(num).floor
-    (((num.to_f/digits).round(1) + 0.1) * digits).to_i
-  end
+  class << self
+    attr_writer :logger
 
-  def self.logger
-    @logger ||= Logger.new("/dev/null")
-  end
+    def maxup(num)
+      digits = 10**Math.log10(num).floor
+      (((num.to_f / digits).round(1) + 0.1) * digits).to_i
+    end
 
-  def self.logger=(new_logger)
-    @logger = new_logger
+    def logger
+      @logger ||= Logger.new("/dev/null")
+    end
   end
 end
