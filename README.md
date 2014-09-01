@@ -17,13 +17,12 @@ General requirements:
 
   - Ruby version 2.0 or higher
   - MySQL server version 5.1 or higher
-  - Web Server for production (Nginx, or Apache)
-  - Blast+ 
+  - Web Server for production (Nginx, or Apache) 
 
-### Blast install on Ubuntu:
+### required packatges on Ubuntu:
 
     sudo apt-get update
-    sudo apt-get install ncbi-blast+
+    sudo apt-get install mysql-server csh libqt4-dev
 
 
 Running Tests
