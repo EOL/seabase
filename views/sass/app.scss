@@ -1,4 +1,4 @@
-@import "zen";
+@import "zen-grids";
 $zen-column-count: 7;
 $zen-gutter-width: 0px;
 $light_grey: #efefef;
@@ -38,7 +38,6 @@ a {
 }
 
 .container {
-  @include zen-clear;
   @include zen-grid-container;
   @include size-params;
   background-color: white;
@@ -194,7 +193,6 @@ a {
 }
 
 #transcripts_data {
-  @include zen-clear;
   @include size-params;
   padding: 0.5em;
   a {
@@ -204,7 +202,6 @@ a {
 }
 
 #footer {
-  @include zen-clear;
   @include zen-grid-item(7, 1);
   @include brd(8px);
   width: 100%;
@@ -218,7 +215,6 @@ a {
 }
 
 #data_chart {
-  @include zen-clear;
   @include zen-grid-item(5, 1);
 }
 

@@ -57,10 +57,6 @@ task(:release) do
   end
 end
 
-desc "populate seed data for tests"
-task :seed do
-  require_relative "db/seed"
-end
 
 desc "open an irb session preloaded with this library"
 task :console do

@@ -1,0 +1,14 @@
+version: '2'
+services:
+  app:
+    build: .
+    ports:
+      - "0.0.0.0:4567:4567"
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1

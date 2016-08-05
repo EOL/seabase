@@ -20,7 +20,7 @@ class Seeder
     run_migrations_msg = "\nBefore adding seeds run:\n"\
       "bundle exec rake db:migrate SEABASE_ENV=%s\n\n" % Seabase.env
     @path = path
-    files = Dir.entries(path).map {|e| e.to_s}.select {|e| e.match /csv$/}
+    files = Dir.entries(path).map {|e| e.to_s}.select {|e| e.match(/csv$/)}
     begin
       files.each do |file|
         add_seeds(file)
@@ -30,12 +30,12 @@ class Seeder
     end
   end
 
-  private 
-  
+  private
+
   def add_seeds(file)
     table = file.gsub(/\.csv/, '')
-    data = get_data(table, file) 
-    @db.execute("truncate table %s" % table) 
+    data = get_data(table, file)
+    @db.execute("truncate table %s" % table)
     @db.execute("insert ignore into %s values %s" % [table, data]) if data
   end
 
@@ -46,7 +46,7 @@ class Seeder
     csv_args = {:col_sep => "\t"}
     data = CSV.open(File.join(@path, file), csv_args).map do |row|
       res = get_row(row, ca_index, ua_index)
-      (columns.size - res.size).times { res << 'null' } 
+      (columns.size - res.size).times { res << 'null' }
       res.join(",")
     end rescue []
     data.empty? ? nil : "(%s)" % data.join("), (")
