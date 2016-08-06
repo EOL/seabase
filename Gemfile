@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "rake", "~> 11.2"
-gem "activerecord", "~> 5.0"
+gem "activerecord", "< 5.0"
 gem "mysql2", "~> 0.4"
 gem "rack", "~> 1.6"
 gem "rack-timeout", "~> 0.4"
@@ -31,7 +31,7 @@ group :test do
   gem "capybara", "~> 2.7"
   gem "coveralls", "~> 0.8", require: false
   gem "travis-lint", "~> 2.0"
-  gem "launchy", "~> 2.4" 
+  gem "launchy", "~> 2.4"
   gem "git", "~> 1.3"
   gem "rack-test", "~> 0.6"
   gem "rubocop", "~> 0.42"
