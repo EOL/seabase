@@ -47,7 +47,6 @@ module Seabase
 
     def cgi_execute(cgi)
       cgi.start
-      require "byebug"; byebug
       cgi.io.stdin.write @env["rack.input"].read
       cgi.io.stdout.close
       fail Seabase::ExecutionError if cgi.crashed?

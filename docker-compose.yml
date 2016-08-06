@@ -3,11 +3,12 @@ services:
   app:
     build: .
     ports:
-      - "0.0.0.0:4567:4567"
+      - "0.0.0.0:9292:9292"
     volumes:
       - .:/app
     depends_on:
       - mysql
+    command: bundle exec rackup -o 0.0.0.0
   mysql:
     image: mysql
     environment:

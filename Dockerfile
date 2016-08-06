@@ -20,6 +20,7 @@ RUN apt-get update && \
 
 RUN locale-gen en_US.UTF-8
 
+ENV DISPLAY :99.0
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
@@ -28,8 +29,10 @@ ENV RACK_ENV development
 ENV RESQUE_WORKERS 1
 ENV QUEUE NameFinder
 ENV PUMA_WORKERS 2
+ENV XVFB_WHD=${XVFB_WHD:-1280x720x16}
 
 RUN echo 'gem: --no-rdoc --no-ri >> "$HOME/.gemrc"'
+
 
 RUN gem install bundler && \
     mkdir /app
@@ -41,7 +44,11 @@ COPY Gemfile /app
 COPY Gemfile.lock /app
 RUN bundle install
 
+RUN apt-get update && apt-get install -y xvfb
+RUN Xvfb :99 -ac -screen 0 $XVFB_WHD -nolisten tcp &
+
+
 COPY . /app
 
-CMD ["ruby", "./application.rb", "-o", "0.0.0.0"]
+CMD ["rackup"]
 
