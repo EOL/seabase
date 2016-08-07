@@ -3,6 +3,7 @@ require "ostruct"
 require "yaml"
 require "active_record"
 require "csv"
+require "erb"
 require "fileutils"
 require "nokogiri"
 
