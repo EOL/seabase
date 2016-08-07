@@ -7,6 +7,9 @@ services:
     volumes:
       - .:/app
     environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=""
       - DISPLAY=:99.0
     depends_on:
       - mysql

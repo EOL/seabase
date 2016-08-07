@@ -1,9 +1,9 @@
 require "bundler"
-require "active_record"
 require "rake"
 require "rspec"
 require "git"
 require "rspec/core/rake_task"
+require "active_record"
 require "sinatra/activerecord/rake"
 require_relative "lib/seabase"
 
@@ -15,7 +15,7 @@ end
 
 include ActiveRecord::Tasks
 ActiveRecord::Base.configurations =
-  YAML.load(File.read("config/config.yml"))["database"]
+  YAML.load(ERB.new(File.read("config/database.yml")).result)
 
 namespace :db do
   desc "create all the databases from config.yml"
@@ -33,7 +33,7 @@ namespace :db do
   end
 
   desc "redo last migration"
-  task redo: ["db:rollback", "db:migrate"]
+  task redo: %w(db:rollback db:migrate)
 end
 
 desc "prepares everything for tests"

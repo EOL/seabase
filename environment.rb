@@ -41,13 +41,13 @@ module Seabase
   end
 
   def self.new_conf
-    raw_conf = File.read(File.join(__dir__, "config", "config.yml"))
-    conf = YAML.load(raw_conf)
+    raw_conf = File.read(File.join(__dir__, "config", "database.yml"))
+    conf = YAML.load(ERB.new(raw_conf).result)
     OpenStruct.new(
-      ga_id:            conf["google_analytics_id"],
-      ga_domain:        conf["google_analytics_domain"],
-      session_secret:   conf["session_secret"],
-      database:         conf["database"]
+      ga_id: ENV["GOOGLE_ANALYTICS_ID"] || "123_abc",
+      ga_domain: ENV["GOOGLE_ANALYTICS_DOMAIN"] || "example.org",
+      session_secret: ENV["SESSION_SECRET"] || "change_me",
+      database: conf
      )
   end
 end
