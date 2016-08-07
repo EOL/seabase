@@ -1,28 +1,28 @@
 #!/usr/bin/env ruby
-require 'optparse'
- 
+require "optparse"
+
 OPTS = {}
 OptionParser.new do |o|
-  o.on('-n') { |bool| OPTS[:new] = bool }
-  o.on('-e ENVIRONMENT') { |env| OPTS[:environment] = env }
-  o.on('-h') { puts o; exit }
+  o.on("-n") { |bool| OPTS[:new] = bool }
+  o.on("-e ENVIRONMENT") { |env| OPTS[:environment] = env }
+  o.on("-h") { puts o; exit }
   o.parse!
 end
 
-ENV['SEABASE_ENV'] = OPTS[:environment] || 'development'
+ENV["SEABASE_ENV"] = OPTS[:environment] || "development"
 
-require_relative '../lib/seabase'
+require_relative "../lib/seabase"
 
 db = Transcript.connection
 
-db.execute('truncate table transcripts_data')
+db.execute("truncate table transcripts_data")
 
-names = { 'Average' => 1, 'A' => 2, 'B' => 3 }
+names = { "Average" => 1, "A" => 2, "B" => 3 }
 
 count = 0
 Transcript.all.each do |t|
   count += 1
-  puts "Processing transcript %s" % count if count % 100 == 0 
+  puts "Processing transcript %s" % count if count % 100 == 0
   ti = t.table_items
   hours = Replicate.all_stages
   data = []
@@ -35,12 +35,10 @@ Transcript.all.each do |t|
         join(',')
     end
   end
-  data = "(%s)" % data.join('),(')
+  data = "(%s)" % data.join("),(")
   db.execute("
-    insert into transcripts_data 
+    insert into transcripts_data
     (transcript_id, time, time_unit_id, quantity, averaged, name)
     values
     %s" % data)
 end
-
-

@@ -28,8 +28,7 @@ ENV LC_ALL en_US.UTF-8
 ENV RACK_ENV development
 ENV RESQUE_WORKERS 1
 ENV QUEUE NameFinder
-ENV PUMA_WORKERS 2
-ENV XVFB_WHD=${XVFB_WHD:-1280x720x16}
+ENV PUMA_WORKERS 1
 
 RUN echo 'gem: --no-rdoc --no-ri >> "$HOME/.gemrc"'
 
@@ -50,5 +49,5 @@ RUN Xvfb :99 -ac -screen 0 $XVFB_WHD -nolisten tcp &
 
 COPY . /app
 
-CMD ["rackup"]
+CMD ["rackup", "-o", "0.0.0.0"]
 

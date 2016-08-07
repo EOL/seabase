@@ -1,8 +1,8 @@
-require 'csv'
-require_relative '../lib/seabase'
+require "csv"
+require_relative "../lib/seabase"
 
 unless [:development, :test, :production].include? Seabase.env
-  puts 'Use: bundle exec rake seed SEABASE_ENV=test|development|production'
+  puts "Use: bundle exec rake seed SEABASE_ENV=test|development|production"
   exit
 end
 
@@ -11,7 +11,7 @@ class Seeder
 
   def initialize
     @db = ActiveRecord::Base.connection
-    common_dir = File.join(File.dirname(__FILE__), 'seed')
+    common_dir = File.join(File.dirname(__FILE__), "seed")
     @env_dir = File.join(common_dir, Seabase.env.to_s)
     @path = nil
   end
@@ -46,7 +46,7 @@ class Seeder
     csv_args = {:col_sep => "\t"}
     data = CSV.open(File.join(@path, file), csv_args).map do |row|
       res = get_row(row, ca_index, ua_index)
-      (columns.size - res.size).times { res << 'null' }
+      (columns.size - res.size).times { res << "null" }
       res.join(",")
     end rescue []
     data.empty? ? nil : "(%s)" % data.join("), (")
@@ -56,7 +56,7 @@ class Seeder
     res = []
     row.each_with_index do |field, index|
       if [ca_index, ua_index].include? index
-        res << 'now()'
+        res << "now()"
       else
         res << @db.quote(field)
       end
@@ -69,5 +69,3 @@ end
 s = Seeder.new
 s.walk_path(s.env_dir)
 puts "You added seeds data to %s tables" % Seabase.env.upcase
-
-

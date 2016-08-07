@@ -15,8 +15,8 @@ Install
 
 General requirements:
 
-  - Ruby version 2.0 or higher
-  - MySQL server version 5.1 or higher
+  - Ruby version 2.3
+  - MySQL server version 5.7
   - Web Server for production (Nginx, or Apache)
 
 ### required packatges on Ubuntu:
@@ -38,6 +38,21 @@ QT Webkit library, you can find installations instruction on
 
 Also look at [.travis.yml][10] file for more information
 
+### Running Tests With Docker Compose
+
+Docker and Docker Compose need to be installed on the host machine
+
+```.bash
+sudo rm -rf .sass-cache
+docker-compose build
+docker-compose up -d
+docker-compose run app db:reset
+docker-compose run app db:seed SEABASE_ENV=test
+docker exec -it seabase_app_1 rake
+```
+
+For some reason ``docker-compose run app rake`` does not work for webkit-based
+tests.
 
 Copyright
 ---------
