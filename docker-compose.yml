@@ -2,16 +2,18 @@ version: '2'
 services:
   app:
     build: .
+    image: encoflife/seabase
     ports:
-      - "0.0.0.0:9292:9292"
-    volumes:
-      - .:/app
+      - "0.0.0.0:80:80"
     env_file:
-      - config/seabase-dev.env
+      - config/seabase-production.env
+    volumes:
+      - /opt/seabase/log/nginx:/var/log/nginx
+      - /opt/seabase/log/app:/app/log
     depends_on:
       - mysql
-    command: /usr/bin/supervisord -c /app/config/docker/supervisord_dev.conf
+    command: /usr/bin/supervisord -c /app/config/docker/supervisord.conf
   mysql:
     image: mysql:5.7
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - /opt/seabase/data/mysql:/var/lib/mysql
