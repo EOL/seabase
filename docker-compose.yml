@@ -12,6 +12,6 @@ services:
       - mysql
     command: /usr/bin/supervisord -c /app/config/docker/supervisord_dev.conf
   mysql:
-    image: mysql
+    image: mysql:5.7
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
