@@ -13,7 +13,7 @@ describe '/' do
     expect(page.status_code).to eq 200
     expect(page.body).to match 'SeaBase'
   end
-  
+
   it 'searches' do
     visit '/'
     select('Human orthologs', from: 'scientific_name')
@@ -22,7 +22,7 @@ describe '/' do
     expect(page.status_code).to eq 200
     expect(page.body).to match %q(O00391: Sulfhydryl oxidase 1)
   end
-  
+
   it 'searches for exact match' do
     visit '/'
     select('Human orthologs', :from => 'scientific_name')
@@ -59,7 +59,7 @@ describe '/search' do
     expect(page.status_code).to eq 200
     expect(page.body).to match %q(Sulfhydryl oxidase 1)
   end
-  
+
   context 'html' do
     it 'returns html page' do
       data = [{ term: 'sox',  count: 3 },
@@ -81,11 +81,11 @@ describe '/search' do
 
   context 'json' do
     it 'returns results in json' do
-      data = [{ term: 'sox', result: ['QSOX1', 'SOX14', 'SOX18'], 
+      data = [{ term: 'sox', result: ['QSOX1', 'SOX14', 'SOX18'],
                 field: :gene_name},
-              { term: 'Transcription', result: 
-                ['Transcription factor SOX-14', 
-                 'Transcription factor SOX-18'], 
+              { term: 'Transcription', result:
+                ['Transcription factor SOX-14',
+                 'Transcription factor SOX-18'],
                  field: :functional_name },
               { term: 'O95416', result: ['O95416'],
                  field: :name }]
@@ -139,7 +139,7 @@ describe '/transcript' do
     expect(page.body).to match /transcript comp12135_c0_seq1/m
     expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'
   end
-  
+
   it 'shows transcript sequence' do
     visit '/transcript/17065?external_name_id=25360'
     expect(page.body).to match 'ATCTCATGTAAAAGGTTGAGAAATGTCTTATCTCCATTGTCAAAA'

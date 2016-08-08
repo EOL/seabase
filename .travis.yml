@@ -14,7 +14,6 @@ before_install:
   - "export SEABASE_ENV=development"
   - "sh -e /etc/init.d/xvfb start"
 before_script:
-  - cp config/config.yml.example config/config.yml
   - bundle exec rake db:reset
   - bundle exec rake seed SEABASE_ENV=test
 script:
