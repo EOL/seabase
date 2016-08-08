@@ -8,12 +8,14 @@ before_install:
   - sudo apt-get install csh
   - sudo apt-get install libqt4-dev
   - "export DISPLAY=:99.0"
+  - "export DB_HOST=localhost"
+  - "export DB_USER=root"
+  - "export DB_PASSWORD="
+  - "export SEABASE_ENV=development"
   - "sh -e /etc/init.d/xvfb start"
 before_script:
   - cp config/config.yml.example config/config.yml
-  - bundle exec rake db:create:all
-  - bundle exec rake db:migrate
-  - bundle exec rake db:migrate SEABASE_ENV=test
+  - bundle exec rake db:reset
   - bundle exec rake seed SEABASE_ENV=test
 script:
   - bundle exec rake

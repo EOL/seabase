@@ -24,6 +24,31 @@ General requirements:
     sudo apt-get update
     sudo apt-get install mysql-server csh libqt4-dev
 
+Running in production with docker-compose
+-----------------------------------------
+
+Get source code and switch to production branch
+
+```bash
+git clone https://github.com/GlobalNamesArchitecture/gnrd.git
+cd gnrd
+git checkout production
+```
+
+Create directories for database and configuration files
+
+```bash
+sudo mkdir -p /opt/seabase/data/mysql
+sudo chown 999:999 -R /opt/seabase/data/mysql
+sudo cp ./config/seabase-dev.env ./config/seabase-production.env
+```
+
+Modify `seabase-production.env` to suit your needs.
+Run compose in daemon mode from the project's root directory
+
+```bash
+nohup docker-compose up -d
+```
 
 Running Tests
 -------------
