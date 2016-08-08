@@ -14,14 +14,16 @@ gem "sinatra-flash", "~> 0.3"
 gem "sinatra-redirect-with-flash", "~> 0.2"
 gem "haml", "~> 4.0"
 gem "childprocess", "~> 0.5"
+gem "puma", "~> 3.6"
 
 group :development do
   gem "byebug", "~> 9.0"
+  gem "shotgun", "~> 0.9"
   gem "sinatra-reloader", "~> 1.0"
 end
 
 group :production do
-  gem "puma", "~> 3.6"
+  gem "rack-google-analytics", "~> 1.2"
 end
 
 group :test do
