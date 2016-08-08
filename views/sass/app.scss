@@ -337,5 +337,6 @@ dt:first-child:before { /* disable line break before the first <dt> */
   padding: 0.5em;
   margin: 0.5em;
   marging-left: 1em;
+  overflow-wrap: break-word;
   border: 1px solid #ccc;
 }
