@@ -1,4 +1,4 @@
-@import "zen-grids";
+@import "zen";
 $zen-column-count: 7;
 $zen-gutter-width: 0px;
 $light_grey: #efefef;
@@ -38,6 +38,7 @@ a {
 }
 
 .container {
+  @include zen-clear;
   @include zen-grid-container;
   @include size-params;
   background-color: white;
@@ -193,6 +194,7 @@ a {
 }
 
 #transcripts_data {
+  @include zen-clear;
   @include size-params;
   padding: 0.5em;
   a {
@@ -202,6 +204,7 @@ a {
 }
 
 #footer {
+  @include zen-clear;
   @include zen-grid-item(7, 1);
   @include brd(8px);
   width: 100%;
@@ -215,6 +218,7 @@ a {
 }
 
 #data_chart {
+  @include zen-clear;
   @include zen-grid-item(5, 1);
 }
 
@@ -337,6 +341,6 @@ dt:first-child:before { /* disable line break before the first <dt> */
   padding: 0.5em;
   margin: 0.5em;
   marging-left: 1em;
-  overflow-wrap: break-word;
   border: 1px solid #ccc;
 }
+
