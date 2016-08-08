@@ -15,7 +15,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 before_script:
   - bundle exec rake db:reset
-  - bundle exec rake seed SEABASE_ENV=test
+  - bundle exec rake db:seed SEABASE_ENV=test
 script:
   - bundle exec rake
 
