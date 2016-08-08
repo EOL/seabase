@@ -38,7 +38,7 @@ RUN gem install bundler && \
 
 WORKDIR /app
 
-# COPY config/docker/nginx-sites.conf /etc/nginx/sites-enabled/default
+COPY config/docker/nginx-sites.conf /etc/nginx/sites-enabled/default
 COPY Gemfile /app
 COPY Gemfile.lock /app
 RUN bundle install
@@ -49,5 +49,5 @@ RUN Xvfb :99 -ac -screen 0 $XVFB_WHD -nolisten tcp &
 
 COPY . /app
 
-CMD ["rackup", "-o", "0.0.0.0"]
+CMD ["supervisord", "-c", "/app/config/docker/supervisord_dev.conf]
 

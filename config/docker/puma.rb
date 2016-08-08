@@ -5,7 +5,7 @@ app_dir = File.expand_path("../../..", __FILE__)
 tmp_dir = "#{app_dir}/tmp"
 
 # Default to production
-rack_env = ENV["RACK_ENV"] || "production"
+rack_env = ENV["SEABASE_ENV"] || "production"
 environment rack_env
 
 # Set up socket location

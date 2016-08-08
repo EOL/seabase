@@ -49,3 +49,4 @@ _yardoc
 doc/
 java/similarities*
 java/*.class
+seabase.env

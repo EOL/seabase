@@ -21,7 +21,7 @@ group :development do
 end
 
 group :production do
-  gem "unicorn", "~> 5.1"
+  gem "puma", "~> 3.6"
 end
 
 group :test do
