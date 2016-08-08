@@ -6,11 +6,8 @@ services:
       - "0.0.0.0:9292:9292"
     volumes:
       - .:/app
-    environment:
-      - DB_HOST=mysql
-      - DB_USER=root
-      - DB_PASSWORD=""
-      - DISPLAY=:99.0
+    env_file:
+      - config/seabase-dev.env
     depends_on:
       - mysql
     command: /usr/bin/supervisord -c /app/config/docker/supervisord_dev.conf
